@@ -10,6 +10,19 @@ This library provides a set of React components useful for building applications
 
 ## Contributing
 
+### Tests
+
+    npm run test
+
+To run the tests continuously as you change files:
+
+    npm run test:watch
+
+To get a report on test coverage:
+
+    npm run test:coverage
+    open coverage/html/index.html
+
 ### Code-Style and Linting
 
 TODO: Describe ESLint, benefits of linting javascript, and the benefits of a common code-style. Also, how to set up editor-support.
