@@ -9,6 +9,6 @@ it('renders without crashing', () => {
 
 it('includes the title', () => {
   // Have to mount to see into a child. Is there a better way?
-  const wrapper = render(<MLNavbar title="MyNavbarTitle"/>);
-  expect(wrapper.text()).toContain("MyNavbarTitle");
+  const wrapper = render(<MLNavbar title='MyNavbarTitle'/>);
+  expect(wrapper.text()).toContain('MyNavbarTitle');
 });
