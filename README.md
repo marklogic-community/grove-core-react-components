@@ -1,10 +1,28 @@
-# ml-treehouse
+# MarkLogic Treehouse (ml-treehouse)
+
+This library provides a set of React components useful for building applications backed by a MarkLogic database.
+
+## Getting Started
+
+### Installation
+
+    npm install --save ml-treehouse
+
+## Contributing
+
+### Code-Style and Linting
+
+TODO: Describe ESLint, benefits of linting javascript, and the benefits of a common code-style. Also, how to set up editor-support.
+
+TODO: We should enforce linting as part of the build.
+
+## Optional Badges
+
+TODO: Evaluate which to keep.
 
 [![Travis][build-badge]][build]
 [![npm package][npm-badge]][npm]
 [![Coveralls][coveralls-badge]][coveralls]
-
-Describe ml-treehouse here.
 
 [build-badge]: https://img.shields.io/travis/user/repo/master.png?style=flat-square
 [build]: https://travis-ci.org/user/repo
