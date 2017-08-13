@@ -3,8 +3,6 @@ import { Grid, Row, Col } from 'react-bootstrap';
 import MLSearchBar from './MLSearchBar';
 import MLSearchResults from './MLSearchResults';
 
-import { mockResults } from './test/mockData';
-
 class MLSearch extends Component {
   constructor(props) {
     super(props);
@@ -31,8 +29,11 @@ class MLSearch extends Component {
   }
 
   search() {
+    const searchResults = this.props.runSearch({
+      qtext: this.state.qtext
+    });
     this.setState({
-      results: mockResults
+      results: searchResults.results
     });
   }
 
@@ -51,7 +52,7 @@ class MLSearch extends Component {
               />
             </Row>
             <Row>
-              <MLSearchResults results={this.state.results}/>
+              <MLSearchResults className="ml-search-results" results={this.state.results}/>
             </Row>
           </Col>
         </Row>
