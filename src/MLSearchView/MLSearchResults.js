@@ -9,7 +9,7 @@ const MLSearchResults = (props) => {
     return (
       <Col xs={12} sm={6} md={4} lg={3} className="ml-search-result" key={result.uri}>
         <Panel>
-          <h4>{result.label}</h4>
+          <h4>{result.label || result.uri}</h4>
           <div className="ml-search-result-matches">
             {result.matches.map((match, index) => {
               return <MLSearchSnippet match={match} key={index} /> ;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Col, FormGroup, FormControl, InputGroup, Glyphicon, Button } from 'react-bootstrap';
-import './MLSearchBar.css';
+// import './MLSearchBar.css';
 
 const MLSearchBar = ({
   qtext,
@@ -12,7 +12,7 @@ const MLSearchBar = ({
 }) => {
   return (
     <Col md={12} className="ml-search-bar">
-      <form role="search">
+      <form role="search" onSubmit={onSearchExecute}>
         <FormGroup controlId="searchBox">
           <InputGroup>
             <FormControl
@@ -22,11 +22,11 @@ const MLSearchBar = ({
               value={qtext}
               onChange={onQtextChange}
             />
-            <InputGroup.Button type="submit">
+            <InputGroup.Button>
               <Button
-                onClick={onSearchExecute}
                 className='ml-execute-search'
                 disabled={searchPending}
+                type="submit"
               >
                 {/* <Glyphicon className="glyphicon-spin" glyph="refresh"/> */}
                 <Glyphicon glyph="search"/> Search

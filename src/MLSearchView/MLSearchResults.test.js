@@ -4,10 +4,12 @@ import MLSearchResults from './MLSearchResults';
 
 import { mockResults } from './test/mockData';
 
-it('renders empty results without crashing', () => {
-  shallow(<MLSearchResults results={[]} />);
-});
+describe('<MLSearchResults />', () => {
+  it('renders empty results without crashing', () => {
+    shallow(<MLSearchResults results={[]} />);
+  });
 
-it('renders results without crashing', () => {
-  shallow(<MLSearchResults results={mockResults} />);
+  it('renders results without crashing', () => {
+    shallow(<MLSearchResults results={mockResults} />);
+  });
 });

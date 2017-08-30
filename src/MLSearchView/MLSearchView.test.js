@@ -15,14 +15,16 @@ describe('<MLSearchView />', () => {
   });
 
   it('runs a search', () => {
-    const searchSpy = createSpy().andReturn({
-      results: mockResults
-    });
+    const searchSpy = createSpy();
     const wrapper = mount(<MLSearchView runSearch={searchSpy}/>);
     const typing = {target: {value: 'Waldo'}};
     wrapper.find('.ml-qtext-input').simulate('change', typing);
-    wrapper.find('.ml-execute-search').simulate('click');
-    expect(searchSpy).toHaveBeenCalledWith({qtext: 'Waldo'});
+    wrapper.find('.ml-execute-search').simulate('submit');
+    expect(searchSpy).toHaveBeenCalled({qtext: 'Waldo'});
+  });
+
+  it('displays search results', () => {
+    const wrapper = mount(<MLSearchView results={mockResults}/>);
     wrapper.find('.ml-search-results').text('Another Search Result');
   });
 

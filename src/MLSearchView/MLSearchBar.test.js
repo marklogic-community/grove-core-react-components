@@ -45,8 +45,8 @@ describe ('<MLSearchBar />', () => {
 
   it('calls correct function on search execute', () => {
     const mySearch = createSpy();
-    const wrapper = shallow(<MLSearchBar onSearchExecute={mySearch} />);
-    wrapper.find('.ml-execute-search').simulate('click');
+    const wrapper = mount(<MLSearchBar onSearchExecute={mySearch} />);
+    wrapper.find('.ml-execute-search').simulate('submit');
     expect(mySearch).toHaveBeenCalled();
   });
 
