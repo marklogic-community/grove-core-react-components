@@ -1,9 +1,6 @@
-import React, {Component} from 'react'
+export MLSearchBar from './MLSearchView/MLSearchBar';
+export MLSearchResults from './MLSearchView/MLSearchResults';
+export MLSearchSnippet from './MLSearchView/MLSearchSnippet';
+export MLSearchView from './MLSearchView/MLSearchView';
 
-export default class extends Component {
-  render() {
-    return <div>
-      <h2>Welcome to React components</h2>
-    </div>
-  }
-}
+export MLNavbar from './MLNavbar/MLNavbar';

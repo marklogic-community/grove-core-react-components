@@ -10,6 +10,13 @@ This library provides a set of React components useful for building applications
 
 ## Contributing
 
+### Local Development of `ml-treehouse`
+
+    npm link ../ml-treehouse
+    # We need just one version of React
+    cd ../ml-treehouse
+    npm link ../host-for-ml-treehouse/client/node_modules/react
+
 ### Tests
 
     npm run test

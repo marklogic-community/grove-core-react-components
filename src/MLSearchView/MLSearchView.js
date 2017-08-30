@@ -7,8 +7,7 @@ class MLSearch extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      qtext: '',
-      results: []
+      qtext: ''
     };
 
     this.handleQtextChange = this.handleQtextChange.bind(this);
@@ -28,13 +27,9 @@ class MLSearch extends Component {
     });
   }
 
-  search() {
-    const searchResults = this.props.runSearch({
-      qtext: this.state.qtext
-    });
-    this.setState({
-      results: searchResults.results
-    });
+  search(event) {
+    event.preventDefault();
+    this.props.runSearch(this.state.qtext);
   }
 
   render() {
@@ -52,7 +47,9 @@ class MLSearch extends Component {
               />
             </Row>
             <Row>
-              <MLSearchResults className="ml-search-results" results={this.state.results}/>
+              <MLSearchResults
+                className="ml-search-results"
+                results={this.props.results || []}/>
             </Row>
           </Col>
         </Row>

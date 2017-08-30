@@ -1,6 +1,6 @@
 {
   "name": "ml-treehouse",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "React component library for apps backed by MarkLogic",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -11,27 +11,28 @@
     "umd"
   ],
   "scripts": {
-    "build": "nwb build-react-component",
+    "build": "nwb build-react-component --copy-files",
     "clean": "nwb clean-module && nwb clean-demo",
     "start": "nwb serve-react-demo",
     "test": "nwb test-react",
     "test:coverage": "nwb test-react --coverage",
     "test:watch": "nwb test-react --server"
   },
-  "dependencies": {
+  "dependencies": {},
+  "peerDependencies": {
     "bootstrap": "^3.3.7",
+    "react": "15.x",
     "react-bootstrap": "^0.31.2"
   },
-  "peerDependencies": {
-    "react": "15.x"
-  },
   "devDependencies": {
+    "bootstrap": "^3.3.7",
     "enzyme": "^2.9.1",
     "eslint": "^4.4.1",
     "eslint-plugin-react": "^7.2.0",
     "nwb": "0.18.x",
     "react": "^15.6.1",
     "react-addons-test-utils": "^15.6.0",
+    "react-bootstrap": "^0.31.2",
     "react-dom": "^15.6.1",
     "react-test-renderer": "^15.6.1"
   },
