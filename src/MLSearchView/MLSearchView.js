@@ -6,9 +6,6 @@ import MLSearchResults from './MLSearchResults';
 class MLSearch extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      qtext: ''
-    };
 
     this.handleQtextChange = this.handleQtextChange.bind(this);
     this.handleQtextClear = this.handleQtextClear.bind(this);
@@ -16,20 +13,16 @@ class MLSearch extends Component {
   }
 
   handleQtextChange(event) {
-    this.setState({
-      qtext: event.target.value
-    });
+    this.props.handleQtextChange(event.target.value);
   }
 
   handleQtextClear() {
-    this.setState({
-      qtext: ''
-    });
+    this.props.handleQtextChange('');
   }
 
   search(event) {
     event.preventDefault();
-    this.props.runSearch(this.state.qtext);
+    this.props.runSearch(this.props.qtext);
   }
 
   render() {
@@ -40,7 +33,7 @@ class MLSearch extends Component {
           <Col md={9}>
             <Row>
               <MLSearchBar
-                qtext={this.state.qtext}
+                qtext={this.props.qtext}
                 onQtextChange={this.handleQtextChange}
                 onQtextClear={this.handleQtextClear}
                 onSearchExecute={this.search}
