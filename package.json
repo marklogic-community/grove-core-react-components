@@ -1,5 +1,5 @@
 {
-  "name": "ml-treehouse",
+  "name": "ml-treehouse-react",
   "version": "0.1.0",
   "description": "React component library for apps backed by MarkLogic",
   "main": "lib/index.js",
@@ -36,7 +36,7 @@
     "react-dom": "^15.6.1",
     "react-test-renderer": "^15.6.1"
   },
-  "author": "",
+  "author": "Patrick McElwee <patrick.mcelwee@marklogic.com>",
   "homepage": "",
   "license": "MIT",
   "repository": "",
