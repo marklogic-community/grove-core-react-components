@@ -39,7 +39,7 @@
   "author": "Patrick McElwee <patrick.mcelwee@marklogic.com>",
   "homepage": "",
   "license": "MIT",
-  "repository": "",
+  "repository": "ssh://git@project.marklogic.com:7999/nacw/ml-treehouse-react.git",
   "keywords": [
     "react-component-library",
     "MarkLogic"
