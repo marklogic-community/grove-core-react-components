@@ -1,30 +1,20 @@
 import React from 'react';
-import { Panel, Col } from 'react-bootstrap';
-import MLSearchSnippet from './MLSearchSnippet.js';
+import { Col } from 'react-bootstrap';
+import MLSearchResult from './MLSearchResult';
 import './MLSearchResults.css';
 
-const MLSearchResults = (props) => {
-  const results = props.results;
-  const resultElements = results.map((result => {
-    return (
-      <Col xs={12} sm={6} md={4} lg={3} className="ml-search-result" key={result.uri}>
-        <Panel>
-          <h4>{result.label || result.uri}</h4>
-          <div className="ml-search-result-matches">
-            {result.matches.map((match, index) => {
-              return <MLSearchSnippet match={match} key={index} /> ;
-            })}
-          </div>
-        </Panel>
-      </Col>
-    );
-  }));
-
-  return (
-    <div className="ml-search-results">
-      { resultElements }
-    </div>
+const renderResults = results => {
+  return results.map(result =>
+    <MLSearchResult result={result} key={result.uri} />
   );
 };
+
+const renderNothing = () => <Col md={12}><p>No results to show.</p></Col>;
+
+const MLSearchResults = ({results}) => (
+  <div className="ml-search-results">
+    { (results.length > 0) ? renderResults(results) : renderNothing() }
+  </div>
+);
 
 export default MLSearchResults;
