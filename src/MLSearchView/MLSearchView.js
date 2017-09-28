@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Grid, Row, Col } from 'react-bootstrap';
 import MLSearchBar from './MLSearchBar';
 import MLSearchResults from './MLSearchResults';
+import MLSearchMetrics from './MLSearchMetrics';
 
 class MLSearch extends Component {
   constructor(props) {
@@ -26,6 +27,8 @@ class MLSearch extends Component {
   }
 
   render() {
+    const executedSearch = this.props.executedSearch;
+
     return (
       <Grid>
         <Row>
@@ -39,11 +42,23 @@ class MLSearch extends Component {
                 onSearchExecute={this.search}
               />
             </Row>
-            <Row>
-              <MLSearchResults
-                className="ml-search-results"
-                results={this.props.results || []}/>
-            </Row>
+            {executedSearch && !executedSearch.pending &&
+              <div>
+                <Row>
+                  <Col md={12}>
+                    <MLSearchMetrics
+                      time={executedSearch.executionTime}
+                      total={executedSearch.total}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <MLSearchResults
+                    className="ml-search-results"
+                    results={executedSearch.results || []}/>
+                </Row>
+              </div>
+            }
           </Col>
         </Row>
       </Grid>
