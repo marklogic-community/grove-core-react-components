@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow, render, mount } from 'enzyme';
 import expect, { createSpy } from 'expect';
 import { mockResults } from './test/mockData';
 import MLSearchView from './MLSearchView';
@@ -15,8 +15,14 @@ describe('<MLSearchView />', () => {
     shallow(<MLSearchView />);
   });
 
+  const executedSearch = {
+    total: 25,
+    executionTime: 0.01091,
+    results: mockResults
+  };
+
   it('renders, integrated with children, without crashing', () => {
-    mount(<MLSearchView />);
+    mount(<MLSearchView executedSearch={executedSearch} />);
   });
 
   // TODO: do we have to actually pass qtext? We've already captured it
@@ -30,7 +36,7 @@ describe('<MLSearchView />', () => {
   });
 
   it('displays search results', () => {
-    const wrapper = mount(<MLSearchView results={mockResults}/>);
+    const wrapper = render(<MLSearchView executedSearch={executedSearch}/>);
     wrapper.find('.ml-search-results').text('Another Search Result');
   });
 

@@ -8,6 +8,7 @@ import React, { Component } from 'react';
 import { Grid, Row, Col } from 'react-bootstrap';
 import MLSearchBar from './MLSearchBar';
 import MLSearchResults from './MLSearchResults';
+import MLSearchMetrics from './MLSearchMetrics';
 
 var MLSearch = function (_Component) {
   _inherits(MLSearch, _Component);
@@ -37,6 +38,8 @@ var MLSearch = function (_Component) {
   };
 
   MLSearch.prototype.render = function render() {
+    var executedSearch = this.props.executedSearch;
+
     return React.createElement(
       Grid,
       null,
@@ -57,12 +60,28 @@ var MLSearch = function (_Component) {
               onSearchExecute: this.search
             })
           ),
-          React.createElement(
-            Row,
+          executedSearch && !executedSearch.pending && React.createElement(
+            'div',
             null,
-            React.createElement(MLSearchResults, {
-              className: 'ml-search-results',
-              results: this.props.results || [] })
+            React.createElement(
+              Row,
+              null,
+              React.createElement(
+                Col,
+                { md: 12 },
+                React.createElement(MLSearchMetrics, {
+                  time: executedSearch.executionTime,
+                  total: executedSearch.total
+                })
+              )
+            ),
+            React.createElement(
+              Row,
+              null,
+              React.createElement(MLSearchResults, {
+                className: 'ml-search-results',
+                results: executedSearch.results || [] })
+            )
           )
         )
       )
