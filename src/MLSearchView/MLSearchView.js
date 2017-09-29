@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { Grid, Row, Col } from 'react-bootstrap';
+import PropTypes from 'prop-types';
+import { Grid, Row, Col, Pagination } from 'react-bootstrap';
+
 import MLSearchBar from './MLSearchBar';
 import MLSearchResults from './MLSearchResults';
 import MLSearchMetrics from './MLSearchMetrics';
 
-class MLSearch extends Component {
+class MLSearchView extends Component {
   constructor(props) {
     super(props);
 
@@ -23,12 +25,10 @@ class MLSearch extends Component {
 
   search(event) {
     event.preventDefault();
-    this.props.runSearch(this.props.qtext);
+    this.props.runSearch(this.props.preExecutedSearch);
   }
 
   render() {
-    const executedSearch = this.props.executedSearch;
-
     return (
       <Grid>
         <Row>
@@ -42,20 +42,30 @@ class MLSearch extends Component {
                 onSearchExecute={this.search}
               />
             </Row>
-            {executedSearch && !executedSearch.pending &&
+            {this.props.isSearchComplete &&
               <div>
                 <Row>
                   <Col md={12}>
                     <MLSearchMetrics
-                      time={executedSearch.executionTime}
-                      total={executedSearch.total}
+                      time={this.props.executionTime}
+                      total={this.props.total}
                     />
                   </Col>
                 </Row>
                 <Row>
                   <MLSearchResults
                     className="ml-search-results"
-                    results={executedSearch.results || []}/>
+                    results={this.props.results || []}/>
+                </Row>
+                <Row>
+                  <Col md={12}>
+                    <Pagination
+                      items={this.props.totalPages}
+                      maxButtons={10}
+                      boundaryLinks={true}
+                      activePage={this.props.page}
+                    />
+                  </Col>
                 </Row>
               </div>
             }
@@ -66,4 +76,18 @@ class MLSearch extends Component {
   }
 }
 
-export default MLSearch;
+MLSearchView.propTypes = {
+  // TODO: flesh out
+  // preExecutedSearch
+  // results
+  // executionTime
+  // total
+  // page
+  // totalPages
+  // isSearchComplete: PropTypes.bool,
+  qtext: PropTypes.string.isRequired,
+  handleQtextChange: PropTypes.func,
+  runSearch: PropTypes.func
+};
+
+export default MLSearchView;
