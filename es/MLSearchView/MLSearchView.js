@@ -5,16 +5,18 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 import React, { Component } from 'react';
-import { Grid, Row, Col } from 'react-bootstrap';
+import PropTypes from 'prop-types';
+import { Grid, Row, Col, Pagination } from 'react-bootstrap';
+
 import MLSearchBar from './MLSearchBar';
 import MLSearchResults from './MLSearchResults';
 import MLSearchMetrics from './MLSearchMetrics';
 
-var MLSearch = function (_Component) {
-  _inherits(MLSearch, _Component);
+var MLSearchView = function (_Component) {
+  _inherits(MLSearchView, _Component);
 
-  function MLSearch(props) {
-    _classCallCheck(this, MLSearch);
+  function MLSearchView(props) {
+    _classCallCheck(this, MLSearchView);
 
     var _this = _possibleConstructorReturn(this, _Component.call(this, props));
 
@@ -24,22 +26,20 @@ var MLSearch = function (_Component) {
     return _this;
   }
 
-  MLSearch.prototype.handleQtextChange = function handleQtextChange(event) {
+  MLSearchView.prototype.handleQtextChange = function handleQtextChange(event) {
     this.props.handleQtextChange(event.target.value);
   };
 
-  MLSearch.prototype.handleQtextClear = function handleQtextClear() {
+  MLSearchView.prototype.handleQtextClear = function handleQtextClear() {
     this.props.handleQtextChange('');
   };
 
-  MLSearch.prototype.search = function search(event) {
+  MLSearchView.prototype.search = function search(event) {
     event.preventDefault();
-    this.props.runSearch(this.props.qtext);
+    this.props.runSearch(this.props.preExecutedSearch);
   };
 
-  MLSearch.prototype.render = function render() {
-    var executedSearch = this.props.executedSearch;
-
+  MLSearchView.prototype.render = function render() {
     return React.createElement(
       Grid,
       null,
@@ -60,7 +60,7 @@ var MLSearch = function (_Component) {
               onSearchExecute: this.search
             })
           ),
-          executedSearch && !executedSearch.pending && React.createElement(
+          this.props.isSearchComplete && React.createElement(
             'div',
             null,
             React.createElement(
@@ -70,8 +70,8 @@ var MLSearch = function (_Component) {
                 Col,
                 { md: 12 },
                 React.createElement(MLSearchMetrics, {
-                  time: executedSearch.executionTime,
-                  total: executedSearch.total
+                  time: this.props.executionTime,
+                  total: this.props.total
                 })
               )
             ),
@@ -80,7 +80,21 @@ var MLSearch = function (_Component) {
               null,
               React.createElement(MLSearchResults, {
                 className: 'ml-search-results',
-                results: executedSearch.results || [] })
+                results: this.props.results || [] })
+            ),
+            React.createElement(
+              Row,
+              null,
+              React.createElement(
+                Col,
+                { md: 12 },
+                React.createElement(Pagination, {
+                  items: this.props.totalPages,
+                  maxButtons: 10,
+                  boundaryLinks: true,
+                  activePage: this.props.page
+                })
+              )
             )
           )
         )
@@ -88,7 +102,21 @@ var MLSearch = function (_Component) {
     );
   };
 
-  return MLSearch;
+  return MLSearchView;
 }(Component);
 
-export default MLSearch;
+MLSearchView.propTypes = process.env.NODE_ENV !== "production" ? {
+  // TODO: flesh out
+  // preExecutedSearch
+  // results
+  // executionTime
+  // total
+  // page
+  // totalPages
+  // isSearchComplete: PropTypes.bool,
+  qtext: PropTypes.string.isRequired,
+  handleQtextChange: PropTypes.func,
+  runSearch: PropTypes.func
+} : {};
+
+export default MLSearchView;

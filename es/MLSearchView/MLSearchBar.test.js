@@ -46,7 +46,7 @@ describe ('<MLSearchBar />', () => {
   it('calls correct function on search execute', () => {
     const mySearch = createSpy();
     const wrapper = mount(<MLSearchBar onSearchExecute={mySearch} />);
-    wrapper.find('.ml-execute-search').simulate('submit');
+    wrapper.find('button.ml-execute-search').simulate('submit');
     expect(mySearch).toHaveBeenCalled();
   });
 
@@ -56,7 +56,7 @@ describe ('<MLSearchBar />', () => {
     const wrapper = mount(
       <MLSearchBar onSearchExecute={mySearch} searchPending={true} />
     );
-    wrapper.find('.ml-execute-search').simulate('click');
+    wrapper.find('button.ml-execute-search').simulate('click');
     expect(mySearch).toNotHaveBeenCalled();
   });
 

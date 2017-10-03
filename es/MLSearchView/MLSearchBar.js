@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Col, FormGroup, FormControl, InputGroup, Glyphicon, Button } from 'react-bootstrap';
 // import './MLSearchBar.css';
 
@@ -55,5 +56,14 @@ var MLSearchBar = function MLSearchBar(_ref) {
     )
   );
 };
+
+MLSearchBar.propTypes = process.env.NODE_ENV !== "production" ? {
+  qtext: PropTypes.string.isRequired,
+  onQtextChange: PropTypes.func,
+  onQtextClear: PropTypes.func,
+  onSearchExecute: PropTypes.func,
+  placeholder: PropTypes.string,
+  searchPending: PropTypes.bool
+} : {};
 
 export default MLSearchBar;
