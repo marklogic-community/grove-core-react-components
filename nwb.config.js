@@ -1,3 +1,5 @@
+/* global module */
+
 module.exports = {
   type: 'react-component',
   npm: {
@@ -13,5 +15,8 @@ module.exports = {
     compat: {
       enzyme: true
     }
+  },
+  karma: {
+    testContext: 'tests/setupTests.js'
   }
-}
+};
