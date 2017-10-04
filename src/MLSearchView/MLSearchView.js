@@ -35,7 +35,7 @@ class MLSearchView extends Component {
     if (event) {
       event.preventDefault();
     }
-    this.props.runSearch(this.props.preExecutedSearch);
+    this.props.runSearch(this.props.stagedSearch);
   }
 
   render() {
@@ -88,7 +88,7 @@ class MLSearchView extends Component {
 
 MLSearchView.propTypes = {
   // TODO: flesh out
-  // preExecutedSearch
+  // stagedSearch
   // results
   // executionTime
   // total
