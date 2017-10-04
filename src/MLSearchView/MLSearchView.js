@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Row, Col, Pagination } from 'react-bootstrap';
+import { Grid, Row, Col } from 'react-bootstrap';
 
 import MLSearchBar from './MLSearchBar';
-import MLSearchResults from './MLSearchResults';
-import MLSearchMetrics from './MLSearchMetrics';
+import MLSearchResponseView from './MLSearchResponseView';
 
 class MLSearchView extends Component {
   constructor(props) {
@@ -53,31 +52,15 @@ class MLSearchView extends Component {
               />
             </Row>
             {this.props.isSearchComplete &&
-              <div>
-                <Row>
-                  <Col md={12}>
-                    <MLSearchMetrics
-                      time={this.props.executionTime}
-                      total={this.props.total}
-                    />
-                  </Col>
-                </Row>
-                <Row>
-                  <MLSearchResults
-                    className="ml-search-results"
-                    results={this.props.results || []}/>
-                </Row>
-                <Row>
-                  <Col md={12}>
-                    <Pagination
-                      items={this.props.totalPages}
-                      maxButtons={10}
-                      boundaryLinks={true}
-                      activePage={this.props.page}
-                      onSelect={this.handlePageSelection} />
-                  </Col>
-                </Row>
-              </div>
+              <MLSearchResponseView
+                error={this.props.error}
+                results={this.props.results}
+                executionTime={this.props.executionTime}
+                total={this.props.total}
+                page={this.props.page}
+                totalPages={this.props.totalPages}
+                handlePageSelection={this.handlePageSelection}
+              />
             }
           </Col>
         </Row>
@@ -87,14 +70,17 @@ class MLSearchView extends Component {
 }
 
 MLSearchView.propTypes = {
-  // TODO: flesh out
-  // stagedSearch
-  // results
-  // executionTime
-  // total
-  // page
-  // totalPages
-  // isSearchComplete: PropTypes.bool,
+  // TODO: flesh out which are required
+  // TODO: group together some of these, perhaps back to what is returned from
+  // selectors, like stagedSearch and searchResponse
+  stagedSearch: PropTypes.object, // TODO: say more about shape of this
+  error: PropTypes.string,
+  results: PropTypes.array, // TODO: say more about shape of this
+  executionTime: PropTypes.number,
+  total: PropTypes.number,
+  page: PropTypes.number,
+  totalPages: PropTypes.number,
+  isSearchComplete: PropTypes.bool,
   qtext: PropTypes.string.isRequired,
   handleQtextChange: PropTypes.func,
   runSearch: PropTypes.func,
