@@ -12,6 +12,7 @@ class MLSearchView extends Component {
 
     this.handleQtextChange = this.handleQtextChange.bind(this);
     this.handleQtextClear = this.handleQtextClear.bind(this);
+    this.handlePageSelection = this.handlePageSelection.bind(this);
     this.search = this.search.bind(this);
   }
 
@@ -23,8 +24,17 @@ class MLSearchView extends Component {
     this.props.handleQtextChange('');
   }
 
+  handlePageSelection(pageNumber) {
+    if (pageNumber !== this.props.page) {
+      this.props.changePage(pageNumber);
+      this.search();
+    }
+  }
+
   search(event) {
-    event.preventDefault();
+    if (event) {
+      event.preventDefault();
+    }
     this.props.runSearch(this.props.preExecutedSearch);
   }
 
@@ -64,7 +74,7 @@ class MLSearchView extends Component {
                       maxButtons={10}
                       boundaryLinks={true}
                       activePage={this.props.page}
-                    />
+                      onSelect={this.handlePageSelection} />
                   </Col>
                 </Row>
               </div>
@@ -87,7 +97,8 @@ MLSearchView.propTypes = {
   // isSearchComplete: PropTypes.bool,
   qtext: PropTypes.string.isRequired,
   handleQtextChange: PropTypes.func,
-  runSearch: PropTypes.func
+  runSearch: PropTypes.func,
+  changePage: PropTypes.func
 };
 
 export default MLSearchView;
