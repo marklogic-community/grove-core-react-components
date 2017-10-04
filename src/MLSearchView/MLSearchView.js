@@ -5,6 +5,8 @@ import { Grid, Row, Col } from 'react-bootstrap';
 import MLSearchBar from './MLSearchBar';
 import MLSearchResponseView from './MLSearchResponseView';
 
+import MLDetailView from './../MLDetailView/MLDetailView';
+
 class MLSearchView extends Component {
   constructor(props) {
     super(props);
@@ -13,6 +15,7 @@ class MLSearchView extends Component {
     this.handleQtextClear = this.handleQtextClear.bind(this);
     this.handlePageSelection = this.handlePageSelection.bind(this);
     this.search = this.search.bind(this);
+    this.loadDetail = this.loadDetail.bind(this);
   }
 
   handleQtextChange(event) {
@@ -35,6 +38,11 @@ class MLSearchView extends Component {
       event.preventDefault();
     }
     this.props.runSearch(this.props.stagedSearch);
+  }
+
+  loadDetail(uri) {
+    alert('clicked a link to load detail for uri ' + uri);
+    //this.props.getDetail(uri);
   }
 
   render() {
@@ -60,6 +68,7 @@ class MLSearchView extends Component {
                 page={this.props.page}
                 totalPages={this.props.totalPages}
                 handlePageSelection={this.handlePageSelection}
+                onLoadDetail={this.loadDetail}
               />
             }
           </Col>
