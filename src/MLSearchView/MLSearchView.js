@@ -5,8 +5,6 @@ import { Grid, Row, Col } from 'react-bootstrap';
 import MLSearchBar from './MLSearchBar';
 import MLSearchResponseView from './MLSearchResponseView';
 
-import MLDetailView from './../MLDetailView/MLDetailView';
-
 class MLSearchView extends Component {
   constructor(props) {
     super(props);
@@ -41,8 +39,8 @@ class MLSearchView extends Component {
   }
 
   loadDetail(uri) {
-    alert('clicked a link to load detail for uri ' + uri);
-    //this.props.getDetail(uri);
+    console.log('clicked a link to load detail for uri ' + uri);
+    this.props.loadDetail(uri);
   }
 
   render() {

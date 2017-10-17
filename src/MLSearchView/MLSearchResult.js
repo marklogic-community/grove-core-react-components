@@ -1,6 +1,7 @@
 import React from 'react';
 import { Panel, Col } from 'react-bootstrap';
 import MLSearchSnippet from './MLSearchSnippet.js';
+import MLDetailView from './../MLDetailView/MLDetailView';
 
 const prettyUri = uri => {
   const uriParts = uri.split('/');
