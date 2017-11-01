@@ -19,7 +19,8 @@
     "test:watch": "nwb test-react --server"
   },
   "dependencies": {
-    "react-json-tree": "^0.11.0"
+    "react-json-tree": "^0.11.0",
+    "react-router-dom": "^4.2.2"
   },
   "peerDependencies": {
     "bootstrap": "^3.3.7",

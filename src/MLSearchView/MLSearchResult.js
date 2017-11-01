@@ -1,7 +1,7 @@
 import React from 'react';
 import { Panel, Col } from 'react-bootstrap';
 import MLSearchSnippet from './MLSearchSnippet.js';
-import MLDetailView from './../MLDetailView/MLDetailView';
+import { Link } from 'react-router-dom';
 
 const prettyUri = uri => {
   const uriParts = uri.split('/');
@@ -15,8 +15,9 @@ const MLSearchResult = (props) => (
   >
     <Panel>
       <h4>
-        <a href="#" onClick={() => props.onLoadDetail(props.result.uri)}>
-          {props.result.label || prettyUri(props.result.uri)}</a>
+        <Link to={'/detail/' + encodeURIComponent(props.result.uri)}>
+          {props.result.label || prettyUri(props.result.uri)}
+        </Link>
       </h4>
       <div className="ml-search-result-matches">
         {props.result.matches.map((match, index) =>
