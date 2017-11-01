@@ -15,7 +15,7 @@ const MLSearchResult = (props) => (
   >
     <Panel>
       <h4>
-        <Link to={'/detail/' + encodeURIComponent(props.result.uri)}>
+        <Link to={props.detailPath + encodeURIComponent(props.result.uri)}>
           {props.result.label || prettyUri(props.result.uri)}
         </Link>
       </h4>

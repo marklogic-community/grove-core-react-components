@@ -13,7 +13,6 @@ class MLSearchView extends Component {
     this.handleQtextClear = this.handleQtextClear.bind(this);
     this.handlePageSelection = this.handlePageSelection.bind(this);
     this.search = this.search.bind(this);
-    this.loadDetail = this.loadDetail.bind(this);
   }
 
   handleQtextChange(event) {
@@ -36,11 +35,6 @@ class MLSearchView extends Component {
       event.preventDefault();
     }
     this.props.runSearch(this.props.stagedSearch);
-  }
-
-  loadDetail(uri) {
-    console.log('clicked a link to load detail for uri ' + uri);
-    this.props.loadDetail(uri);
   }
 
   render() {
@@ -66,7 +60,7 @@ class MLSearchView extends Component {
                 page={this.props.page}
                 totalPages={this.props.totalPages}
                 handlePageSelection={this.handlePageSelection}
-                onLoadDetail={this.loadDetail}
+                detailPath={this.props.detailPath}
               />
             }
           </Col>
@@ -91,7 +85,8 @@ MLSearchView.propTypes = {
   qtext: PropTypes.string.isRequired,
   handleQtextChange: PropTypes.func,
   runSearch: PropTypes.func,
-  changePage: PropTypes.func
+  changePage: PropTypes.func,
+  detailPath: PropTypes.string
 };
 
 export default MLSearchView;
