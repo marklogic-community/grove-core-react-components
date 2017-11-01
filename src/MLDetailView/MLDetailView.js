@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import JSONTree from 'react-json-tree';
 
 class MLDetailView extends Component {
   constructor(props) {
@@ -24,9 +25,8 @@ class MLDetailView extends Component {
   render() {
     return (
       <div>
-        {/* Since we're fetching data on page load, gotta check to make sure detail exists first */}
-        <b>eye color: </b>
-        {this.props.detail ? this.props.detail.eyeColor : '' }
+        {/* Keep it simple for now and use JSONTree to show arbitrary JSON content */}
+        <JSONTree data={this.props.detail} />
       </div>
     );
   }

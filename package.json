@@ -18,7 +18,9 @@
     "test:coverage": "nwb test-react --coverage",
     "test:watch": "nwb test-react --server"
   },
-  "dependencies": {},
+  "dependencies": {
+    "react-json-tree": "^0.11.0"
+  },
   "peerDependencies": {
     "bootstrap": "^3.3.7",
     "prop-types": "^15",
