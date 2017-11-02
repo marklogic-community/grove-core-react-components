@@ -26,7 +26,7 @@ class MLDetailView extends Component {
     return (
       <div>
         {/* Keep it simple for now and use JSONTree to show arbitrary JSON content */}
-        <JSONTree data={this.props.detail} />
+        <JSONTree data={this.props.detail} theme={'grayscale'}/>
       </div>
     );
   }
