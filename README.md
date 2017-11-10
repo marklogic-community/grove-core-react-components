@@ -8,14 +8,23 @@ This library provides a set of React components useful for building applications
 
     npm install --save ml-treehouse-react
 
+or
+
+    yarn add ml-treehouse-react
+
+### Implementation
+
+You will need to create a React container in your host application to pass the necessary props and callback functions to the ML-Treehouse components that you are importing. See the [`MLSearchContainer`](https://project.marklogic.com/repo/projects/NACW/repos/ml-treehouse/browse/client/src/containers/MLSearchContainer.js) in the reference application for an example of doing this, using Redux modules. Also, look at [`App.js`](https://project.marklogic.com/repo/projects/NACW/repos/ml-treehouse/browse/client/src/App.js) and [`index.js`](https://project.marklogic.com/repo/projects/NACW/repos/ml-treehouse/browse/client/src/App.js) to see how selectors and actions are passed to `MLSearchContainer`.
+
 ## Contributing
 
 ### Local Development of `ml-treehouse-react`
 
+We need just one version of React, so, assuming your host application is at `../ml-treehouse-react-reference`, run the following. (If your host application is in a different directory, you will need to make appropriate changes.)
+
     npm link ../ml-treehouse-react
-    # We need just one version of React
     cd ../ml-treehouse-react
-    npm link ../ml-treehouse/client/node_modules/react
+    npm link ../ml-treehouse-react-reference/client/node_modules/react
 
 ### Tests
 
