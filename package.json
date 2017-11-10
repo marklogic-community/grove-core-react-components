@@ -19,7 +19,7 @@
     "test:watch": "nwb test-react --server"
   },
   "dependencies": {
-    "prop-types": "^15.5.7",
+    "prop-types": "^15.5.7"
   },
   "peerDependencies": {
     "bootstrap": "^3.3.7",
