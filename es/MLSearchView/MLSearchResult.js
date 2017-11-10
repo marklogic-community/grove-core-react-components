@@ -1,6 +1,7 @@
 import React from 'react';
 import { Panel, Col } from 'react-bootstrap';
 import MLSearchSnippet from './MLSearchSnippet.js';
+import './MLSearchResult.css';
 
 var prettyUri = function prettyUri(uri) {
   var uriParts = uri.split('/');
@@ -12,8 +13,7 @@ var MLSearchResult = function MLSearchResult(_ref) {
   return React.createElement(
     Col,
     { xs: 12, sm: 6, md: 4, lg: 3,
-      className: 'ml-search-result',
-      key: result.uri
+      className: 'ml-search-result'
     },
     React.createElement(
       Panel,
@@ -26,7 +26,7 @@ var MLSearchResult = function MLSearchResult(_ref) {
       React.createElement(
         'div',
         { className: 'ml-search-result-matches' },
-        result.matches.map(function (match, index) {
+        result.matches && result.matches.map(function (match, index) {
           return React.createElement(MLSearchSnippet, { match: match, key: index });
         })
       )
