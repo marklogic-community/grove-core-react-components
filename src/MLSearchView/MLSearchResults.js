@@ -1,15 +1,19 @@
 import React from 'react';
 import MLSearchResult from './MLSearchResult';
-import './MLSearchResults.css';
 
-const MLSearchResults = (props) => (
+const MLSearchResults = ({results, detailPath, resultComponent: ResultComponent}) => (
   <div className="ml-search-results">
     {
-      props.results.map(result =>
-        <MLSearchResult result={result} key={result.uri} detailPath={props.detailPath} />
+      results && results.map(result =>
+        <ResultComponent result={result}
+          key={result.uri}
+          detailPath={detailPath}
+        />
       )
     }
   </div>
 );
+
+MLSearchResults.defaultProps = { resultComponent: MLSearchResult };
 
 export default MLSearchResults;

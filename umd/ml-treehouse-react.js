@@ -1,5 +1,5 @@
 /*!
- * ml-treehouse-react v0.4.0
+ * ml-treehouse-react v0.4.1
  * MIT Licensed
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -8544,22 +8544,22 @@ ToggleButton.propTypes = propTypes;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__MLSearchResult__ = __webpack_require__(292);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MLSearchResults_css__ = __webpack_require__(293);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MLSearchResults_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__MLSearchResults_css__);
-
 
 
 
 var MLSearchResults = function MLSearchResults(_ref) {
-  var results = _ref.results;
+  var results = _ref.results,
+      ResultComponent = _ref.resultComponent;
   return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
     'div',
     { className: 'ml-search-results' },
-    results.map(function (result) {
-      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__MLSearchResult__["a" /* default */], { result: result, key: result.uri });
+    results && results.map(function (result) {
+      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(ResultComponent, { result: result, key: result.uri });
     })
   );
 };
+
+MLSearchResults.defaultProps = { resultComponent: __WEBPACK_IMPORTED_MODULE_1__MLSearchResult__["a" /* default */] };
 
 /* harmony default export */ __webpack_exports__["a"] = (MLSearchResults);
 
@@ -38100,6 +38100,9 @@ var Well = function (_React$Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MLSearchSnippet_js__ = __webpack_require__(134);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__MLSearchResult_css__ = __webpack_require__(293);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__MLSearchResult_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__MLSearchResult_css__);
+
 
 
 
@@ -38114,8 +38117,7 @@ var MLSearchResult = function MLSearchResult(_ref) {
   return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
     __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["b" /* Col */],
     { xs: 12, sm: 6, md: 4, lg: 3,
-      className: 'ml-search-result',
-      key: result.uri
+      className: 'ml-search-result'
     },
     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["j" /* Panel */],
@@ -38128,7 +38130,7 @@ var MLSearchResult = function MLSearchResult(_ref) {
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         { className: 'ml-search-result-matches' },
-        result.matches.map(function (match, index) {
+        result.matches && result.matches.map(function (match, index) {
           return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__MLSearchSnippet_js__["a" /* default */], { match: match, key: index });
         })
       )
