@@ -18,15 +18,14 @@
     "test:coverage": "nwb test-react --coverage",
     "test:watch": "nwb test-react --server"
   },
-  "dependencies": {
-    "react-json-tree": "^0.11.0",
-    "react-router-dom": "^4.2.2"
-  },
+  "dependencies": {},
   "peerDependencies": {
     "bootstrap": "^3.3.7",
     "prop-types": "^15",
     "react": "^16",
-    "react-bootstrap": "^0.31.2"
+    "react-bootstrap": "^0.31.2",
+    "react-json-tree": "^0.11.0",
+    "react-router-dom": "^4.2.2"
   },
   "devDependencies": {
     "bootstrap": "^3.3.7",
@@ -39,6 +38,8 @@
     "react": "^16.0.0",
     "react-bootstrap": "^0.31.2",
     "react-dom": "^16.0.0",
+    "react-json-tree": "^0.11.0",
+    "react-router-dom": "^4.2.2",
     "react-test-renderer": "^16.0.0"
   },
   "author": "Patrick McElwee <patrick.mcelwee@marklogic.com>",
