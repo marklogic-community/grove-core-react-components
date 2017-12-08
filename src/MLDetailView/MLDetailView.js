@@ -3,12 +3,16 @@ import JSONTree from 'react-json-tree';
 
 class MLDetailView extends Component {
   componentDidMount() {
-    this.props.loadDetail(this.props.uri);
+    if (!this.props.detail) {
+      this.props.loadDetail(this.props.uri);
+    }
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.uri !== this.props.uri) {
-      nextProps.loadDetail(nextProps.uri);
+      if (!nextProps.detail) {
+        nextProps.loadDetail(nextProps.uri);
+      }
     }
   }
 
