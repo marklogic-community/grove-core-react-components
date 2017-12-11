@@ -76,7 +76,8 @@ var MLSearchView = function (_Component) {
             total: this.props.total,
             page: this.props.page,
             totalPages: this.props.totalPages,
-            handlePageSelection: this.handlePageSelection
+            handlePageSelection: this.handlePageSelection,
+            detailPath: this.props.detailPath
           })
         )
       )
@@ -101,7 +102,8 @@ MLSearchView.propTypes = process.env.NODE_ENV !== "production" ? {
   qtext: PropTypes.string.isRequired,
   handleQtextChange: PropTypes.func,
   runSearch: PropTypes.func,
-  changePage: PropTypes.func
+  changePage: PropTypes.func,
+  detailPath: PropTypes.string
 } : {};
 
 export default MLSearchView;

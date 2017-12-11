@@ -8,3 +8,5 @@ import _MLSearchView from './MLSearchView/MLSearchView';
 export { _MLSearchView as MLSearchView };
 import _MLNavbar from './MLNavbar/MLNavbar';
 export { _MLNavbar as MLNavbar };
+import _MLDetailView from './MLDetailView/MLDetailView';
+export { _MLDetailView as MLDetailView };
