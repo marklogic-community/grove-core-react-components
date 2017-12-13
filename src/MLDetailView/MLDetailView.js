@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import JSONTree from 'react-json-tree';
 import vkbeautify from 'vkbeautify';
 
 const defaultTemplate = (props) => {
+  if (!props.detail) {return null;}
   let renderedRawData = null;
   if (props.contentType) {
     if (props.contentType.lastIndexOf('application/json') !== -1) {
@@ -13,6 +15,8 @@ const defaultTemplate = (props) => {
     } else {
       renderedRawData = <pre>{props.detail}</pre>;
     }
+  } else {
+    renderedRawData = <pre>{props.detail}</pre>;
   }
   return (
     <div>
@@ -45,5 +49,13 @@ class MLDetailView extends Component {
     }
   }
 }
+
+MLDetailView.propTypes = {
+  detail: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object
+  ]),
+  contentType: PropTypes.string
+};
 
 export default MLDetailView;
