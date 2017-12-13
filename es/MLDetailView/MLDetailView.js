@@ -5,7 +5,49 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import JSONTree from 'react-json-tree';
+import vkbeautify from 'vkbeautify';
+
+var defaultTemplate = function defaultTemplate(props) {
+  if (!props.detail) {
+    return null;
+  }
+  var renderedRawData = null;
+  if (props.contentType) {
+    if (props.contentType.lastIndexOf('application/json') !== -1) {
+      renderedRawData = React.createElement(JSONTree, { data: props.detail || {}, theme: 'grayscale' });
+    } else if (props.contentType.lastIndexOf('application/xml') !== -1) {
+      renderedRawData = React.createElement(
+        'pre',
+        null,
+        vkbeautify.xml(props.detail)
+      );
+    } else {
+      renderedRawData = React.createElement(
+        'pre',
+        null,
+        props.detail
+      );
+    }
+  } else {
+    renderedRawData = React.createElement(
+      'pre',
+      null,
+      props.detail
+    );
+  }
+  return React.createElement(
+    'div',
+    null,
+    React.createElement(
+      'h1',
+      null,
+      props.label || props.uri
+    ),
+    renderedRawData
+  );
+};
 
 var MLDetailView = function (_Component) {
   _inherits(MLDetailView, _Component);
@@ -31,14 +73,19 @@ var MLDetailView = function (_Component) {
   };
 
   MLDetailView.prototype.render = function render() {
-    return React.createElement(
-      'div',
-      null,
-      React.createElement(JSONTree, { data: this.props.detail || {}, theme: 'grayscale' })
-    );
+    if (this.props.template) {
+      return this.props.template(this.props);
+    } else {
+      return defaultTemplate(this.props);
+    }
   };
 
   return MLDetailView;
 }(Component);
+
+MLDetailView.propTypes = process.env.NODE_ENV !== "production" ? {
+  detail: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  contentType: PropTypes.string
+} : {};
 
 export default MLDetailView;
