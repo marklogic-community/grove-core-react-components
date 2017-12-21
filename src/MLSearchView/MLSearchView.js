@@ -26,7 +26,13 @@ class MLSearchView extends Component {
   handlePageSelection(pageNumber) {
     if (pageNumber !== this.props.page) {
       this.props.changePage(pageNumber);
-      this.search();
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.stagedSearch.page !== this.props.stagedSearch.page) {
+      // TODO: DRY up with this.search()?
+      nextProps.runSearch(nextProps.stagedSearch);
     }
   }
 
