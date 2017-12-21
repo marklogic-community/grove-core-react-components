@@ -8,8 +8,8 @@ describe ('<MLSearchBar />', () => {
     expect(shallow(<MLSearchBar />).length).toEqual(1);
   });
 
-  it('displays qtext', () => {
-    const wrapper = shallow(<MLSearchBar qtext='myQuery' />);
+  it('displays queryText', () => {
+    const wrapper = shallow(<MLSearchBar queryText='myQuery' />);
     expect(
       wrapper.find('.ml-qtext-input').props().value
     ).toEqual('myQuery');
@@ -29,18 +29,18 @@ describe ('<MLSearchBar />', () => {
     ).toEqual('Please Search!');
   });
 
-  it('calls correct function on qtext change', () => {
+  it('calls correct function on queryText change', () => {
     const myHandleChange = createSpy();
-    const wrapper = shallow(<MLSearchBar onQtextChange={myHandleChange} />);
+    const wrapper = shallow(<MLSearchBar onQueryTextChange={myHandleChange} />);
     wrapper.find('.ml-qtext-input').simulate('change');
     expect(myHandleChange).toHaveBeenCalled();
   });
 
-  it('calls correct function on qtext clear', () => {
-    const myHandleQtextClear = createSpy();
-    const wrapper = shallow(<MLSearchBar onQtextClear={myHandleQtextClear} />);
+  it('calls correct function on queryText clear', () => {
+    const myHandleQueryTextClear = createSpy();
+    const wrapper = shallow(<MLSearchBar onQueryTextClear={myHandleQueryTextClear} />);
     wrapper.find('.ml-qtext-clear').simulate('click');
-    expect(myHandleQtextClear).toHaveBeenCalled();
+    expect(myHandleQueryTextClear).toHaveBeenCalled();
   });
 
   it('calls correct function on search execute', () => {

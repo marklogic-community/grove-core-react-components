@@ -3,24 +3,25 @@ import PropTypes from 'prop-types';
 import { Grid, Row, Col } from 'react-bootstrap';
 
 import MLSearchBar from './MLSearchBar';
+import MLFacets from './MLFacets';
 import MLSearchResponseView from './MLSearchResponseView';
 
 class MLSearchView extends Component {
   constructor(props) {
     super(props);
 
-    this.handleQtextChange = this.handleQtextChange.bind(this);
-    this.handleQtextClear = this.handleQtextClear.bind(this);
+    this.handleQueryTextChange = this.handleQueryTextChange.bind(this);
+    this.handleQueryTextClear = this.handleQueryTextClear.bind(this);
     this.handlePageSelection = this.handlePageSelection.bind(this);
     this.search = this.search.bind(this);
   }
 
-  handleQtextChange(event) {
-    this.props.handleQtextChange(event.target.value);
+  handleQueryTextChange(event) {
+    this.props.handleQueryTextChange(event.target.value);
   }
 
-  handleQtextClear() {
-    this.props.handleQtextChange('');
+  handleQueryTextClear() {
+    this.props.handleQueryTextChange('');
   }
 
   handlePageSelection(pageNumber) {
@@ -51,9 +52,9 @@ class MLSearchView extends Component {
           <Col md={9}>
             <Row>
               <MLSearchBar
-                qtext={this.props.qtext}
-                onQtextChange={this.handleQtextChange}
-                onQtextClear={this.handleQtextClear}
+                queryText={this.props.queryText}
+                onQueryTextChange={this.handleQueryTextChange}
+                onQueryTextClear={this.handleQueryTextClear}
                 onSearchExecute={this.search}
               />
             </Row>
@@ -88,8 +89,8 @@ MLSearchView.propTypes = {
   page: PropTypes.number,
   totalPages: PropTypes.number,
   isSearchComplete: PropTypes.bool,
-  qtext: PropTypes.string.isRequired,
-  handleQtextChange: PropTypes.func,
+  queryText: PropTypes.string.isRequired,
+  handleQueryTextChange: PropTypes.func,
   runSearch: PropTypes.func,
   changePage: PropTypes.func,
   detailPath: PropTypes.string

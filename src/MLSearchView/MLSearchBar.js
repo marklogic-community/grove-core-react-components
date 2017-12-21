@@ -4,9 +4,9 @@ import { Col, FormGroup, FormControl, InputGroup, Glyphicon, Button } from 'reac
 // import './MLSearchBar.css';
 
 const MLSearchBar = ({
-  qtext,
-  onQtextChange,
-  onQtextClear,
+  queryText,
+  onQueryTextChange,
+  onQueryTextClear,
   onSearchExecute,
   placeholder = 'Search...',
   searchPending
@@ -20,8 +20,8 @@ const MLSearchBar = ({
               className="ml-qtext-input"
               type="text"
               placeholder={placeholder}
-              value={qtext}
-              onChange={onQtextChange}
+              value={queryText}
+              onChange={onQueryTextChange}
             />
             <InputGroup.Button>
               <Button
@@ -32,7 +32,7 @@ const MLSearchBar = ({
                 {/* <Glyphicon className="glyphicon-spin" glyph="refresh"/> */}
                 <Glyphicon glyph="search"/> Search
               </Button>
-              <Button onClick={onQtextClear} className='ml-qtext-clear'>
+              <Button onClick={onQueryTextClear} className='ml-qtext-clear'>
                 <Glyphicon glyph="remove"/> Clear
               </Button>
             </InputGroup.Button>
@@ -44,9 +44,9 @@ const MLSearchBar = ({
 };
 
 MLSearchBar.propTypes = {
-  qtext: PropTypes.string.isRequired,
-  onQtextChange: PropTypes.func,
-  onQtextClear: PropTypes.func,
+  queryText: PropTypes.string.isRequired,
+  onQueryTextChange: PropTypes.func,
+  onQueryTextClear: PropTypes.func,
   onSearchExecute: PropTypes.func,
   placeholder: PropTypes.string,
   searchPending: PropTypes.bool
