@@ -48,7 +48,12 @@ class MLSearchView extends Component {
     return (
       <Grid>
         <Row>
-          <Col md={3}/>
+          <Col md={3}>
+            <MLFacets
+              nonSelectedFacets={this.props.facets}
+              addConstraint={() => {}}
+            />
+          </Col>
           <Col md={9}>
             <Row>
               <MLSearchBar
