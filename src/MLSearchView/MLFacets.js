@@ -4,7 +4,7 @@ const MLFacets = ({
   activeConstraints, nonSelectedFacets,
   addConstraint, removeConstraint
 }) => (
-  <div className="ml-facet-list">
+  <div className="ml-facet-list list-group">
     {
       // TODO - this was when facets should be negatible?
       // Example of passing in attribute to change component behavior?
@@ -43,13 +43,13 @@ const MLFacets = ({
       // TODO: handle blanks before it gets here
       nonSelectedFacets &&
       Object.keys(nonSelectedFacets).map((facetName) => (
-        <div key={facetName} className="facet">
-          <h3>{facetName}</h3>
+        <div key={facetName} className="ml-facet list-group-item">
+          <h3 className="list-group-item-heading">{facetName}</h3>
           {
             nonSelectedFacets[facetName].facetValues.map((value) => (
               <div key={value.name}>
                 <i
-                  className="fa fa-plus-circle facet-add-pos"
+                  className="glyphicon glyphicon-plus-sign ml-facet-add-pos"
                   onClick={addConstraint.bind(null, facetName, value.name)}
                 />
                 <span title={value.name}>{value.name}</span>
