@@ -50,7 +50,9 @@ class MLSearchView extends Component {
         <Col md={3}>
           <MLFacets
             nonSelectedFacets={this.props.facets}
-            addConstraint={() => {}}
+            activeConstraints={this.props.activeConstraints}
+            addConstraint={this.props.addConstraint}
+            removeConstraint={this.props.removeConstraint}
           />
         </Col>
         <Col md={9}>

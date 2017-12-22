@@ -23,12 +23,12 @@ const MLFacets = ({
             <div key={constraintName}>
               {
                 // TODO: truncate values with a truncateLength option
-                activeConstraints[constraintName].values.map((value) => (
+                activeConstraints[constraintName].map((value) => (
                   <div key={value} className="btn btn-primary">
-                    <span title={value}>{constraintName}: {value}</span>
+                    <span title={value.name}>{constraintName}: {value.name}</span>
                     <span
                       className="glyphicon glyphicon-remove-circle icon-white"
-                      onClick={removeConstraint(constraintName, value)}
+                      onClick={removeConstraint.bind(null, constraintName, value.name)}
                     />
                   </div>
                 ))
