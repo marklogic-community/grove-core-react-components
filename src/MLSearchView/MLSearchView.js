@@ -31,7 +31,13 @@ class MLSearchView extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.stagedSearch.page !== this.props.stagedSearch.page) {
+    if (
+      (nextProps.stagedSearch.page !== this.props.stagedSearch.page) ||
+      // Intentionally using != to test object reference (ie, is it the
+      // same object?) Because our Redux flow will swap out the constraints
+      // object on any change, but keep it referentially the same otherwise
+      (nextProps.stagedSearch.constraints != this.props.stagedSearch.constraints)
+    ) {
       // TODO: DRY up with this.search()?
       nextProps.runSearch(nextProps.stagedSearch);
     }
