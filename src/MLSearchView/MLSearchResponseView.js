@@ -8,7 +8,14 @@ import MLSearchMetrics from './MLSearchMetrics';
 const MLSearchResponseView = (props) => (
   // TODO: better error rendering
   <div>
-    {props.error && <p>{props.error}</p>}
+    {props.error &&
+      <div>
+        <p>
+          There was an error performing your search. The server sent the following error message:
+        </p>
+        <p className="text-danger">{props.error}</p>
+      </div>
+    }
     {!props.error &&
       <div>
         <Row>
