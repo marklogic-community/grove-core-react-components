@@ -12,9 +12,18 @@ var MLSearchResponseView = function MLSearchResponseView(props) {
       'div',
       null,
       props.error && React.createElement(
-        'p',
+        'div',
         null,
-        props.error
+        React.createElement(
+          'p',
+          null,
+          'There was an error performing your search. The server sent the following error message:'
+        ),
+        React.createElement(
+          'p',
+          { className: 'text-danger' },
+          props.error
+        )
       ),
       !props.error && React.createElement(
         'div',

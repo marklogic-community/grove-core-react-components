@@ -6,9 +6,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Row, Col } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 
 import MLSearchBar from './MLSearchBar';
+import MLFacets from './MLFacets';
 import MLSearchResponseView from './MLSearchResponseView';
 
 var MLSearchView = function (_Component) {
@@ -19,25 +20,35 @@ var MLSearchView = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, _Component.call(this, props));
 
-    _this.handleQtextChange = _this.handleQtextChange.bind(_this);
-    _this.handleQtextClear = _this.handleQtextClear.bind(_this);
+    _this.handleQueryTextChange = _this.handleQueryTextChange.bind(_this);
+    _this.handleQueryTextClear = _this.handleQueryTextClear.bind(_this);
     _this.handlePageSelection = _this.handlePageSelection.bind(_this);
     _this.search = _this.search.bind(_this);
     return _this;
   }
 
-  MLSearchView.prototype.handleQtextChange = function handleQtextChange(event) {
-    this.props.handleQtextChange(event.target.value);
+  MLSearchView.prototype.handleQueryTextChange = function handleQueryTextChange(event) {
+    this.props.handleQueryTextChange(event.target.value);
   };
 
-  MLSearchView.prototype.handleQtextClear = function handleQtextClear() {
-    this.props.handleQtextChange('');
+  MLSearchView.prototype.handleQueryTextClear = function handleQueryTextClear() {
+    this.props.handleQueryTextChange('');
   };
 
   MLSearchView.prototype.handlePageSelection = function handlePageSelection(pageNumber) {
     if (pageNumber !== this.props.page) {
       this.props.changePage(pageNumber);
-      this.search();
+    }
+  };
+
+  MLSearchView.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
+    if (nextProps.stagedSearch.page !== this.props.stagedSearch.page ||
+    // Intentionally using != to test object reference (ie, is it the
+    // same object?) Because our Redux flow will swap out the constraints
+    // object on any change, but keep it referentially the same otherwise
+    nextProps.stagedSearch.constraints != this.props.stagedSearch.constraints) {
+      // TODO: DRY up with this.search()?
+      nextProps.runSearch(nextProps.stagedSearch);
     }
   };
 
@@ -50,36 +61,41 @@ var MLSearchView = function (_Component) {
 
   MLSearchView.prototype.render = function render() {
     return React.createElement(
-      Grid,
+      Row,
       null,
       React.createElement(
-        Row,
-        null,
-        React.createElement(Col, { md: 3 }),
+        Col,
+        { md: 3 },
+        React.createElement(MLFacets, {
+          nonSelectedFacets: this.props.facets,
+          activeConstraints: this.props.activeConstraints,
+          addConstraint: this.props.addConstraint,
+          removeConstraint: this.props.removeConstraint
+        })
+      ),
+      React.createElement(
+        Col,
+        { md: 9 },
         React.createElement(
-          Col,
-          { md: 9 },
-          React.createElement(
-            Row,
-            null,
-            React.createElement(MLSearchBar, {
-              qtext: this.props.qtext,
-              onQtextChange: this.handleQtextChange,
-              onQtextClear: this.handleQtextClear,
-              onSearchExecute: this.search
-            })
-          ),
-          this.props.isSearchComplete && React.createElement(MLSearchResponseView, {
-            error: this.props.error,
-            results: this.props.results,
-            executionTime: this.props.executionTime,
-            total: this.props.total,
-            page: this.props.page,
-            totalPages: this.props.totalPages,
-            handlePageSelection: this.handlePageSelection,
-            detailPath: this.props.detailPath
+          Row,
+          null,
+          React.createElement(MLSearchBar, {
+            queryText: this.props.queryText,
+            onQueryTextChange: this.handleQueryTextChange,
+            onQueryTextClear: this.handleQueryTextClear,
+            onSearchExecute: this.search
           })
-        )
+        ),
+        this.props.isSearchComplete && React.createElement(MLSearchResponseView, {
+          error: this.props.error,
+          results: this.props.results,
+          executionTime: this.props.executionTime,
+          total: this.props.total,
+          page: this.props.page,
+          totalPages: this.props.totalPages,
+          handlePageSelection: this.handlePageSelection,
+          detailPath: this.props.detailPath
+        })
       )
     );
   };
@@ -99,8 +115,8 @@ MLSearchView.propTypes = process.env.NODE_ENV !== "production" ? {
   page: PropTypes.number,
   totalPages: PropTypes.number,
   isSearchComplete: PropTypes.bool,
-  qtext: PropTypes.string.isRequired,
-  handleQtextChange: PropTypes.func,
+  queryText: PropTypes.string.isRequired,
+  handleQueryTextChange: PropTypes.func,
   runSearch: PropTypes.func,
   changePage: PropTypes.func,
   detailPath: PropTypes.string

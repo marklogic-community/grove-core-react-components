@@ -4,9 +4,9 @@ import { Col, FormGroup, FormControl, InputGroup, Glyphicon, Button } from 'reac
 // import './MLSearchBar.css';
 
 var MLSearchBar = function MLSearchBar(_ref) {
-  var qtext = _ref.qtext,
-      onQtextChange = _ref.onQtextChange,
-      onQtextClear = _ref.onQtextClear,
+  var queryText = _ref.queryText,
+      onQueryTextChange = _ref.onQueryTextChange,
+      onQueryTextClear = _ref.onQueryTextClear,
       onSearchExecute = _ref.onSearchExecute,
       _ref$placeholder = _ref.placeholder,
       placeholder = _ref$placeholder === undefined ? 'Search...' : _ref$placeholder,
@@ -28,8 +28,8 @@ var MLSearchBar = function MLSearchBar(_ref) {
             className: 'ml-qtext-input',
             type: 'text',
             placeholder: placeholder,
-            value: qtext,
-            onChange: onQtextChange
+            value: queryText,
+            onChange: onQueryTextChange
           }),
           React.createElement(
             InputGroup.Button,
@@ -46,7 +46,7 @@ var MLSearchBar = function MLSearchBar(_ref) {
             ),
             React.createElement(
               Button,
-              { onClick: onQtextClear, className: 'ml-qtext-clear' },
+              { onClick: onQueryTextClear, className: 'ml-qtext-clear' },
               React.createElement(Glyphicon, { glyph: 'remove' }),
               ' Clear'
             )
@@ -58,9 +58,9 @@ var MLSearchBar = function MLSearchBar(_ref) {
 };
 
 MLSearchBar.propTypes = process.env.NODE_ENV !== "production" ? {
-  qtext: PropTypes.string.isRequired,
-  onQtextChange: PropTypes.func,
-  onQtextClear: PropTypes.func,
+  queryText: PropTypes.string.isRequired,
+  onQueryTextChange: PropTypes.func,
+  onQueryTextClear: PropTypes.func,
   onSearchExecute: PropTypes.func,
   placeholder: PropTypes.string,
   searchPending: PropTypes.bool
