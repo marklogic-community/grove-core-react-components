@@ -24,8 +24,8 @@ const MLFacets = ({
               {
                 // TODO: truncate values with a truncateLength option
                 activeConstraints[constraintName].map((value) => (
-                  <div key={value} className="btn btn-primary">
-                    <span title={value.name}>{constraintName}: {value.name}</span>
+                  <div key={value} className="btn btn-success btn-raised">
+                    <span title={value.name}>{constraintName}: {value.name} </span>
                     <span
                       className="glyphicon glyphicon-remove-circle icon-white"
                       onClick={removeConstraint.bind(null, constraintName, value.name)}
@@ -43,17 +43,19 @@ const MLFacets = ({
       // TODO: handle blanks before it gets here
       nonSelectedFacets &&
       Object.keys(nonSelectedFacets).map((facetName) => (
-        <div key={facetName} className="ml-facet list-group-item">
-          <h3 className="list-group-item-heading">{facetName}</h3>
-          {
+        <div key={facetName} className="panel panel-primary ml-facet">
+          <div className="panel-heading">
+            <h3 className="panel-title">{facetName}</h3>
+          </div>
+          <div className="panel-body">{
             nonSelectedFacets[facetName].facetValues.map((value) => (
               <div key={value.name}>
                 <i
                   className="glyphicon glyphicon-plus-sign ml-facet-add-pos"
                   onClick={addConstraint.bind(null, facetName, value.name)}
                 />
-                <span title={value.name}>{value.name}</span>
-                <span>({value.count})</span>
+                <span title={value.name}> {value.name}</span>
+                <span> ({value.count})</span>
                 {
                   // TODO: negation as an option
                   // <i class="fa fa-minus-circle facet-add-neg"
@@ -72,7 +74,7 @@ const MLFacets = ({
             //   see more ...
             //   </a>
             // </div>
-          }
+          }</div>
         </div>
       ))
     }
