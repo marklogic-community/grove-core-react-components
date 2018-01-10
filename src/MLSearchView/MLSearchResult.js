@@ -13,12 +13,13 @@ const MLSearchResult = (props) => (
   <Col xs={12} sm={6} md={4} lg={3}
     className="ml-search-result"
   >
-    <Panel>
-      <h4>
+    <Panel bsStyle="info"
+      header={
         <Link to={props.detailPath + encodeURIComponent(props.result.uri)}>
           {props.result.label || prettyUri(props.result.uri)}
         </Link>
-      </h4>
+      }
+    >
       <div className="ml-search-result-matches">
         {
           props.result.matches && props.result.matches.map((match, index) =>
