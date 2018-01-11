@@ -1,4 +1,6 @@
 import React from 'react';
+import TransitionGroup from 'react-transition-group/TransitionGroup';
+import Fade from '../animations/Fade';
 
 const MLFacets = ({
   activeConstraints, nonSelectedFacets,
@@ -16,27 +18,29 @@ const MLFacets = ({
     }
     {
       !!activeConstraints &&
-      <div className="chiclets">
+      <TransitionGroup className="chiclets" appear={true}>
         {
           Object.keys(activeConstraints).map((constraintName) => (
             // <div ng-repeat="(index, facet) in facets | object2Array | filter:{selected: true}">
-            <div key={constraintName}>
-              {
-                // TODO: truncate values with a truncateLength option
-                activeConstraints[constraintName].map((value) => (
-                  <div key={value} className="btn btn-success btn-raised">
-                    <span title={value.name}>{constraintName}: {value.name} </span>
-                    <span
-                      className="glyphicon glyphicon-remove-circle icon-white"
-                      onClick={removeConstraint.bind(null, constraintName, value.name)}
-                    />
-                  </div>
-                ))
-              }
-            </div>
+            <Fade key={constraintName}>
+              <div key={constraintName}>
+                {
+                  // TODO: truncate values with a truncateLength option
+                  activeConstraints[constraintName].map((value) => (
+                    <div key={value} className="btn btn-success btn-raised">
+                      <span title={value.name}>{constraintName}: {value.name} </span>
+                      <span
+                        className="glyphicon glyphicon-remove-circle icon-white"
+                        onClick={removeConstraint.bind(null, constraintName, value.name)}
+                      />
+                    </div>
+                  ))
+                }
+              </div>
+            </Fade>
           ))
         }
-      </div>
+      </TransitionGroup>
     }
     {
       // TODO: truncate names with a truncateLength option
