@@ -11,11 +11,6 @@ module.exports = {
       }
     }
   },
-  webpack: {
-    compat: {
-      enzyme: true
-    }
-  },
   karma: {
     testContext: 'tests/setupTests.js'
   }
