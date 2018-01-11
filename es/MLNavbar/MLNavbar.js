@@ -1,27 +1,33 @@
 import React from 'react';
-import { Grid, Navbar } from 'react-bootstrap';
+import { Navbar } from 'react-bootstrap';
+import logo from '../images/MarkLogic-Powered-By.png';
 
 var MLNavbar = function MLNavbar(props) {
   return React.createElement(
     Navbar,
-    null,
+    { fluid: true },
     React.createElement(
-      Grid,
+      Navbar.Header,
       null,
       React.createElement(
-        Navbar.Header,
+        Navbar.Brand,
         null,
         React.createElement(
-          Navbar.Brand,
-          null,
-          React.createElement(
-            'a',
-            { href: '/' },
-            props.title
-          )
-        ),
-        React.createElement(Navbar.Toggle, null)
-      )
+          'a',
+          { href: '/', className: 'navbar-left' },
+          React.createElement('img', { src: props.logo || logo })
+        )
+      ),
+      React.createElement(
+        Navbar.Brand,
+        null,
+        React.createElement(
+          'a',
+          { href: '/' },
+          props.title
+        )
+      ),
+      React.createElement(Navbar.Toggle, null)
     )
   );
 };

@@ -1,19 +1,9 @@
-/*!
- * ml-treehouse-react v0.5.1
- * Apache-2.0 Licensed
- */
-.ml-search-result .panel-body {
-  overflow: hidden;
-  height: 207px;
-}
 .ml-fade-enter, .ml-fade-appear {
   opacity: 0.01;
 }
 
 .ml-fade-enter.ml-fade-enter-active, .ml-fade-appear.ml-fade-appear-active  {
   opacity: 1;
-  -webkit-transition: all 500ms ease-in;
-  -o-transition: all 500ms ease-in;
   transition: all 500ms ease-in;
 }
 

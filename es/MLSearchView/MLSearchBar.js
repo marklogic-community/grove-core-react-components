@@ -37,7 +37,7 @@ var MLSearchBar = function MLSearchBar(_ref) {
             React.createElement(
               Button,
               {
-                className: 'ml-execute-search',
+                className: 'ml-execute-search btn-raised',
                 disabled: searchPending,
                 type: 'submit'
               },
@@ -46,7 +46,7 @@ var MLSearchBar = function MLSearchBar(_ref) {
             ),
             React.createElement(
               Button,
-              { onClick: onQueryTextClear, className: 'ml-qtext-clear' },
+              { onClick: onQueryTextClear, className: 'ml-qtext-clear btn-raised' },
               React.createElement(Glyphicon, { glyph: 'remove' }),
               ' Clear'
             )

@@ -17,16 +17,13 @@ var MLSearchResult = function MLSearchResult(props) {
     },
     React.createElement(
       Panel,
-      null,
-      React.createElement(
-        'h4',
-        null,
-        React.createElement(
+      { bsStyle: 'info',
+        header: React.createElement(
           Link,
           { to: props.detailPath + encodeURIComponent(props.result.uri) },
           props.result.label || prettyUri(props.result.uri)
         )
-      ),
+      },
       React.createElement(
         'div',
         { className: 'ml-search-result-matches' },

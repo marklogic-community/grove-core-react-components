@@ -1,5 +1,7 @@
 import React from 'react';
+import TransitionGroup from 'react-transition-group/TransitionGroup';
 import MLSearchResult from './MLSearchResult';
+import Fade from '../animations/Fade';
 
 var MLSearchResults = function MLSearchResults(_ref) {
   var results = _ref.results,
@@ -8,12 +10,19 @@ var MLSearchResults = function MLSearchResults(_ref) {
   return React.createElement(
     'div',
     { className: 'ml-search-results' },
-    results && results.map(function (result) {
-      return React.createElement(ResultComponent, { result: result,
-        key: result.uri,
-        detailPath: detailPath
-      });
-    })
+    React.createElement(
+      TransitionGroup,
+      { appear: true },
+      results && results.map(function (result) {
+        return React.createElement(
+          Fade,
+          { duration: 500, key: result.uri },
+          React.createElement(ResultComponent, { result: result,
+            detailPath: detailPath
+          })
+        );
+      })
+    )
   );
 };
 
