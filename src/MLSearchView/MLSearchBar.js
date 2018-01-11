@@ -25,14 +25,14 @@ const MLSearchBar = ({
             />
             <InputGroup.Button>
               <Button
-                className='ml-execute-search'
+                className='ml-execute-search btn-raised'
                 disabled={searchPending}
                 type="submit"
               >
                 {/* <Glyphicon className="glyphicon-spin" glyph="refresh"/> */}
                 <Glyphicon glyph="search"/> Search
               </Button>
-              <Button onClick={onQueryTextClear} className='ml-qtext-clear'>
+              <Button onClick={onQueryTextClear} className='ml-qtext-clear btn-raised'>
                 <Glyphicon glyph="remove"/> Clear
               </Button>
             </InputGroup.Button>
