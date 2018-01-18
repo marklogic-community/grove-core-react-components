@@ -1,5 +1,5 @@
 /*!
- * ml-treehouse-react v0.5.2
+ * ml-treehouse-react v0.5.3
  * Apache-2.0 Licensed
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -43105,7 +43105,8 @@ var MLNavbar = function MLNavbar(props) {
           props.title
         )
       ),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["g" /* Navbar */].Toggle, null)
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["g" /* Navbar */].Toggle, null),
+      props.content
     )
   );
 };
