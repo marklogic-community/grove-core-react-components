@@ -10264,17 +10264,30 @@ ToggleButton.propTypes = propTypes;
 
 
 
+var DefaultNoResults = function DefaultNoResults() {
+  return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+    'p',
+    null,
+    'No results matched your search.'
+  );
+};
+
 var MLSearchResults = function MLSearchResults(_ref) {
   var results = _ref.results,
       detailPath = _ref.detailPath,
+      NoResults = _ref.noResults,
       ResultComponent = _ref.resultComponent;
+
+  if (!results) {
+    return null;
+  }
   return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
     'div',
     { className: 'ml-search-results' },
     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       __WEBPACK_IMPORTED_MODULE_1_react_transition_group_TransitionGroup___default.a,
       { appear: true },
-      results && results.map(function (result) {
+      results.map(function (result) {
         return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           __WEBPACK_IMPORTED_MODULE_3__animations_Fade__["a" /* default */],
           { duration: 500, key: result.uri },
@@ -10282,12 +10295,20 @@ var MLSearchResults = function MLSearchResults(_ref) {
             detailPath: detailPath
           })
         );
-      })
+      }),
+      results.length === 0 && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        __WEBPACK_IMPORTED_MODULE_3__animations_Fade__["a" /* default */],
+        { duration: 500 },
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(NoResults, null)
+      )
     )
   );
 };
 
-MLSearchResults.defaultProps = { resultComponent: __WEBPACK_IMPORTED_MODULE_2__MLSearchResult__["a" /* default */] };
+MLSearchResults.defaultProps = {
+  resultComponent: __WEBPACK_IMPORTED_MODULE_2__MLSearchResult__["a" /* default */],
+  noResults: DefaultNoResults
+};
 
 /* harmony default export */ __webpack_exports__["a"] = (MLSearchResults);
 
