@@ -31,6 +31,7 @@ const MLSearchResponseView = (props) => (
             className="ml-search-results"
             results={props.results || []}
             detailPath={props.detailPath}
+            resultComponent={props.resultComponent}
           />
         </Row>
         <Row>

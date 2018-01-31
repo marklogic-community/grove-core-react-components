@@ -80,6 +80,7 @@ class MLSearchView extends Component {
               totalPages={this.props.totalPages}
               handlePageSelection={this.handlePageSelection}
               detailPath={this.props.detailPath}
+              resultComponent={this.props.resultComponent}
             />
           }
         </Col>
