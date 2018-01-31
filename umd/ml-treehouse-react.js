@@ -1,5 +1,5 @@
 /*!
- * ml-treehouse-react v0.5.3
+ * ml-treehouse-react v0.5.4
  * Apache-2.0 Licensed
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -6475,7 +6475,8 @@ var MLSearchResponseView = function MLSearchResponseView(props) {
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__MLSearchResults__["a" /* default */], {
             className: 'ml-search-results',
             results: props.results || [],
-            detailPath: props.detailPath
+            detailPath: props.detailPath,
+            resultComponent: props.resultComponent
           })
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -43057,7 +43058,8 @@ var MLSearchView = function (_Component) {
           page: this.props.page,
           totalPages: this.props.totalPages,
           handlePageSelection: this.handlePageSelection,
-          detailPath: this.props.detailPath
+          detailPath: this.props.detailPath,
+          resultComponent: this.props.resultComponent
         })
       )
     );

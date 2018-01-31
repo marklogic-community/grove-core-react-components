@@ -46,7 +46,8 @@ var MLSearchResponseView = function MLSearchResponseView(props) {
           React.createElement(MLSearchResults, {
             className: 'ml-search-results',
             results: props.results || [],
-            detailPath: props.detailPath
+            detailPath: props.detailPath,
+            resultComponent: props.resultComponent
           })
         ),
         React.createElement(
