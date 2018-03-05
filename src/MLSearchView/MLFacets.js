@@ -1,6 +1,7 @@
 import React from 'react';
 import TransitionGroup from 'react-transition-group/TransitionGroup';
 import Fade from '../animations/Fade';
+import SingleRefinementList from './facets/SingleRefinementList';
 
 const MLFacets = ({
   activeConstraints, nonSelectedFacets,
@@ -51,34 +52,11 @@ const MLFacets = ({
           <div className="panel-heading">
             <h3 className="panel-title">{facetName}</h3>
           </div>
-          <div className="panel-body">{
-            nonSelectedFacets[facetName].facetValues.map((value) => (
-              <div key={value.name}>
-                <i
-                  className="glyphicon glyphicon-plus-sign ml-facet-add-pos"
-                  onClick={addConstraint.bind(null, facetName, value.name)}
-                />
-                <span title={value.name}> {value.name}</span>
-                <span> ({value.count})</span>
-                {
-                  // TODO: negation as an option
-                  // <i class="fa fa-minus-circle facet-add-neg"
-                  // ng-if="shouldNegate"
-                  // ng-click="negate({facet: facet.__key, value: value.name})"
-                  // title="{{ value.name }}"></i>
-                }
-              </div>
-            ))
-          }
-          {
-            // TODO: show more
-            // <div ng-if="shouldShowMore &amp;&amp; !facet.displayingAll">
-            //   <a href
-            //   ng-click="showMore({facet: facet, facetName: facet.__key})">
-            //   see more ...
-            //   </a>
-            // </div>
-          }</div>
+          <div className="panel-body">
+            <SingleRefinementList
+              values={nonSelectedFacets[facetName].facetValues}
+              addConstraint={addConstraint.bind(null, facetName)}/>
+          </div>
         </div>
       ))
     }
