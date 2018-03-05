@@ -37,7 +37,10 @@ const MLFacets = ({
           <div className="panel-body">
             <SingleConstraintList
               values={availableConstraints[facetName].facetValues}
-              addConstraint={addConstraint.bind(null, facetName)}/>
+              selectedValues={activeConstraints[facetName]}
+              addConstraint={addConstraint.bind(null, facetName)}
+              removeConstraint={removeConstraint.bind(null, facetName)}
+            />
           </div>
         </div>
       ))

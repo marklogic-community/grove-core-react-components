@@ -12,13 +12,37 @@ describe('<SingleConstraintList/>', () => {
   });
 
   it('renders with values', () => {
+    const wrapper = shallow(
+      <SingleConstraintList
+        values={[{ value: 'value1', count: 1 }, { value: 'value2', count: 2 }]}
+        addConstraint={() => {}}
+      />
+    );
+    expect(wrapper.length).toEqual(1);
     expect(
-      shallow(
-        <SingleConstraintList
-          values={[{ name: 'value1', count: 1 }, { name: 'value2', count: 2 }]}
-          addConstraint={() => {}}
-        />
-      ).length
-    ).toEqual(1);
+      wrapper
+        .find('.nonSelectedConstraintValues')
+        .contains(<span title="value1"> value1</span>)
+    ).toBe(true);
+  });
+
+  it('handles selected values differently', () => {
+    const wrapper = shallow(
+      <SingleConstraintList
+        values={[{ value: 'value1', count: 1 }, { value: 'value2', count: 2 }]}
+        selectedValues={[{ value: 'value1' }]}
+        addConstraint={() => {}}
+      />
+    );
+    expect(
+      wrapper
+        .find('.nonSelectedConstraintValues')
+        .contains(<span title="value1"> value1</span>)
+    ).toBe(false);
+    expect(
+      wrapper
+        .find('.selectedConstraintValues')
+        .contains(<span title="value1"> value1</span>)
+    ).toBe(true);
   });
 });

@@ -108,10 +108,10 @@ MLSearchView.propTypes = {
   detailPath: PropTypes.string,
 
   // TODO: rename facets => activeConstraints?
-  facets: PropTypes.object.isRequired,
-  activeConstraints: PropTypes.object.isRequired,
-  addConstraint: PropTypes.func.isRequired,
-  removeConstraint: PropTypes.func.isRequired
+  facets: PropTypes.object,
+  activeConstraints: PropTypes.object,
+  addConstraint: PropTypes.func,
+  removeConstraint: PropTypes.func
 };
 
 export default MLSearchView;
