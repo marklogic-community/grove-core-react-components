@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const SingleRefinementList = ({values, addConstraint}) => (
+const SingleConstraintList = ({values, addConstraint}) => (
   <div>{
     values.map((value) => (
       <div key={value.name}>
@@ -32,7 +32,7 @@ const SingleRefinementList = ({values, addConstraint}) => (
   }</div>
 );
 
-SingleRefinementList.propTypes = {
+SingleConstraintList.propTypes = {
   values: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string,
     count: PropTypes.number
@@ -40,4 +40,4 @@ SingleRefinementList.propTypes = {
   addConstraint: PropTypes.func.isRequired
 };
 
-export default SingleRefinementList;
+export default SingleConstraintList;
