@@ -5,7 +5,7 @@ import CurrentConstraints from './facets/CurrentConstraints';
 import SingleConstraintList from './facets/SingleConstraintList';
 
 const MLFacets = ({
-  activeConstraints, nonSelectedFacets,
+  activeConstraints, availableConstraints,
   addConstraint, removeConstraint
 }) => (
   <div className="ml-facet-list list-group">
@@ -28,15 +28,15 @@ const MLFacets = ({
     {
       // TODO: truncate names with a truncateLength option
       // TODO: handle blanks before it gets here
-      nonSelectedFacets &&
-      Object.keys(nonSelectedFacets).map((facetName) => (
+      availableConstraints &&
+      Object.keys(availableConstraints).map((facetName) => (
         <div key={facetName} className="panel panel-primary ml-facet">
           <div className="panel-heading">
             <h3 className="panel-title">{facetName}</h3>
           </div>
           <div className="panel-body">
             <SingleConstraintList
-              values={nonSelectedFacets[facetName].facetValues}
+              values={availableConstraints[facetName].facetValues}
               addConstraint={addConstraint.bind(null, facetName)}/>
           </div>
         </div>

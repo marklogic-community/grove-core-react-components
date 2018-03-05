@@ -32,11 +32,11 @@ class MLSearchView extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (
-      (nextProps.stagedSearch.page !== this.props.stagedSearch.page) ||
+      nextProps.stagedSearch.page !== this.props.stagedSearch.page ||
       // Intentionally using != to test object reference (ie, is it the
       // same object?) Because our Redux flow will swap out the constraints
       // object on any change, but keep it referentially the same otherwise
-      (nextProps.stagedSearch.constraints != this.props.stagedSearch.constraints)
+      nextProps.stagedSearch.constraints != this.props.stagedSearch.constraints
     ) {
       // TODO: DRY up with this.search()?
       nextProps.runSearch(nextProps.stagedSearch);
@@ -55,7 +55,7 @@ class MLSearchView extends Component {
       <Row>
         <Col md={3}>
           <MLFacets
-            nonSelectedFacets={this.props.facets}
+            availableConstraints={this.props.facets}
             activeConstraints={this.props.activeConstraints}
             addConstraint={this.props.addConstraint}
             removeConstraint={this.props.removeConstraint}
@@ -70,7 +70,7 @@ class MLSearchView extends Component {
               onSearchExecute={this.search}
             />
           </Row>
-          {this.props.isSearchComplete &&
+          {this.props.isSearchComplete && (
             <MLSearchResponseView
               error={this.props.error}
               results={this.props.results}
@@ -82,7 +82,7 @@ class MLSearchView extends Component {
               detailPath={this.props.detailPath}
               resultComponent={this.props.resultComponent}
             />
-          }
+          )}
         </Col>
       </Row>
     );
@@ -105,7 +105,13 @@ MLSearchView.propTypes = {
   handleQueryTextChange: PropTypes.func,
   runSearch: PropTypes.func,
   changePage: PropTypes.func,
-  detailPath: PropTypes.string
+  detailPath: PropTypes.string,
+
+  // TODO: rename facets => activeConstraints?
+  facets: PropTypes.object.isRequired,
+  activeConstraints: PropTypes.object.isRequired,
+  addConstraint: PropTypes.func.isRequired,
+  removeConstraint: PropTypes.func.isRequired
 };
 
 export default MLSearchView;

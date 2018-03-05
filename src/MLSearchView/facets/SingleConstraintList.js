@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const SingleConstraintList = ({values, addConstraint}) => (
-  <div>{
-    values.map((value) => (
+const SingleConstraintList = ({ values, addConstraint }) => (
+  <div>
+    {values.map(value => (
       <div key={value.name}>
         <i
           className="glyphicon glyphicon-plus-sign ml-facet-add-pos"
@@ -28,15 +28,17 @@ const SingleConstraintList = ({values, addConstraint}) => (
           // </div>
         }
       </div>
-    ))
-  }</div>
+    ))}
+  </div>
 );
 
 SingleConstraintList.propTypes = {
-  values: PropTypes.arrayOf(PropTypes.shape({
-    name: PropTypes.string,
-    count: PropTypes.number
-  })).isRequired,
+  values: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      count: PropTypes.number
+    })
+  ).isRequired,
   addConstraint: PropTypes.func.isRequired
 };
 
