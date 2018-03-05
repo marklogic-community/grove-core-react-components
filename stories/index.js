@@ -15,26 +15,29 @@ import 'bootstrap/dist/css/bootstrap-theme.css';
 const defaultValues = [
   {
     name: 'First',
+    value: 'First',
     count: 100
   },
   {
     name: 'Second',
+    value: 'Second',
     count: 55
   },
   {
     name: 'Third',
+    value: 'Third',
     count: 75
   }
 ];
 
-const defaultNonSelectedFacets = {'Example': {facetValues: defaultValues}};
+const defaultNonSelectedFacets = { Example: { facetValues: defaultValues } };
 
 class MLFacetsWithState extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       activeConstraints: {},
-      nonSelectedFacets: defaultNonSelectedFacets
+      availableConstraints: defaultNonSelectedFacets
     };
   }
 
@@ -43,13 +46,18 @@ class MLFacetsWithState extends React.Component {
       <div className="col-md-3">
         <MLFacets
           activeConstraints={this.state.activeConstraints}
-          nonSelectedFacets={this.state.nonSelectedFacets}
+          availableConstraints={this.state.availableConstraints}
           addConstraint={(facetName, value) => {
             this.setState({
-              activeConstraints: {[facetName]: [{name: [value]}]},
-              nonSelectedFacets: {
+              activeConstraints: {
+                [facetName]: [{ name: value, value: value }]
+              },
+              availableConstraints: {
                 Example: {
-                  facetValues: filter(defaultValues, {name: value})
+                  facetValues: filter(defaultValues, {
+                    name: value,
+                    value: value
+                  })
                 }
               }
             });
@@ -57,7 +65,7 @@ class MLFacetsWithState extends React.Component {
           removeConstraint={() => {
             this.setState({
               activeConstraints: {},
-              nonSelectedFacets: defaultNonSelectedFacets
+              availableConstraints: defaultNonSelectedFacets
             });
           }}
         />
@@ -66,28 +74,26 @@ class MLFacetsWithState extends React.Component {
   }
 }
 
-storiesOf('MLFacets', module)
-  .add('default', () => (
-    <MLFacetsWithState />
-  ));
+storiesOf('MLFacets', module).add('default', () => <MLFacetsWithState />);
 
-storiesOf('CurrentConstraints', module)
-  .add('default', () => (
-    <CurrentConstraints />
-  ));
+storiesOf('CurrentConstraints', module).add('default', () => (
+  // TODO: allow state change
+  <CurrentConstraints
+    constraints={{ Example: [{ value: 'selection1', name: 'selection1' }] }}
+    removeConstraint={() => {}}
+  />
+));
 
-storiesOf('SingleConstraintList', module)
-  .add('default', () => (
-    <div className="col-md-3">
-      <div className="panel panel-primary ml-facet">
-        <div className="panel-heading">
-          <h3 className="panel-title">Facet</h3>
-        </div>
-        <div className="panel-body">
-          <SingleConstraintList
-            values={defaultValues}
-            addConstraint={() => {}}/>
-        </div>
+storiesOf('SingleConstraintList', module).add('default', () => (
+  // TODO: allow state change
+  <div className="col-md-3">
+    <div className="panel panel-primary ml-facet">
+      <div className="panel-heading">
+        <h3 className="panel-title">Facet</h3>
+      </div>
+      <div className="panel-body">
+        <SingleConstraintList values={defaultValues} addConstraint={() => {}} />
       </div>
     </div>
-  ));
+  </div>
+));
