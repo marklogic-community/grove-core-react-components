@@ -16,6 +16,14 @@ or
 
 You will need to create a React container in your host application to pass the necessary props and callback functions to the ML-Treehouse components that you are importing. See the [`MLSearchContainer`](https://project.marklogic.com/repo/projects/NACW/repos/ml-treehouse/browse/client/src/containers/MLSearchContainer.js) in the reference application for an example of doing this, using Redux modules. Also, look at [`App.js`](https://project.marklogic.com/repo/projects/NACW/repos/ml-treehouse/browse/client/src/App.js) and [`index.js`](https://project.marklogic.com/repo/projects/NACW/repos/ml-treehouse/browse/client/src/App.js) to see how selectors and actions are passed to `MLSearchContainer`.
 
+## Components
+
+### Storybook
+
+We are creating a storybook for all the components present in this library. To see it, for the moment, clone this repository and run:
+
+    npm run storybook
+
 ## Contributing
 
 ### Local Development of `ml-treehouse-react`

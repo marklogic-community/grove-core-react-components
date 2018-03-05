@@ -1,7 +1,8 @@
 import React from 'react';
-import TransitionGroup from 'react-transition-group/TransitionGroup';
-import Fade from '../animations/Fade';
-import SingleRefinementList from './facets/SingleRefinementList';
+import PropTypes from 'prop-types';
+
+import CurrentConstraints from './facets/CurrentConstraints';
+import SingleConstraintList from './facets/SingleConstraintList';
 
 const MLFacets = ({
   activeConstraints, nonSelectedFacets,
@@ -19,29 +20,10 @@ const MLFacets = ({
     }
     {
       !!activeConstraints &&
-      <TransitionGroup className="chiclets" appear={true}>
-        {
-          Object.keys(activeConstraints).map((constraintName) => (
-            // <div ng-repeat="(index, facet) in facets | object2Array | filter:{selected: true}">
-            <Fade key={constraintName}>
-              <div key={constraintName}>
-                {
-                  // TODO: truncate values with a truncateLength option
-                  activeConstraints[constraintName].map((value) => (
-                    <div key={value} className="btn btn-success btn-raised">
-                      <span title={value.name}>{constraintName}: {value.name} </span>
-                      <span
-                        className="glyphicon glyphicon-remove-circle icon-white"
-                        onClick={removeConstraint.bind(null, constraintName, value.name)}
-                      />
-                    </div>
-                  ))
-                }
-              </div>
-            </Fade>
-          ))
-        }
-      </TransitionGroup>
+        <CurrentConstraints
+          constraints={activeConstraints}
+          removeConstraint={removeConstraint}
+        />
     }
     {
       // TODO: truncate names with a truncateLength option
@@ -53,7 +35,7 @@ const MLFacets = ({
             <h3 className="panel-title">{facetName}</h3>
           </div>
           <div className="panel-body">
-            <SingleRefinementList
+            <SingleConstraintList
               values={nonSelectedFacets[facetName].facetValues}
               addConstraint={addConstraint.bind(null, facetName)}/>
           </div>
@@ -61,7 +43,12 @@ const MLFacets = ({
       ))
     }
   </div>
-
 );
+
+MLFacets.propTypes = {
+  activeConstraints: PropTypes.object.isRequired,
+  addConstraint: PropTypes.func.isRequired,
+  removeConstraint: PropTypes.func.isRequired
+};
 
 export default MLFacets;

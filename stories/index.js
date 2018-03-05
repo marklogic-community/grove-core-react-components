@@ -4,6 +4,7 @@ import { storiesOf } from '@storybook/react';
 // import { action } from '@storybook/addon-actions';
 
 import MLFacets from '../src/MLSearchView/MLFacets';
+import CurrentConstraints from '../src/MLSearchView/facets/CurrentConstraints';
 import SingleConstraintList from '../src/MLSearchView/facets/SingleConstraintList';
 
 import filter from 'lodash/filter';
@@ -68,6 +69,11 @@ class MLFacetsWithState extends React.Component {
 storiesOf('MLFacets', module)
   .add('default', () => (
     <MLFacetsWithState />
+  ));
+
+storiesOf('CurrentConstraints', module)
+  .add('default', () => (
+    <CurrentConstraints />
   ));
 
 storiesOf('SingleConstraintList', module)
