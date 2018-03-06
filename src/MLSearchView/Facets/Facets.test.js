@@ -1,10 +1,10 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import expect from 'expect';
-import MLFacets from './MLFacets';
+import Facets from './Facets';
 
-describe('<MLFacets/>', () => {
+describe('<Facets/>', () => {
   it('renders', () => {
-    expect(shallow(<MLFacets />).length).toEqual(1);
+    expect(shallow(<Facets />).length).toEqual(1);
   });
 });

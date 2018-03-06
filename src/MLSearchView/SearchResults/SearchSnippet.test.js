@@ -1,12 +1,12 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import MLSearchSnippet from './MLSearchSnippet';
+import SearchSnippet from './SearchSnippet';
 
 it('renders an empty match without crashing', () => {
   const match = {
     'match-text': []
   };
-  shallow(<MLSearchSnippet match={match} />);
+  shallow(<SearchSnippet match={match} />);
 });
 
 it('renders a match without crashing', () => {
@@ -17,5 +17,5 @@ it('renders a match without crashing', () => {
       'for you.'
     ]
   };
-  shallow(<MLSearchSnippet match={match} />);
+  shallow(<SearchSnippet match={match} />);
 });

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const MLSearchSnippet = (props) => {
+const SearchSnippet = (props) => {
   const match = props.match;
   const matchSpans = match['match-text'].map( (text, index) => {
     return (
@@ -17,4 +17,4 @@ const MLSearchSnippet = (props) => {
   );
 };
 
-export default MLSearchSnippet;
+export default SearchSnippet;

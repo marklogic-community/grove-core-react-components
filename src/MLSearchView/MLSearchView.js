@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Row, Col } from 'react-bootstrap';
 
 import MLSearchBar from './MLSearchBar';
-import MLFacets from './MLFacets';
+import Facets from './Facets/Facets';
 import MLSearchResponseView from './MLSearchResponseView';
 
 class MLSearchView extends Component {
@@ -54,7 +54,7 @@ class MLSearchView extends Component {
     return (
       <Row>
         <Col md={3}>
-          <MLFacets
+          <Facets
             availableConstraints={this.props.facets}
             activeConstraints={this.props.activeConstraints}
             addConstraint={this.props.addConstraint}

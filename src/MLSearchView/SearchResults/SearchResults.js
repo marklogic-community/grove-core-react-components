@@ -1,11 +1,11 @@
 import React from 'react';
 import TransitionGroup from 'react-transition-group/TransitionGroup';
-import MLSearchResult from './MLSearchResult';
-import Fade from '../animations/Fade';
+import CardResult from './CardResult';
+import Fade from '../../animations/Fade';
 
 const DefaultNoResults = () => <p>No results matched your search.</p>;
 
-const MLSearchResults = ({
+const SearchResults = ({
   results, detailPath,
   noResults: NoResults, resultComponent: ResultComponent
 }) => {
@@ -30,9 +30,9 @@ const MLSearchResults = ({
   );
 };
 
-MLSearchResults.defaultProps = {
-  resultComponent: MLSearchResult,
+SearchResults.defaultProps = {
+  resultComponent: CardResult,
   noResults: DefaultNoResults
 };
 
-export default MLSearchResults;
+export default SearchResults;

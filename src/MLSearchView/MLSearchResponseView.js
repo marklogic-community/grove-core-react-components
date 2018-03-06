@@ -9,10 +9,10 @@ import {
   ToggleButton
 } from 'react-bootstrap';
 
-import MLSearchResults from './MLSearchResults';
+import MLSearchResults from './SearchResults/SearchResults';
 import MLSearchMetrics from './MLSearchMetrics';
-import CardsResult from './MLSearchResult';
-import ListResult from './ListResult';
+import CardResult from './SearchResults/CardResult';
+import ListResult from './SearchResults/ListResult';
 
 class MLSearchResponseView extends Component {
   constructor(props) {
@@ -28,7 +28,7 @@ class MLSearchResponseView extends Component {
   setResultType(e) {
     let resultComponent;
     if (e === 'Cards') {
-      resultComponent = CardsResult;
+      resultComponent = CardResult;
     } else if (e === 'List') {
       resultComponent = ListResult;
     } else {

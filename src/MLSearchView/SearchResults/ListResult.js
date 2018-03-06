@@ -1,7 +1,7 @@
 import React from 'react';
 import { Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import MLSearchSnippet from './MLSearchSnippet.js';
+import SearchSnippet from './SearchSnippet.js';
 
 const prettyUri = uri => {
   const uriParts = uri.split('/');
@@ -20,7 +20,7 @@ const ListResult = (props) => (
     <div className="ml-search-result-matches">
       {
         props.result.matches && props.result.matches.map((match, index) =>
-          <MLSearchSnippet match={match} key={index} />
+          <SearchSnippet match={match} key={index} />
         )
       }
     </div>

@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import CurrentConstraints from './facets/CurrentConstraints';
-import SingleConstraintList from './facets/SingleConstraintList';
+import CurrentConstraints from './CurrentConstraints';
+import SingleConstraintList from './SingleConstraintList';
 
-const MLFacets = ({
+const Facets = ({
   activeConstraints, availableConstraints,
   addConstraint, removeConstraint
 }) => (
@@ -48,10 +48,10 @@ const MLFacets = ({
   </div>
 );
 
-MLFacets.propTypes = {
+Facets.propTypes = {
   activeConstraints: PropTypes.object.isRequired,
   addConstraint: PropTypes.func.isRequired,
   removeConstraint: PropTypes.func.isRequired
 };
 
-export default MLFacets;
+export default Facets;
