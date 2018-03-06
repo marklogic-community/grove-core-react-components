@@ -18,6 +18,7 @@ const SingleConstraintList = ({
                   <span
                     className="glyphicon glyphicon-remove-circle icon-white"
                     onClick={removeConstraint.bind(null, value.value)}
+                    style={{ cursor: 'pointer' }}
                   />
                 )}
                 <span title={value.value}> {value.value}</span>
@@ -36,6 +37,7 @@ const SingleConstraintList = ({
               <i
                 className="glyphicon glyphicon-plus-sign ml-facet-add-pos"
                 onClick={addConstraint.bind(null, value.value)}
+                style={{ cursor: 'pointer' }}
               />
               <span title={value.value}> {value.value}</span>
               <span> ({value.count})</span>
