@@ -1,4 +1,4 @@
-# MarkLogic Treehouse React Components (ml-treehouse-react)
+# MarkLogic-UI-Resource (Muir) React Components
 
 This library provides a set of React components useful for building applications backed by a MarkLogic database.
 
@@ -46,6 +46,14 @@ To get a report on test coverage:
 
     npm run test:coverage
     open coverage/html/index.html
+
+### Stories
+
+Best practice is to add a story for each component that gets exported from this library. We are using [Storybook](https://github.com/storybooks/storybook) for this, which is a form of live documentation. At least, there should be a story example for each supported state of the component. It is also possible to make interactive examples, though this is more work. See <Facets /> for an example.
+
+Eventually, we may tie stories together with testing. This could follow the model [described in this article](https://medium.com/@mlthuret/building-a-react-components-living-documentation-using-react-storybook-5f11f0e7d23e).
+
+To create a story for a component, save it as a new file ending with '.story.js'. See the codebase for examples.
 
 ### Code-Style and Linting
 

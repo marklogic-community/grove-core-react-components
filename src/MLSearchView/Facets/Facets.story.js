@@ -1,17 +1,21 @@
 /* global module */
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-// import { action } from '@storybook/addon-actions';
+import { action } from '@storybook/addon-actions';
 
 import filter from 'lodash/filter';
+import omit from 'lodash/omit';
 
 import Facets from './Facets';
 
 import { defaultValues } from './shared';
 
-const defaultNonSelectedFacets = { Example: { facetValues: defaultValues } };
+const defaultNonSelectedFacets = {
+  Example: { facetValues: defaultValues },
+  AnotherExample: { facetValues: defaultValues }
+};
 
-class FacetsWithState extends React.Component {
+class InteractiveFacets extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -29,10 +33,12 @@ class FacetsWithState extends React.Component {
           addConstraint={(facetName, value) => {
             this.setState({
               activeConstraints: {
+                ...this.state.activeConstraints,
                 [facetName]: [{ name: value, value: value }]
               },
               availableConstraints: {
-                Example: {
+                ...this.state.availableConstraints,
+                [facetName]: {
                   facetValues: filter(defaultValues, {
                     name: value,
                     value: value
@@ -41,10 +47,15 @@ class FacetsWithState extends React.Component {
               }
             });
           }}
-          removeConstraint={() => {
+          removeConstraint={facetName => {
             this.setState({
-              activeConstraints: {},
-              availableConstraints: defaultNonSelectedFacets
+              activeConstraints: omit(this.state.activeConstraints, facetName),
+              availableConstraints: {
+                ...this.state.availableConstraints,
+                [facetName]: {
+                  facetValues: defaultValues
+                }
+              }
             });
           }}
         />
@@ -53,4 +64,25 @@ class FacetsWithState extends React.Component {
   }
 }
 
-storiesOf('Facets', module).add('default', () => <FacetsWithState />);
+storiesOf('Facets', module)
+  .add('default', () => (
+    <div className="col-md-3">
+      <Facets
+        activeConstraints={{}}
+        availableConstraints={defaultNonSelectedFacets}
+        addConstraint={action('addConstraint')}
+        removeConstraint={action('removeConstraint')}
+      />
+    </div>
+  ))
+  .add('with a selection', () => (
+    <div className="col-md-3">
+      <Facets
+        activeConstraints={{ Example: [{ name: 'First', value: 'First' }] }}
+        availableConstraints={defaultNonSelectedFacets}
+        addConstraint={action('addConstraint')}
+        removeConstraint={action('removeConstraint')}
+      />
+    </div>
+  ))
+  .add('interactive', () => <InteractiveFacets />);
