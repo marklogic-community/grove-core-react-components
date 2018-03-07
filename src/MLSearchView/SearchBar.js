@@ -1,19 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Col, FormGroup, FormControl, InputGroup, Glyphicon, Button } from 'react-bootstrap';
-// import './MLSearchBar.css';
+import {
+  Col,
+  FormGroup,
+  FormControl,
+  InputGroup,
+  Glyphicon,
+  Button
+} from 'react-bootstrap';
 
-const MLSearchBar = ({
+const SearchBar = ({
   queryText,
   onQueryTextChange,
-  onQueryTextClear,
   onSearchExecute,
   placeholder = 'Search...',
   searchPending
 }) => {
   return (
     <Col md={12} className="ml-search-bar">
-      <form role="search" onSubmit={onSearchExecute}>
+      <form
+        role="search"
+        onSubmit={e => {
+          e.preventDefault();
+          onSearchExecute();
+        }}
+      >
         <FormGroup controlId="searchBox">
           <InputGroup>
             <FormControl
@@ -21,19 +32,22 @@ const MLSearchBar = ({
               type="text"
               placeholder={placeholder}
               value={queryText}
-              onChange={onQueryTextChange}
+              onChange={e => onQueryTextChange(e.target.value)}
             />
             <InputGroup.Button>
               <Button
-                className='ml-execute-search btn-raised'
+                className="ml-execute-search btn-raised"
                 disabled={searchPending}
                 type="submit"
               >
                 {/* <Glyphicon className="glyphicon-spin" glyph="refresh"/> */}
-                <Glyphicon glyph="search"/> Search
+                <Glyphicon glyph="search" /> Search
               </Button>
-              <Button onClick={onQueryTextClear} className='ml-qtext-clear btn-raised'>
-                <Glyphicon glyph="remove"/> Clear
+              <Button
+                onClick={() => onQueryTextChange('')}
+                className="ml-qtext-clear btn-raised"
+              >
+                <Glyphicon glyph="remove" /> Clear
               </Button>
             </InputGroup.Button>
           </InputGroup>
@@ -43,7 +57,7 @@ const MLSearchBar = ({
   );
 };
 
-MLSearchBar.propTypes = {
+SearchBar.propTypes = {
   queryText: PropTypes.string.isRequired,
   onQueryTextChange: PropTypes.func,
   onQueryTextClear: PropTypes.func,
@@ -52,4 +66,4 @@ MLSearchBar.propTypes = {
   searchPending: PropTypes.bool
 };
 
-export default MLSearchBar;
+export default SearchBar;

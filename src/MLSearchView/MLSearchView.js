@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col } from 'react-bootstrap';
 
-import MLSearchBar from './MLSearchBar';
+import SearchBar from './SearchBar';
 import Facets from './Facets/Facets';
 import MLSearchResponseView from './MLSearchResponseView';
 
@@ -11,17 +11,13 @@ class MLSearchView extends Component {
     super(props);
 
     this.handleQueryTextChange = this.handleQueryTextChange.bind(this);
-    this.handleQueryTextClear = this.handleQueryTextClear.bind(this);
     this.handlePageSelection = this.handlePageSelection.bind(this);
     this.search = this.search.bind(this);
   }
 
-  handleQueryTextChange(event) {
-    this.props.handleQueryTextChange(event.target.value);
-  }
-
-  handleQueryTextClear() {
-    this.props.handleQueryTextChange('');
+  // TODO: probably should pull out the value within the SearchBar
+  handleQueryTextChange(value) {
+    this.props.handleQueryTextChange(value);
   }
 
   handlePageSelection(pageNumber) {
@@ -43,10 +39,7 @@ class MLSearchView extends Component {
     }
   }
 
-  search(event) {
-    if (event) {
-      event.preventDefault();
-    }
+  search() {
     this.props.runSearch(this.props.stagedSearch);
   }
 
@@ -63,10 +56,9 @@ class MLSearchView extends Component {
         </Col>
         <Col md={9}>
           <Row>
-            <MLSearchBar
+            <SearchBar
               queryText={this.props.queryText}
               onQueryTextChange={this.handleQueryTextChange}
-              onQueryTextClear={this.handleQueryTextClear}
               onSearchExecute={this.search}
             />
           </Row>
@@ -102,7 +94,6 @@ MLSearchView.propTypes = {
   totalPages: PropTypes.number,
   isSearchComplete: PropTypes.bool,
   queryText: PropTypes.string.isRequired,
-  handleQueryTextChange: PropTypes.func,
   runSearch: PropTypes.func,
   changePage: PropTypes.func,
   detailPath: PropTypes.string,

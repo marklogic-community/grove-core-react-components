@@ -1,6 +1,6 @@
 export MLSearchView from './MLSearchView/MLSearchView';
 
-export MLSearchBar from './MLSearchView/MLSearchBar';
+export MLSearchBar from './MLSearchView/SearchBar';
 
 export MLFacets from './MLSearchView/Facets/Facets';
 export CurrentConstraints from './MLSearchView/Facets/CurrentConstraints';
