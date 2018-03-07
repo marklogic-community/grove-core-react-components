@@ -8,7 +8,7 @@ import CurrentConstraints from './CurrentConstraints';
 storiesOf('Facets/CurrentConstraints', module).add('default', () => (
   // TODO: allow state change
   <CurrentConstraints
-    constraints={{ Example: [{ value: 'selection1', name: 'selection1' }] }}
+    constraints={{ Example: {and: [{ name: 'selection1' }]} }}
     removeConstraint={action('removeConstraint')}
   />
 ));

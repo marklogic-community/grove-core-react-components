@@ -34,7 +34,7 @@ class InteractiveFacets extends React.Component {
             this.setState({
               activeConstraints: {
                 ...this.state.activeConstraints,
-                [facetName]: [{ name: value, value: value }]
+                [facetName]: { and: [{ name: value, value: value }] }
               },
               availableConstraints: {
                 ...this.state.availableConstraints,
@@ -78,7 +78,9 @@ storiesOf('Facets', module)
   .add('with a selection', () => (
     <div className="col-md-3">
       <Facets
-        activeConstraints={{ Example: [{ name: 'First', value: 'First' }] }}
+        activeConstraints={{
+          Example: { and: [{ name: 'First', value: 'First' }] }
+        }}
         availableConstraints={defaultNonSelectedFacets}
         addConstraint={action('addConstraint')}
         removeConstraint={action('removeConstraint')}

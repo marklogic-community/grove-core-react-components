@@ -16,7 +16,7 @@ describe('<CurrentConstraints/>', () => {
   it('renders with constraints', () => {
     expect(shallow(
       <CurrentConstraints
-        constraints={{Test: ['value1', 'value2']}}
+        constraints={{Test: {and: [{name: 'value1'}, {name: 'value2'}]}}}
         removeConstraint={() => {}}
       />
     ).length).toEqual(1);

@@ -16,7 +16,9 @@ const SingleConstraintList = ({
               <div key={value.value}>
                 {removeConstraint && (
                   <span
-                    className="glyphicon glyphicon-remove-circle icon-white"
+                    className={
+                      'glyphicon glyphicon-remove-circle icon-white ml-facet-remove-constraint'
+                    }
                     onClick={removeConstraint.bind(null, value.value)}
                     style={{ cursor: 'pointer' }}
                   />
