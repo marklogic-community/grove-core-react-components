@@ -3,7 +3,7 @@ import { shallow, render, mount } from 'enzyme';
 import expect, { createSpy } from 'expect';
 import { mockResults } from './test/mockData';
 import MLSearchView from './MLSearchView';
-import MLSearchResponseView from './MLSearchResponseView';
+import SearchResponseView from './SearchResponseView';
 
 const enterQueryText = (text, wrapper) => {
   const typing = {target: {value: text}};
@@ -26,14 +26,14 @@ describe('<MLSearchView />', () => {
     mount(<MLSearchView executedSearch={executedSearch} />);
   });
 
-  it('renders <MLSearchResponseView> if search complete', () => {
+  it('renders <SearchResponseView> if search complete', () => {
     const wrapper = shallow(<MLSearchView isSearchComplete={true} />);
-    expect(wrapper.find(MLSearchResponseView).length).toEqual(1);
+    expect(wrapper.find(SearchResponseView).length).toEqual(1);
   });
 
-  it('does not render <MLSearchResponseView> if search incomplete', () => {
+  it('does not render <SearchResponseView> if search incomplete', () => {
     const wrapper = shallow(<MLSearchView isSearchComplete={false} />);
-    expect(wrapper.find(MLSearchResponseView).length).toEqual(0);
+    expect(wrapper.find(SearchResponseView).length).toEqual(0);
   });
 
   // TODO: do we have to actually pass queryText? We've already captured it

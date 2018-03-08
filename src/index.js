@@ -6,8 +6,8 @@ export MLFacets from './MLSearchView/Facets/Facets';
 export CurrentConstraints from './MLSearchView/Facets/CurrentConstraints';
 export SingleConstraintList from './MLSearchView/Facets/SingleConstraintList';
 
-export MLSearchResponseView from './MLSearchView/MLSearchResponseView';
-export MLSearchMetrics from './MLSearchView/MLSearchMetrics';
+export MLSearchResponseView from './MLSearchView/SearchResponseView';
+export MLSearchMetrics from './MLSearchView/SearchMetrics';
 
 export MLSearchResults from './MLSearchView/SearchResults/SearchResults';
 export CardResult from './MLSearchView/SearchResults/CardResult';

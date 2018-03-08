@@ -24,7 +24,7 @@ const ListResult = (props) => (
         )
       }
     </div>
-    <hr style={{borderTopColor: 'white'}}/>
+    <hr />
   </Col>
 );
 

@@ -38,9 +38,8 @@ export const mockResults = [
     uri: '/uri/3.json'
   },
   {
-    label: 'Result',
     matches: [],
-    uri: '/uri/4.json'
+    uri: '/uri/no-label-provided.json'
   },
   {
     label: 'A Search Result',

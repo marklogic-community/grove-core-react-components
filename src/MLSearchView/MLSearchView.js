@@ -4,7 +4,7 @@ import { Row, Col } from 'react-bootstrap';
 
 import SearchBar from './SearchBar';
 import Facets from './Facets/Facets';
-import MLSearchResponseView from './MLSearchResponseView';
+import SearchResponseView from './SearchResponseView';
 
 class MLSearchView extends Component {
   constructor(props) {
@@ -63,7 +63,7 @@ class MLSearchView extends Component {
             />
           </Row>
           {this.props.isSearchComplete && (
-            <MLSearchResponseView
+            <SearchResponseView
               error={this.props.error}
               results={this.props.results}
               executionTime={this.props.executionTime}
