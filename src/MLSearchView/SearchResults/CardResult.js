@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Panel, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import SearchSnippet from './SearchSnippet.js';
@@ -14,6 +15,7 @@ const CardResult = (props) => (
     className="ml-search-result"
   >
     <Panel bsStyle="info"
+      style={{height: '200px', overflow: 'hidden'}}
       header={
         <Link to={props.detailPath + encodeURIComponent(props.result.uri)}>
           {props.result.label || prettyUri(props.result.uri)}
@@ -30,5 +32,11 @@ const CardResult = (props) => (
     </Panel>
   </Col>
 );
+
+CardResult.propTypes = {
+  result: PropTypes.shape({
+    uri: PropTypes.string
+  })
+};
 
 export default CardResult;

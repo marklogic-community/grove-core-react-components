@@ -51,7 +51,7 @@ class SearchResults extends React.Component {
     return (
       <div>
         {this.props.results.length > 0 && (
-          <Col md={6} style={{ float: 'right' }}>
+          <Col xs={12} md={6} style={{ float: 'right' }}>
             <ButtonToolbar style={{ float: 'right', marginBottom: '10px' }}>
               <ToggleButtonGroup
                 type="radio"
