@@ -26,7 +26,7 @@ const defaultTemplate = (props) => {
   );
 };
 
-class MLDetailView extends Component {
+class DetailView extends Component {
   componentDidMount() {
     if (!this.props.detail) {
       this.props.loadDetail(this.props.uri);
@@ -50,7 +50,7 @@ class MLDetailView extends Component {
   }
 }
 
-MLDetailView.propTypes = {
+DetailView.propTypes = {
   detail: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.object
@@ -58,4 +58,4 @@ MLDetailView.propTypes = {
   contentType: PropTypes.string
 };
 
-export default MLDetailView;
+export default DetailView;

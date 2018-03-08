@@ -5,15 +5,17 @@ import 'bootstrap/dist/css/bootstrap-theme.css';
 
 import React, {Component} from 'react';
 import {render} from 'react-dom';
-import MLSearchView from '../../src/MLSearchView/MLSearchView';
-import MLNavbar from '../../src/MLNavbar/MLNavbar';
+import SearchView from '../../src/SearchView/SearchView';
+import Navbar from '../../src/Navbar/Navbar';
 
 class Demo extends Component {
   render() {
     return (
       <div>
-        <MLNavbar title="MarkLogic Treehouse"/>
-        <MLSearchView />
+        <Navbar title="MarkLogic UI Resources"/>
+        <SearchView
+          queryText=""
+        />
       </div>
     );
   }
