@@ -12,6 +12,7 @@
   ],
   "scripts": {
     "build": "nwb build-react-component --copy-files",
+    "buildStorybook": "build-storybook -c .storybook -o .storybook/dist",
     "clean": "nwb clean-module && nwb clean-demo",
     "start": "nwb serve-react-demo",
     "storybook": "start-storybook -p 9001 -c .storybook",
