@@ -11,13 +11,15 @@ const SearchResponseView = props => {
     <Row>
       <Col md={12}>
         {props.error ? (
-          <div>
+          <Col md={12}>
             <p>
-              There was an error performing your search. The server sent the
-              following error message:
+              <strong>There was an error performing your search.</strong>
             </p>
-            <p className="text-danger">{props.error}</p>
-          </div>
+            <p>
+              The server sent the following error message:&nbsp;
+              <span className="text-danger">{props.error}</span>
+            </p>
+          </Col>
         ) : (
           <div>
             <Col md={6}>
@@ -29,17 +31,15 @@ const SearchResponseView = props => {
               resultComponent={props.resultComponent}
             />
             {props.totalPages > 1 && (
-              <Row>
-                <Col md={12}>
-                  <Pagination
-                    items={props.totalPages}
-                    maxButtons={10}
-                    boundaryLinks={true}
-                    activePage={props.page}
-                    onSelect={props.handlePageSelection}
-                  />
-                </Col>
-              </Row>
+              <Col md={12}>
+                <Pagination
+                  items={props.totalPages}
+                  maxButtons={10}
+                  boundaryLinks={true}
+                  activePage={props.page}
+                  onSelect={props.handlePageSelection}
+                />
+              </Col>
             )}
           </div>
         )}

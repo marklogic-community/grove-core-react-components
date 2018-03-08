@@ -26,12 +26,12 @@ storiesOf('SearchResponseView', module)
   ))
   .add('with no results', () => (
     <div className="col-md-12">
-      <SearchResponseView />
+      <SearchResponseView results={[]} total={0} executionTime={9.98080}/>
     </div>
   ))
   .add('with an error', () => (
     <div className="col-md-12">
-      <SearchResponseView error="This is an error." />
+      <SearchResponseView error="ERROR: This is an error." />
     </div>
   ));
 

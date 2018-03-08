@@ -6,7 +6,7 @@ const SearchMetrics = ({ time, total }) => {
     return null;
   }
   let announcement = 'Found ';
-  if (total) {
+  if (total || total === 0) {
     announcement = announcement + (total + ' ');
   }
   announcement = announcement + 'results';

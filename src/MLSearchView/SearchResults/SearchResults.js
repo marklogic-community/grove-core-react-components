@@ -14,7 +14,7 @@ import Fade from '../../animations/Fade';
 
 const DefaultNoResults = () => (
   <Col md={12}>
-    <p>No results matched your search.</p>
+    <p><br/><strong>No results matched your search.</strong></p>
   </Col>
 );
 
@@ -51,7 +51,7 @@ class SearchResults extends React.Component {
     return (
       <div>
         {this.props.results.length > 0 && (
-          <Col md={6}>
+          <Col md={6} style={{ float: 'right' }}>
             <ButtonToolbar style={{ float: 'right', marginBottom: '10px' }}>
               <ToggleButtonGroup
                 type="radio"
@@ -66,21 +66,23 @@ class SearchResults extends React.Component {
           </Col>
         )}
         <Row className="ml-search-results">
-          <TransitionGroup appear={true}>
-            {this.props.results.map(result => (
-              <Fade duration={500} key={result.uri}>
-                <this.state.resultComponent
-                  result={result}
-                  detailPath={this.props.detailPath || '/detail'}
-                />
-              </Fade>
-            ))}
-            {this.props.results.length === 0 && (
-              <Fade duration={500}>
-                <this.props.noResults />
-              </Fade>
-            )}
-          </TransitionGroup>
+          <Col md={12}>
+            <TransitionGroup appear={true}>
+              {this.props.results.map(result => (
+                <Fade duration={500} key={result.uri}>
+                  <this.state.resultComponent
+                    result={result}
+                    detailPath={this.props.detailPath || '/detail'}
+                  />
+                </Fade>
+              ))}
+              {this.props.results.length === 0 && (
+                <Fade duration={500}>
+                  <this.props.noResults />
+                </Fade>
+              )}
+            </TransitionGroup>
+          </Col>
         </Row>
       </div>
     );
