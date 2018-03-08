@@ -1,22 +1,22 @@
-export MLSearchView from './SearchView/SearchView';
+export SearchView from './SearchView/SearchView';
 
-export MLSearchBar from './SearchView/SearchBar';
+export SearchBar from './SearchView/SearchBar';
 
-export MLFacets from './SearchView/Facets/Facets';
+export Facets from './SearchView/Facets/Facets';
 export CurrentConstraints from './SearchView/Facets/CurrentConstraints';
 export SingleConstraintList from './SearchView/Facets/SingleConstraintList';
 
-export MLSearchResponseView from './SearchView/SearchResponseView';
-export MLSearchMetrics from './SearchView/SearchMetrics';
+export SearchResponseView from './SearchView/SearchResponseView';
+export SearchMetrics from './SearchView/SearchMetrics';
 
-export MLSearchResults from './SearchView/SearchResults/SearchResults';
+export SearchResults from './SearchView/SearchResults/SearchResults';
 export CardResult from './SearchView/SearchResults/CardResult';
 export ListResult from './SearchView/SearchResults/ListResult';
-export MLSearchSnippet from './SearchView/SearchResults/SearchSnippet';
+export SearchSnippet from './SearchView/SearchResults/SearchSnippet';
 
-export MLNavbar from './MLNavbar/MLNavbar';
+export Navbar from './Navbar/Navbar';
 
-export MLDetailView from './MLDetailView/MLDetailView';
+export DetailView from './DetailView/DetailView';
 
 export FadeAndSlide from './animations/FadeAndSlide';
 export Fade from './animations/Fade';
