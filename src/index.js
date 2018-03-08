@@ -1,18 +1,18 @@
-export MLSearchView from './MLSearchView/MLSearchView';
+export MLSearchView from './SearchView/SearchView';
 
-export MLSearchBar from './MLSearchView/SearchBar';
+export MLSearchBar from './SearchView/SearchBar';
 
-export MLFacets from './MLSearchView/Facets/Facets';
-export CurrentConstraints from './MLSearchView/Facets/CurrentConstraints';
-export SingleConstraintList from './MLSearchView/Facets/SingleConstraintList';
+export MLFacets from './SearchView/Facets/Facets';
+export CurrentConstraints from './SearchView/Facets/CurrentConstraints';
+export SingleConstraintList from './SearchView/Facets/SingleConstraintList';
 
-export MLSearchResponseView from './MLSearchView/SearchResponseView';
-export MLSearchMetrics from './MLSearchView/SearchMetrics';
+export MLSearchResponseView from './SearchView/SearchResponseView';
+export MLSearchMetrics from './SearchView/SearchMetrics';
 
-export MLSearchResults from './MLSearchView/SearchResults/SearchResults';
-export CardResult from './MLSearchView/SearchResults/CardResult';
-export ListResult from './MLSearchView/SearchResults/ListResult';
-export MLSearchSnippet from './MLSearchView/SearchResults/SearchSnippet';
+export MLSearchResults from './SearchView/SearchResults/SearchResults';
+export CardResult from './SearchView/SearchResults/CardResult';
+export ListResult from './SearchView/SearchResults/ListResult';
+export MLSearchSnippet from './SearchView/SearchResults/SearchSnippet';
 
 export MLNavbar from './MLNavbar/MLNavbar';
 

@@ -8,7 +8,7 @@ import CardResult from './CardResult';
 
 import { mockResults } from '../test/mockData.js';
 
-storiesOf('SearchResponseView/SearchResults/CardResult', module)
+storiesOf('SearchView/SearchResponseView/SearchResults/CardResult', module)
   .add('with label', () => (
     <BrowserRouter>
       <CardResult result={mockResults[0]} />

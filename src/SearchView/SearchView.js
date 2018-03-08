@@ -6,7 +6,7 @@ import SearchBar from './SearchBar';
 import Facets from './Facets/Facets';
 import SearchResponseView from './SearchResponseView';
 
-class MLSearchView extends Component {
+class SearchView extends Component {
   constructor(props) {
     super(props);
 
@@ -81,11 +81,14 @@ class MLSearchView extends Component {
   }
 }
 
-MLSearchView.propTypes = {
+SearchView.propTypes = {
   // TODO: flesh out which are required
   // TODO: group together some of these, perhaps back to what is returned from
   // selectors, like stagedSearch and searchResponse
-  stagedSearch: PropTypes.object, // TODO: say more about shape of this
+  stagedSearch: PropTypes.object.isRequired,
+  queryText: PropTypes.string.isRequired,
+  handleQueryTextChange: PropTypes.func.isRequired,
+  runSearch: PropTypes.func.isRequired,
   error: PropTypes.string,
   results: PropTypes.array, // TODO: say more about shape of this
   executionTime: PropTypes.number,
@@ -93,16 +96,13 @@ MLSearchView.propTypes = {
   page: PropTypes.number,
   totalPages: PropTypes.number,
   isSearchComplete: PropTypes.bool,
-  queryText: PropTypes.string.isRequired,
-  runSearch: PropTypes.func,
   changePage: PropTypes.func,
   detailPath: PropTypes.string,
 
   // TODO: rename facets => activeConstraints?
   facets: PropTypes.object,
-  activeConstraints: PropTypes.object,
-  addConstraint: PropTypes.func,
-  removeConstraint: PropTypes.func
+  addConstraint: PropTypes.func.isRequired,
+  removeConstraint: PropTypes.func.isRequired
 };
 
-export default MLSearchView;
+export default SearchView;

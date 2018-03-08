@@ -9,7 +9,7 @@ import SearchResponseView from './SearchResponseView';
 
 import { mockResults } from './test/mockData.js';
 
-storiesOf('SearchResponseView', module)
+storiesOf('SearchView/SearchResponseView', module)
   .add('with results', () => (
     <BrowserRouter>
       <div className="col-md-12">

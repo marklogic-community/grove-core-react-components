@@ -4,7 +4,7 @@ import { storiesOf } from '@storybook/react';
 
 import SearchMetrics from './SearchMetrics';
 
-storiesOf('SearchResponseView/SearchMetrics', module)
+storiesOf('SearchView/SearchResponseView/SearchMetrics', module)
   .add('default', () => <SearchMetrics time={0.090908989} total={1000} />)
   .add('without time', () => <SearchMetrics total={1000} />)
   .add('without total', () => <SearchMetrics time={0.090908989} />)

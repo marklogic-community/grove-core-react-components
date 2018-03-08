@@ -3,18 +3,18 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import SingleConstraintList from './SingleConstraintList';
+import MultiConstraintList from './MultiConstraintList';
 import { defaultValues } from './shared';
 
-storiesOf('Facets/SingleConstraintList', module)
+storiesOf('SearchView/Facets/MultiConstraintList', module)
   .add('default', () => (
-    <SingleConstraintList
+    <MultiConstraintList
       values={defaultValues}
       addConstraint={action('addConstraint')}
     />
   ))
   .add('with a selection', () => (
-    <SingleConstraintList
+    <MultiConstraintList
       values={defaultValues}
       selectedValues={[{ value: 'First' }]}
       addConstraint={action('addConstraint')}

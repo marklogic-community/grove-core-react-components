@@ -8,7 +8,7 @@ import ListResult from './ListResult';
 
 import { mockResults } from '../test/mockData.js';
 
-storiesOf('SearchResponseView/SearchResults/ListResult', module)
+storiesOf('SearchView/SearchResponseView/SearchResults/ListResult', module)
   .add('with label', () => (
     <BrowserRouter>
       <ListResult result={mockResults[0]} />

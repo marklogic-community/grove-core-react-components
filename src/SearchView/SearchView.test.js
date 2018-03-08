@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow, render, mount } from 'enzyme';
 import expect, { createSpy } from 'expect';
 import { mockResults } from './test/mockData';
-import MLSearchView from './MLSearchView';
+import SearchView from './SearchView';
 import SearchResponseView from './SearchResponseView';
 
 const enterQueryText = (text, wrapper) => {
@@ -10,10 +10,10 @@ const enterQueryText = (text, wrapper) => {
   wrapper.find('input.ml-qtext-input').simulate('change', typing);
 };
 
-describe('<MLSearchView />', () => {
+describe('<SearchView />', () => {
 
   it('renders without crashing', () => {
-    shallow(<MLSearchView />);
+    shallow(<SearchView />);
   });
 
   const executedSearch = {
@@ -23,16 +23,16 @@ describe('<MLSearchView />', () => {
   };
 
   it('renders, integrated with children, without crashing', () => {
-    mount(<MLSearchView executedSearch={executedSearch} />);
+    mount(<SearchView executedSearch={executedSearch} />);
   });
 
   it('renders <SearchResponseView> if search complete', () => {
-    const wrapper = shallow(<MLSearchView isSearchComplete={true} />);
+    const wrapper = shallow(<SearchView isSearchComplete={true} />);
     expect(wrapper.find(SearchResponseView).length).toEqual(1);
   });
 
   it('does not render <SearchResponseView> if search incomplete', () => {
-    const wrapper = shallow(<MLSearchView isSearchComplete={false} />);
+    const wrapper = shallow(<SearchView isSearchComplete={false} />);
     expect(wrapper.find(SearchResponseView).length).toEqual(0);
   });
 
@@ -40,27 +40,27 @@ describe('<MLSearchView />', () => {
   it('runs a search', () => {
     const searchSpy = createSpy();
     const wrapper = mount(
-      <MLSearchView runSearch={searchSpy} queryText='Waldo' />
+      <SearchView runSearch={searchSpy} queryText='Waldo' />
     );
     wrapper.find('button.ml-execute-search').simulate('submit');
     expect(searchSpy).toHaveBeenCalled();
   });
 
   it('displays search results', () => {
-    const wrapper = render(<MLSearchView executedSearch={executedSearch}/>);
+    const wrapper = render(<SearchView executedSearch={executedSearch}/>);
     wrapper.find('.ml-search-results').text('Another Search Result');
   });
 
   it('uses queryText from props', () => {
     const wrapper = mount(
-      <MLSearchView queryText={'from-props'}/>
+      <SearchView queryText={'from-props'}/>
     );
     expect(wrapper.find('input.ml-qtext-input').props().value).toEqual('from-props');
   });
 
   it('calls props.handleQueryTextChange on typing', () => {
     const spy = createSpy();
-    const wrapper = mount(<MLSearchView handleQueryTextChange={spy}/>);
+    const wrapper = mount(<SearchView handleQueryTextChange={spy}/>);
     enterQueryText('query', wrapper);
     expect(spy).toHaveBeenCalledWith('query');
     wrapper.find('button.ml-qtext-clear').simulate('click');

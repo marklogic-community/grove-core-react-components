@@ -5,7 +5,7 @@ import { action } from '@storybook/addon-actions';
 
 import CurrentConstraints from './CurrentConstraints';
 
-storiesOf('Facets/CurrentConstraints', module).add('default', () => (
+storiesOf('SearchView/Facets/CurrentConstraints', module).add('default', () => (
   // TODO: allow state change
   <CurrentConstraints
     constraints={{ Example: {and: [{ name: 'selection1' }]} }}

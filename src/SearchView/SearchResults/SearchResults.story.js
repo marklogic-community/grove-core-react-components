@@ -8,7 +8,7 @@ import SearchResults from './SearchResults';
 
 import { mockResults } from '../test/mockData.js';
 
-storiesOf('SearchResponseView/SearchResults', module)
+storiesOf('SearchView/SearchResponseView/SearchResults', module)
   .add('with results', () => (
     <BrowserRouter>
       <div className="col-md-12">

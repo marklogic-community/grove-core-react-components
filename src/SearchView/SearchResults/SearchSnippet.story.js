@@ -4,7 +4,7 @@ import { storiesOf } from '@storybook/react';
 
 import SearchSnippet from './SearchSnippet';
 
-storiesOf('SearchResponseView/SearchResults/SearchSnippet', module)
+storiesOf('SearchView/SearchResponseView/SearchResults/SearchSnippet', module)
   .add('with highlights', () => (
     <SearchSnippet
       match={{

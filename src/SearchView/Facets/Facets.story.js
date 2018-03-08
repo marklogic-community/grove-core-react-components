@@ -10,7 +10,7 @@ import Facets from './Facets';
 
 import { defaultValues } from './shared';
 
-const defaultNonSelectedFacets = {
+export const defaultNonSelectedFacets = {
   Example: { facetValues: defaultValues },
   AnotherExample: { facetValues: defaultValues }
 };
@@ -64,7 +64,7 @@ class InteractiveFacets extends React.Component {
   }
 }
 
-storiesOf('Facets', module)
+storiesOf('SearchView/Facets', module)
   .add('default', () => (
     <div className="col-md-3">
       <Facets
