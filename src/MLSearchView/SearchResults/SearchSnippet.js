@@ -1,8 +1,7 @@
 import React from 'react';
 
-const SearchSnippet = (props) => {
-  const match = props.match;
-  const matchSpans = match['match-text'].map( (text, index) => {
+const SearchSnippet = ({ match }) => {
+  const matchSpans = match['match-text'].map((text, index) => {
     return (
       <em className={text.highlight ? 'mark' : ''} key={index}>
         {text.highlight || text}
@@ -10,11 +9,7 @@ const SearchSnippet = (props) => {
     );
   });
 
-  return (
-    <div className="ml-search-result-match">
-      {matchSpans}
-    </div>
-  );
+  return <div className="ml-search-result-match">{matchSpans}</div>;
 };
 
 export default SearchSnippet;
