@@ -2,25 +2,27 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import JSONTree from 'react-json-tree';
 import vkbeautify from 'vkbeautify';
+import { Row, Col, Button, Glyphicon } from 'react-bootstrap';
 
-const defaultTemplate = (props) => {
-  if (!props.detail) {return null;}
+const defaultTemplate = ({ detail, contentType, label, uri }) => {
+  if (!detail) {
+    return null;
+  }
   let renderedRawData = null;
-  if (props.contentType) {
-    if (props.contentType.lastIndexOf('application/json') !== -1) {
-      renderedRawData =
-        <JSONTree data={props.detail || {}} theme={'grayscale'} />;
-    } else if (props.contentType.lastIndexOf('application/xml') !== -1) {
-      renderedRawData = <pre>{vkbeautify.xml(props.detail)}</pre>;
+  if (contentType) {
+    if (contentType.lastIndexOf('application/json') !== -1) {
+      renderedRawData = <JSONTree data={detail || {}} theme={'grayscale'} />;
+    } else if (contentType.lastIndexOf('application/xml') !== -1) {
+      renderedRawData = <pre>{vkbeautify.xml(detail)}</pre>;
     } else {
-      renderedRawData = <pre>{props.detail}</pre>;
+      renderedRawData = <pre>{detail}</pre>;
     }
   } else {
-    renderedRawData = <pre>{props.detail}</pre>;
+    renderedRawData = <pre>{detail}</pre>;
   }
   return (
     <div>
-      <h1>{props.label || props.uri}</h1>
+      <h1>{label || uri}</h1>
       {renderedRawData}
     </div>
   );
@@ -33,7 +35,7 @@ class DetailView extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(nextProps) {
     if (nextProps.uri !== this.props.uri) {
       if (!nextProps.detail) {
         nextProps.loadDetail(nextProps.uri);
@@ -42,20 +44,41 @@ class DetailView extends Component {
   }
 
   render() {
-    if (this.props.template) {
-      return this.props.template(this.props);
-    } else {
-      return defaultTemplate(this.props);
-    }
+    return (
+      <Row>
+        <div className="pull-right">
+          <Button
+            bsStyle="default"
+            bsSize="small" className="btn-raised"
+            onClick={() => this.props.loadDetail(this.props.uri)}
+          >
+            <Glyphicon glyph="refresh" />
+          </Button>
+        </div>
+        {this.props.error ? (
+          <Col md={12}>
+            <p>
+              <strong>There was an error retrieving this document.</strong>
+            </p>
+            <p>
+              The server sent the following error message:&nbsp;
+              <span className="text-danger">{this.props.error}</span>
+            </p>
+          </Col>
+        ) : this.props.template ? (
+          this.props.template(this.props)
+        ) : (
+          defaultTemplate(this.props)
+        )}
+      </Row>
+    );
   }
 }
 
 DetailView.propTypes = {
-  detail: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.object
-  ]),
-  contentType: PropTypes.string
+  detail: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  contentType: PropTypes.string,
+  error: PropTypes.string
 };
 
 export default DetailView;
