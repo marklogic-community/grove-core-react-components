@@ -14,8 +14,10 @@ const MLNavbar = (props) => (
         <a href="/">{props.title}</a>
       </Navbar.Brand>
       <Navbar.Toggle />
-      {props.content}
     </Navbar.Header>
+    <Navbar.Collapse>
+      {props.children}
+    </Navbar.Collapse>
   </Navbar>
 );
 
