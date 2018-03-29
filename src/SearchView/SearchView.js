@@ -26,7 +26,7 @@ class SearchView extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(nextProps) {
     if (
       nextProps.stagedSearch.page !== this.props.stagedSearch.page ||
       // Intentionally using != to test object reference (ie, is it the
