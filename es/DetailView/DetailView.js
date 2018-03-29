@@ -8,33 +8,39 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import JSONTree from 'react-json-tree';
 import vkbeautify from 'vkbeautify';
+import { Row, Col, Button, Glyphicon } from 'react-bootstrap';
 
-var defaultTemplate = function defaultTemplate(props) {
-  if (!props.detail) {
+var defaultTemplate = function defaultTemplate(_ref) {
+  var detail = _ref.detail,
+      contentType = _ref.contentType,
+      label = _ref.label,
+      uri = _ref.uri;
+
+  if (!detail) {
     return null;
   }
   var renderedRawData = null;
-  if (props.contentType) {
-    if (props.contentType.lastIndexOf('application/json') !== -1) {
-      renderedRawData = React.createElement(JSONTree, { data: props.detail || {}, theme: 'grayscale' });
-    } else if (props.contentType.lastIndexOf('application/xml') !== -1) {
+  if (contentType) {
+    if (contentType.lastIndexOf('application/json') !== -1) {
+      renderedRawData = React.createElement(JSONTree, { data: detail || {}, theme: 'grayscale' });
+    } else if (contentType.lastIndexOf('application/xml') !== -1) {
       renderedRawData = React.createElement(
         'pre',
         null,
-        vkbeautify.xml(props.detail)
+        vkbeautify.xml(detail)
       );
     } else {
       renderedRawData = React.createElement(
         'pre',
         null,
-        props.detail
+        detail
       );
     }
   } else {
     renderedRawData = React.createElement(
       'pre',
       null,
-      props.detail
+      detail
     );
   }
   return React.createElement(
@@ -43,7 +49,7 @@ var defaultTemplate = function defaultTemplate(props) {
     React.createElement(
       'h1',
       null,
-      props.label || props.uri
+      label || uri
     ),
     renderedRawData
   );
@@ -64,7 +70,7 @@ var DetailView = function (_Component) {
     }
   };
 
-  DetailView.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
+  DetailView.prototype.componentDidUpdate = function componentDidUpdate(nextProps) {
     if (nextProps.uri !== this.props.uri) {
       if (!nextProps.detail) {
         nextProps.loadDetail(nextProps.uri);
@@ -73,11 +79,50 @@ var DetailView = function (_Component) {
   };
 
   DetailView.prototype.render = function render() {
-    if (this.props.template) {
-      return this.props.template(this.props);
-    } else {
-      return defaultTemplate(this.props);
-    }
+    var _this2 = this;
+
+    return React.createElement(
+      Row,
+      null,
+      React.createElement(
+        'div',
+        { className: 'pull-right' },
+        React.createElement(
+          Button,
+          {
+            bsStyle: 'default',
+            bsSize: 'small', className: 'btn-raised',
+            onClick: function onClick() {
+              return _this2.props.loadDetail(_this2.props.uri);
+            }
+          },
+          React.createElement(Glyphicon, { glyph: 'refresh' })
+        )
+      ),
+      this.props.error ? React.createElement(
+        Col,
+        { md: 12 },
+        React.createElement(
+          'p',
+          null,
+          React.createElement(
+            'strong',
+            null,
+            'There was an error retrieving this document.'
+          )
+        ),
+        React.createElement(
+          'p',
+          null,
+          'The server sent the following error message:\xA0',
+          React.createElement(
+            'span',
+            { className: 'text-danger' },
+            this.props.error
+          )
+        )
+      ) : this.props.template ? this.props.template(this.props) : defaultTemplate(this.props)
+    );
   };
 
   return DetailView;
@@ -85,7 +130,8 @@ var DetailView = function (_Component) {
 
 DetailView.propTypes = process.env.NODE_ENV !== "production" ? {
   detail: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  contentType: PropTypes.string
+  contentType: PropTypes.string,
+  error: PropTypes.string
 } : {};
 
 export default DetailView;

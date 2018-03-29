@@ -5,7 +5,6 @@ import { Row, Col, Pagination } from 'react-bootstrap';
 import SearchResults from './SearchResults/SearchResults';
 import SearchMetrics from './SearchMetrics';
 
-// TODO: better error rendering
 var SearchResponseView = function SearchResponseView(props) {
   return React.createElement(
     Row,

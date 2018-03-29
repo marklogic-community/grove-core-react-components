@@ -27,8 +27,12 @@ var MLNavbar = function MLNavbar(props) {
           props.title
         )
       ),
-      React.createElement(Navbar.Toggle, null),
-      props.content
+      React.createElement(Navbar.Toggle, null)
+    ),
+    React.createElement(
+      Navbar.Collapse,
+      null,
+      props.children
     )
   );
 };
