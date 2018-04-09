@@ -1,24 +1,32 @@
 import React from 'react';
-import { Navbar } from 'react-bootstrap';
-import logo from '../images/MarkLogic-Powered-By.png';
+import PropTypes from 'prop-types';
+import { Navbar as BSNavbar } from 'react-bootstrap';
+import defaultLogo from '../images/MarkLogic-Powered-By.png';
+import UserInfo from './UserInfo';
 
-const MLNavbar = (props) => (
-  <Navbar fluid={true}>
-    <Navbar.Header>
-      <Navbar.Brand>
+const Navbar = ({ logo, title, children, withoutUser, ...props }) => (
+  <BSNavbar fluid={true}>
+    <BSNavbar.Header>
+      <BSNavbar.Brand>
         <a href="/" className="navbar-left">
-          <img src={props.logo || logo} />
+          <img src={logo || defaultLogo} />
         </a>
-      </Navbar.Brand>
-      <Navbar.Brand>
-        <a href="/">{props.title}</a>
-      </Navbar.Brand>
-      <Navbar.Toggle />
-    </Navbar.Header>
-    <Navbar.Collapse>
-      {props.children}
-    </Navbar.Collapse>
-  </Navbar>
+      </BSNavbar.Brand>
+      <BSNavbar.Brand>
+        <a href="/">{title}</a>
+      </BSNavbar.Brand>
+      <BSNavbar.Toggle />
+    </BSNavbar.Header>
+    <BSNavbar.Collapse>
+      {children}
+      {!withoutUser && <UserInfo {...props} />}
+    </BSNavbar.Collapse>
+  </BSNavbar>
 );
 
-export default MLNavbar;
+Navbar.propTypes = {
+  title: PropTypes.string,
+  withoutUser: PropTypes.bool
+};
+
+export default Navbar;
