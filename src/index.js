@@ -16,6 +16,9 @@ export SearchSnippet from './SearchView/SearchResults/SearchSnippet';
 
 export Navbar from './Navbar/Navbar';
 
+export Login from './user/Login';
+export LoginJumbotron from './user/LoginJumbotron';
+
 export DetailView from './DetailView/DetailView';
 
 export FadeAndSlide from './animations/FadeAndSlide';
