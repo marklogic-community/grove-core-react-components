@@ -1,40 +1,56 @@
-import React from 'react';
-import { Navbar } from 'react-bootstrap';
-import logo from '../images/MarkLogic-Powered-By.png';
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
-var MLNavbar = function MLNavbar(props) {
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Navbar as BSNavbar } from 'react-bootstrap';
+import defaultLogo from '../images/MarkLogic-Powered-By.png';
+import UserInfo from './UserInfo';
+
+var Navbar = function Navbar(_ref) {
+  var logo = _ref.logo,
+      title = _ref.title,
+      children = _ref.children,
+      withoutUser = _ref.withoutUser,
+      props = _objectWithoutProperties(_ref, ['logo', 'title', 'children', 'withoutUser']);
+
   return React.createElement(
-    Navbar,
+    BSNavbar,
     { fluid: true },
     React.createElement(
-      Navbar.Header,
+      BSNavbar.Header,
       null,
       React.createElement(
-        Navbar.Brand,
+        BSNavbar.Brand,
         null,
         React.createElement(
           'a',
           { href: '/', className: 'navbar-left' },
-          React.createElement('img', { src: props.logo || logo })
+          React.createElement('img', { src: logo || defaultLogo })
         )
       ),
       React.createElement(
-        Navbar.Brand,
+        BSNavbar.Brand,
         null,
         React.createElement(
           'a',
           { href: '/' },
-          props.title
+          title
         )
       ),
-      React.createElement(Navbar.Toggle, null)
+      React.createElement(BSNavbar.Toggle, null)
     ),
     React.createElement(
-      Navbar.Collapse,
+      BSNavbar.Collapse,
       null,
-      props.children
+      children,
+      !withoutUser && React.createElement(UserInfo, props)
     )
   );
 };
 
-export default MLNavbar;
+Navbar.propTypes = process.env.NODE_ENV !== "production" ? {
+  title: PropTypes.string,
+  withoutUser: PropTypes.bool
+} : {};
+
+export default Navbar;
