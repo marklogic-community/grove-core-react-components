@@ -1,6 +1,6 @@
 {
   "name": "muir-react",
-  "version": "0.7.1",
+  "version": "0.7.2",
   "description": "React component library for apps backed by MarkLogic",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -21,7 +21,7 @@
     "test:watch": "nwb test-react --server"
   },
   "dependencies": {
-    "bootstrap": "^3.3.7",
+    "bootstrap": ">=3.3.7 <4.0.0",
     "prop-types": "^15.6.1",
     "react": "^16.3.1",
     "react-bootstrap": "^0.31.2",
