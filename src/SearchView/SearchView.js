@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col } from 'react-bootstrap';
+import { isEqual } from 'lodash';
 
 import SearchBar from './SearchBar';
 import Facets from './Facets/Facets';
@@ -26,16 +27,16 @@ class SearchView extends Component {
     }
   }
 
-  componentDidUpdate(nextProps) {
+  componentDidUpdate(prevProps) {
     if (
-      nextProps.stagedSearch.page !== this.props.stagedSearch.page ||
+      prevProps.stagedSearch.page !== this.props.stagedSearch.page ||
       // Intentionally using != to test object reference (ie, is it the
       // same object?) Because our Redux flow will swap out the constraints
       // object on any change, but keep it referentially the same otherwise
-      nextProps.stagedSearch.constraints != this.props.stagedSearch.constraints
+      prevProps.stagedSearch.constraints != this.props.stagedSearch.constraints
     ) {
       // TODO: DRY up with this.search()?
-      nextProps.runSearch(nextProps.stagedSearch);
+      this.props.runSearch(this.props.stagedSearch);
     }
   }
 

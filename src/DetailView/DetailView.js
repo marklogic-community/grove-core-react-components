@@ -35,10 +35,10 @@ class DetailView extends Component {
     }
   }
 
-  componentDidUpdate(nextProps) {
-    if (nextProps.uri !== this.props.uri) {
-      if (!nextProps.detail) {
-        nextProps.loadDetail(nextProps.uri);
+  componentDidUpdate(prevProps) {
+    if (prevProps.uri !== this.props.uri) {
+      if (!this.props.detail) {
+        this.props.loadDetail(this.props.uri);
       }
     }
   }
