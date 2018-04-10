@@ -70,10 +70,10 @@ var DetailView = function (_Component) {
     }
   };
 
-  DetailView.prototype.componentDidUpdate = function componentDidUpdate(nextProps) {
-    if (nextProps.uri !== this.props.uri) {
-      if (!nextProps.detail) {
-        nextProps.loadDetail(nextProps.uri);
+  DetailView.prototype.componentDidUpdate = function componentDidUpdate(prevProps) {
+    if (prevProps.uri !== this.props.uri) {
+      if (!this.props.detail) {
+        this.props.loadDetail(this.props.uri);
       }
     }
   };

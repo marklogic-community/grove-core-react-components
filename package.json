@@ -1,6 +1,6 @@
 {
   "name": "muir-react",
-  "version": "0.7.2",
+  "version": "0.7.3",
   "description": "React component library for apps backed by MarkLogic",
   "main": "lib/index.js",
   "module": "es/index.js",
