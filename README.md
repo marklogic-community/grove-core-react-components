@@ -18,6 +18,42 @@ You will need to create a React container in your host application to pass the n
 
 ## Components
 
+### <DetailView />
+
+This component provides a default view of a single document, together with some error handling. It can be customized:
+
+#### Providing a custom detail page
+
+<DetailView /> accepts a `template` attribute that will override the default template when a document is successfully retrieved. It gets passed all the props that <DetailView /> itself received. Typically, you will write a React component to render those props as desired. It can then be passed to <DetailView /> like so:
+
+    <DetailView template={myCustomDetailComponent} />
+
+In many cases, in applications using Redux, <DetailView /> is the top-level 'dumb' component being wrapped by a 'smart' Redux container. In that case, you can add your template to `mapStateToProps` directly, as in this example:
+
+```javascript
+//...
+import { DetailView } from 'muir-react';
+import myDetailComponent from '../components/myDetailComponent';
+
+import { actions, selectors } from 'ml-documents-redux';
+import { bindSelectors } from '../utils/redux-utils';
+const boundSelectors = bindSelectors(selectors, 'documents');
+
+const mapStateToProps = (state, ownProps) => {
+  const sel = boundSelectors;
+  return {
+    template: myDetailComponent,
+    detail: sel.documentByUri(state, ownProps.uri),
+    error: sel.errorByUri(state, ownProps.uri),
+    contentType: sel.contentTypeByUri(state, ownProps.uri)
+  };
+};
+
+//...
+```
+
+Or, you could allow the code consuming your container to pass in the template, and simply grab it from the `ownProps` argument from `mapStateToProps`.
+
 ### Storybook
 
 We are creating a storybook for all the components present in this library. To see it, for the moment, clone this repository and run:
