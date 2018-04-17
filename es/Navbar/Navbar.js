@@ -3,15 +3,15 @@ function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in ob
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Navbar as BSNavbar } from 'react-bootstrap';
-import defaultLogo from '../images/MarkLogic-Powered-By.png';
 import UserInfo from './UserInfo';
 
 var Navbar = function Navbar(_ref) {
   var logo = _ref.logo,
+      logoStyle = _ref.logoStyle,
       title = _ref.title,
       children = _ref.children,
       withoutUser = _ref.withoutUser,
-      props = _objectWithoutProperties(_ref, ['logo', 'title', 'children', 'withoutUser']);
+      props = _objectWithoutProperties(_ref, ['logo', 'logoStyle', 'title', 'children', 'withoutUser']);
 
   return React.createElement(
     BSNavbar,
@@ -19,13 +19,16 @@ var Navbar = function Navbar(_ref) {
     React.createElement(
       BSNavbar.Header,
       null,
-      React.createElement(
+      logo && React.createElement(
         BSNavbar.Brand,
         null,
         React.createElement(
           'a',
           { href: '/', className: 'navbar-left' },
-          React.createElement('img', { src: logo || defaultLogo })
+          React.createElement('img', {
+            src: logo,
+            style: logoStyle || { maxWidth: '100px', maxHeight: '45px' }
+          })
         )
       ),
       React.createElement(
