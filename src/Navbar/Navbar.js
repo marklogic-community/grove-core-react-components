@@ -1,17 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Navbar as BSNavbar } from 'react-bootstrap';
-import defaultLogo from '../images/MarkLogic-Powered-By.png';
 import UserInfo from './UserInfo';
 
-const Navbar = ({ logo, title, children, withoutUser, ...props }) => (
+const Navbar = ({
+  logo,
+  logoStyle,
+  title,
+  children,
+  withoutUser,
+  ...props
+}) => (
   <BSNavbar fluid={true}>
     <BSNavbar.Header>
-      <BSNavbar.Brand>
-        <a href="/" className="navbar-left">
-          <img src={logo || defaultLogo} />
-        </a>
-      </BSNavbar.Brand>
+      {logo && (
+        <BSNavbar.Brand>
+          <a href="/" className="navbar-left">
+            <img
+              src={logo}
+              style={logoStyle || { maxWidth: '100px', maxHeight: '45px' }}
+            />
+          </a>
+        </BSNavbar.Brand>
+      )}
       <BSNavbar.Brand>
         <a href="/">{title}</a>
       </BSNavbar.Brand>
