@@ -1,5 +1,5 @@
 /*!
- * muir-react v0.8.2
+ * muir-react v0.8.3
  * Apache-2.0 Licensed
  */
 (function webpackUniversalModuleDefinition(root, factory) {
