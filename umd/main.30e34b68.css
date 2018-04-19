@@ -1,5 +1,5 @@
 /*!
- * muir-react v0.8.1
+ * muir-react v0.8.2
  * Apache-2.0 Licensed
  */
 .ml-fade-appear,.ml-fade-enter{opacity:.01}.ml-fade-appear.ml-fade-appear-active,.ml-fade-enter.ml-fade-enter-active{opacity:1;-webkit-transition:all .5s ease-in;-o-transition:all .5s ease-in;transition:all .5s ease-in}.ml-fade-exit{opacity:1}.ml-fade-exit.ml-fade-exit-active{opacity:.01}.ml-search-result .panel-body{overflow:hidden;height:207px}.ml-fade-slide-appear,.ml-fade-slide-enter{opacity:.01;-webkit-transform:translateY(-10%);-ms-transform:translateY(-10%);transform:translateY(-10%)}.ml-fade-slide-appear.ml-fade-slide-appear-active,.ml-fade-slide-enter.ml-fade-slide-enter-active{opacity:1;-webkit-transform:translateY(0);-ms-transform:translateY(0);transform:translateY(0);-webkit-transform-origin:top;-ms-transform-origin:top;transform-origin:top;-webkit-transition:all .5s ease-in;-o-transition:all .5s ease-in;transition:all .5s ease-in}.ml-fade-slide-exit{opacity:1;-webkit-transform:translateY(0);-ms-transform:translateY(0);transform:translateY(0)}.ml-fade-slide-exit.ml-fade-slide-exit-active{opacity:.01;-webkit-transform:translateY(-10%);-ms-transform:translateY(-10%);transform:translateY(-10%);-webkit-transition:all .3s ease-in;-o-transition:all .3s ease-in;transition:all .3s ease-in;-webkit-transform-origin:top;-ms-transform-origin:top;transform-origin:top}
