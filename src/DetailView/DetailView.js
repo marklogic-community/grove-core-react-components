@@ -4,7 +4,7 @@ import JSONTree from 'react-json-tree';
 import vkbeautify from 'vkbeautify';
 import { Row, Col, Button, Glyphicon } from 'react-bootstrap';
 
-const defaultTemplate = ({ detail, contentType, label, uri }) => {
+const ViewAsJson = ({ detail, contentType, label, uri }) => {
   if (!detail) {
     return null;
   }
@@ -49,7 +49,8 @@ class DetailView extends Component {
         <div className="pull-right">
           <Button
             bsStyle="default"
-            bsSize="small" className="btn-raised"
+            bsSize="small"
+            className="btn-raised"
             onClick={() => this.props.loadDetail(this.props.uri)}
           >
             <Glyphicon glyph="refresh" />
@@ -65,18 +66,21 @@ class DetailView extends Component {
               <span className="text-danger">{this.props.error}</span>
             </p>
           </Col>
-        ) : this.props.template ? (
-          this.props.template(this.props)
         ) : (
-          defaultTemplate(this.props)
+          <this.props.template {...this.props} />
         )}
       </Row>
     );
   }
 }
 
+DetailView.defaultProps = {
+  template: ViewAsJson
+};
+
 DetailView.propTypes = {
   detail: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  template: PropTypes.func,
   contentType: PropTypes.string,
   error: PropTypes.string
 };
