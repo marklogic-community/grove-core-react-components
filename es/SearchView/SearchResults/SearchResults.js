@@ -67,10 +67,12 @@ var SearchResults = function (_React$Component) {
     if (!this.props.results) {
       return null;
     }
+    // For now, if you provide a resultComponent, we suppress the choice among
+    // various types, though I could imagine letting the user specify > 1
     return React.createElement(
       'div',
       null,
-      this.props.results.length > 0 && React.createElement(
+      this.props.results.length > 0 && !this.props.resultComponent && React.createElement(
         Col,
         { xs: 12, md: 6, style: { float: 'right' } },
         React.createElement(

@@ -10,7 +10,7 @@ import JSONTree from 'react-json-tree';
 import vkbeautify from 'vkbeautify';
 import { Row, Col, Button, Glyphicon } from 'react-bootstrap';
 
-var defaultTemplate = function defaultTemplate(_ref) {
+var ViewAsJson = function ViewAsJson(_ref) {
   var detail = _ref.detail,
       contentType = _ref.contentType,
       label = _ref.label,
@@ -91,7 +91,8 @@ var DetailView = function (_Component) {
           Button,
           {
             bsStyle: 'default',
-            bsSize: 'small', className: 'btn-raised',
+            bsSize: 'small',
+            className: 'btn-raised',
             onClick: function onClick() {
               return _this2.props.loadDetail(_this2.props.uri);
             }
@@ -121,15 +122,20 @@ var DetailView = function (_Component) {
             this.props.error
           )
         )
-      ) : this.props.template ? this.props.template(this.props) : defaultTemplate(this.props)
+      ) : React.createElement(this.props.template, this.props)
     );
   };
 
   return DetailView;
 }(Component);
 
+DetailView.defaultProps = {
+  template: ViewAsJson
+};
+
 DetailView.propTypes = process.env.NODE_ENV !== "production" ? {
   detail: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  template: PropTypes.func,
   contentType: PropTypes.string,
   error: PropTypes.string
 } : {};

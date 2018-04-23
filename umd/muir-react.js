@@ -1,5 +1,5 @@
 /*!
- * muir-react v0.8.3
+ * muir-react v0.8.4
  * Apache-2.0 Licensed
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -10620,10 +10620,12 @@ var SearchResults = function (_React$Component) {
     if (!this.props.results) {
       return null;
     }
+    // For now, if you provide a resultComponent, we suppress the choice among
+    // various types, though I could imagine letting the user specify > 1
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       'div',
       null,
-      this.props.results.length > 0 && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+      this.props.results.length > 0 && !this.props.resultComponent && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         __WEBPACK_IMPORTED_MODULE_3_react_bootstrap__["c" /* Col */],
         { xs: 12, md: 6, style: { float: 'right' } },
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -10724,34 +10726,51 @@ var prettyUri = function prettyUri(uri) {
   return uriParts[uriParts.length - 1];
 };
 
+var SearchSnippets = function SearchSnippets(_ref) {
+  var result = _ref.result;
+  return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+    'div',
+    { className: 'ml-search-result-matches' },
+    result.matches && result.matches.map(function (match, index) {
+      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__SearchSnippet_js__["a" /* default */], { match: match, key: index });
+    })
+  );
+};
+
+var Header = function Header(props) {
+  return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+    __WEBPACK_IMPORTED_MODULE_3_react_router_dom__["Link"],
+    { to: props.detailPath + encodeURIComponent(props.result.uri) },
+    props.result.label || prettyUri(props.result.uri)
+  );
+};
+
 var CardResult = function CardResult(props) {
   return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
     __WEBPACK_IMPORTED_MODULE_2_react_bootstrap__["c" /* Col */],
-    { xs: 12, sm: 6, md: 4, lg: 3,
-      className: 'ml-search-result'
-    },
+    { xs: 12, sm: 6, md: 4, lg: 3, className: 'ml-search-result' },
     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       __WEBPACK_IMPORTED_MODULE_2_react_bootstrap__["m" /* Panel */],
-      { bsStyle: 'info',
+      {
+        bsStyle: 'info',
         style: { height: '200px', overflow: 'hidden' },
-        header: __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          __WEBPACK_IMPORTED_MODULE_3_react_router_dom__["Link"],
-          { to: props.detailPath + encodeURIComponent(props.result.uri) },
-          props.result.label || prettyUri(props.result.uri)
-        )
+        header: props.header && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(props.header, props)
       },
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'div',
-        { className: 'ml-search-result-matches' },
-        props.result.matches && props.result.matches.map(function (match, index) {
-          return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__SearchSnippet_js__["a" /* default */], { match: match, key: index });
-        })
-      )
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(props.content, props)
     )
   );
 };
 
+CardResult.defaultProps = {
+  content: SearchSnippets,
+  header: Header,
+  detailPath: '/detail'
+};
+
 CardResult.propTypes = {
+  content: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.func,
+  header: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.func,
+  detailPath: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string,
   result: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.shape({
     uri: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string
   })
@@ -62166,7 +62185,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
-var defaultTemplate = function defaultTemplate(_ref) {
+var ViewAsJson = function ViewAsJson(_ref) {
   var detail = _ref.detail,
       contentType = _ref.contentType,
       label = _ref.label,
@@ -62247,7 +62266,8 @@ var DetailView = function (_Component) {
           __WEBPACK_IMPORTED_MODULE_4_react_bootstrap__["a" /* Button */],
           {
             bsStyle: 'default',
-            bsSize: 'small', className: 'btn-raised',
+            bsSize: 'small',
+            className: 'btn-raised',
             onClick: function onClick() {
               return _this2.props.loadDetail(_this2.props.uri);
             }
@@ -62277,15 +62297,20 @@ var DetailView = function (_Component) {
             this.props.error
           )
         )
-      ) : this.props.template ? this.props.template(this.props) : defaultTemplate(this.props)
+      ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(this.props.template, this.props)
     );
   };
 
   return DetailView;
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
+DetailView.defaultProps = {
+  template: ViewAsJson
+};
+
 DetailView.propTypes = {
   detail: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.oneOfType([__WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string, __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.object]),
+  template: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.func,
   contentType: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string,
   error: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string
 };
