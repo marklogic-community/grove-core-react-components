@@ -10,30 +10,43 @@ const prettyUri = uri => {
   return uriParts[uriParts.length - 1];
 };
 
-const CardResult = (props) => (
-  <Col xs={12} sm={6} md={4} lg={3}
-    className="ml-search-result"
-  >
-    <Panel bsStyle="info"
-      style={{height: '200px', overflow: 'hidden'}}
-      header={
-        <Link to={props.detailPath + encodeURIComponent(props.result.uri)}>
-          {props.result.label || prettyUri(props.result.uri)}
-        </Link>
-      }
+const SearchSnippets = ({ result }) => (
+  <div className="ml-search-result-matches">
+    {result.matches &&
+      result.matches.map((match, index) => (
+        <SearchSnippet match={match} key={index} />
+      ))}
+  </div>
+);
+
+const Header = props => (
+  <Link to={props.detailPath + encodeURIComponent(props.result.uri)}>
+    {props.result.label || prettyUri(props.result.uri)}
+  </Link>
+);
+
+const CardResult = props => (
+  <Col xs={12} sm={6} md={4} lg={3} className="ml-search-result">
+    <Panel
+      bsStyle="info"
+      style={{ height: '200px', overflow: 'hidden' }}
+      header={props.header && <props.header {...props} />}
     >
-      <div className="ml-search-result-matches">
-        {
-          props.result.matches && props.result.matches.map((match, index) =>
-            <SearchSnippet match={match} key={index} />
-          )
-        }
-      </div>
+      <props.content {...props} />
     </Panel>
   </Col>
 );
 
+CardResult.defaultProps = {
+  content: SearchSnippets,
+  header: Header,
+  detailPath: '/detail'
+};
+
 CardResult.propTypes = {
+  content: PropTypes.func,
+  header: PropTypes.func,
+  detailPath: PropTypes.string,
   result: PropTypes.shape({
     uri: PropTypes.string
   })

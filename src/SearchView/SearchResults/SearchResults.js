@@ -48,9 +48,11 @@ class SearchResults extends React.Component {
     if (!this.props.results) {
       return null;
     }
+    // For now, if you provide a resultComponent, we suppress the choice among
+    // various types, though I could imagine letting the user specify > 1
     return (
       <div>
-        {this.props.results.length > 0 && (
+        {this.props.results.length > 0 && !this.props.resultComponent && (
           <Col xs={12} md={6} style={{ float: 'right' }}>
             <ButtonToolbar style={{ float: 'right', marginBottom: '10px' }}>
               <ToggleButtonGroup
