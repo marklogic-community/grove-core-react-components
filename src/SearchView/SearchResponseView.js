@@ -9,39 +9,41 @@ const SearchResponseView = props => {
   return (
     <Row>
       <Col md={12}>
-        {props.error ? (
-          <Col md={12}>
-            <p>
-              <strong>There was an error performing your search.</strong>
-            </p>
-            <p>
-              The server sent the following error message:&nbsp;
-              <span className="text-danger">{props.error}</span>
-            </p>
-          </Col>
-        ) : (
-          <div>
-            <Col md={6}>
-              <SearchMetrics time={props.executionTime} total={props.total} />
+        <Row>
+          {props.error ? (
+            <Col md={12}>
+              <p>
+                <strong>There was an error performing your search.</strong>
+              </p>
+              <p>
+                The server sent the following error message:&nbsp;
+                <span className="text-danger">{props.error}</span>
+              </p>
             </Col>
-            <SearchResults
-              results={props.results || []}
-              detailPath={props.detailPath}
-              resultComponent={props.resultComponent}
-            />
-            {props.totalPages > 1 && (
-              <Col md={12}>
-                <Pagination
-                  items={props.totalPages}
-                  maxButtons={10}
-                  boundaryLinks={true}
-                  activePage={props.page}
-                  onSelect={props.handlePageSelection}
-                />
+          ) : (
+            <div>
+              <Col md={6}>
+                <SearchMetrics time={props.executionTime} total={props.total} />
               </Col>
-            )}
-          </div>
-        )}
+              <SearchResults
+                results={props.results || []}
+                detailPath={props.detailPath}
+                resultComponent={props.resultComponent}
+              />
+              {props.totalPages > 1 && (
+                <Col md={12}>
+                  <Pagination
+                    items={props.totalPages}
+                    maxButtons={10}
+                    boundaryLinks={true}
+                    activePage={props.page}
+                    onSelect={props.handlePageSelection}
+                  />
+                </Col>
+              )}
+            </div>
+          )}
+        </Row>
       </Col>
     </Row>
   );
