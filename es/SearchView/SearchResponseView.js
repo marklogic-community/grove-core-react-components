@@ -12,51 +12,56 @@ var SearchResponseView = function SearchResponseView(props) {
     React.createElement(
       Col,
       { md: 12 },
-      props.error ? React.createElement(
-        Col,
-        { md: 12 },
-        React.createElement(
-          'p',
-          null,
-          React.createElement(
-            'strong',
-            null,
-            'There was an error performing your search.'
-          )
-        ),
-        React.createElement(
-          'p',
-          null,
-          'The server sent the following error message:\xA0',
-          React.createElement(
-            'span',
-            { className: 'text-danger' },
-            props.error
-          )
-        )
-      ) : React.createElement(
-        'div',
+      React.createElement(
+        Row,
         null,
-        React.createElement(
-          Col,
-          { md: 6 },
-          React.createElement(SearchMetrics, { time: props.executionTime, total: props.total })
-        ),
-        React.createElement(SearchResults, {
-          results: props.results || [],
-          detailPath: props.detailPath,
-          resultComponent: props.resultComponent
-        }),
-        props.totalPages > 1 && React.createElement(
+        props.error ? React.createElement(
           Col,
           { md: 12 },
-          React.createElement(Pagination, {
-            items: props.totalPages,
-            maxButtons: 10,
-            boundaryLinks: true,
-            activePage: props.page,
-            onSelect: props.handlePageSelection
-          })
+          React.createElement(
+            'p',
+            null,
+            React.createElement(
+              'strong',
+              null,
+              'There was an error performing your search.'
+            )
+          ),
+          React.createElement(
+            'p',
+            null,
+            'The server sent the following error message:\xA0',
+            React.createElement(
+              'span',
+              { className: 'text-danger' },
+              props.error
+            )
+          )
+        ) : React.createElement(
+          'div',
+          null,
+          React.createElement(
+            Col,
+            { md: 6 },
+            React.createElement(SearchMetrics, { time: props.executionTime, total: props.total })
+          ),
+          React.createElement(SearchResults, {
+            results: props.results || [],
+            detailPath: props.detailPath,
+            resultComponent: props.resultComponent,
+            isSearchPending: props.isSearchPending
+          }),
+          props.totalPages > 1 && React.createElement(
+            Col,
+            { md: 12 },
+            React.createElement(Pagination, {
+              items: props.totalPages,
+              maxButtons: 10,
+              boundaryLinks: true,
+              activePage: props.page,
+              onSelect: props.handlePageSelection
+            })
+          )
         )
       )
     )

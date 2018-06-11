@@ -7,11 +7,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col } from 'react-bootstrap';
-import { isEqual } from 'lodash';
 
 import SearchBar from './SearchBar';
 import Facets from './Facets/Facets';
 import SearchResponseView from './SearchResponseView';
+import Fade from '../animations/Fade';
 
 var SearchView = function (_Component) {
   _inherits(SearchView, _Component);
@@ -81,17 +81,26 @@ var SearchView = function (_Component) {
             onSearchExecute: this.search
           })
         ),
-        this.props.isSearchComplete && React.createElement(SearchResponseView, {
-          error: this.props.error,
-          results: this.props.results,
-          executionTime: this.props.executionTime,
-          total: this.props.total,
-          page: this.props.page,
-          totalPages: this.props.totalPages,
-          handlePageSelection: this.handlePageSelection,
-          detailPath: this.props.detailPath,
-          resultComponent: this.props.resultComponent
-        })
+        this.props.isSearchComplete || this.props.isSearchPending ? React.createElement(
+          Fade,
+          { 'in': this.props.isSearchComplete, appear: true },
+          React.createElement(SearchResponseView, {
+            error: this.props.error,
+            results: this.props.results,
+            executionTime: this.props.executionTime,
+            total: this.props.total,
+            page: this.props.page,
+            totalPages: this.props.totalPages,
+            handlePageSelection: this.handlePageSelection,
+            detailPath: this.props.detailPath,
+            resultComponent: this.props.resultComponent,
+            isSearchPending: this.props.isSearchPending
+          })
+        ) : React.createElement(
+          'p',
+          null,
+          'Please click Search to find results.'
+        )
       )
     );
   };

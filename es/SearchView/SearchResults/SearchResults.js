@@ -6,11 +6,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import TransitionGroup from 'react-transition-group/TransitionGroup';
 import { Row, Col, ButtonToolbar, ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
 import CardResult from './CardResult';
 import ListResult from './ListResult';
-import Fade from '../../animations/Fade';
 
 var DefaultNoResults = function DefaultNoResults() {
   return React.createElement(
@@ -105,25 +103,14 @@ var SearchResults = function (_React$Component) {
         React.createElement(
           Col,
           { md: 12 },
-          React.createElement(
-            TransitionGroup,
-            { appear: true },
-            this.props.results.map(function (result) {
-              return React.createElement(
-                Fade,
-                { duration: 500, key: result.uri },
-                React.createElement(_this2.state.resultComponent, {
-                  result: result,
-                  detailPath: _this2.props.detailPath || '/detail'
-                })
-              );
-            }),
-            this.props.results.length === 0 && React.createElement(
-              Fade,
-              { duration: 500 },
-              React.createElement(this.props.noResults, null)
-            )
-          )
+          this.props.results.map(function (result) {
+            return React.createElement(_this2.state.resultComponent, {
+              key: result.uri,
+              result: result,
+              detailPath: _this2.props.detailPath || '/detail'
+            });
+          }),
+          !this.props.isSearchPending && this.props.results.length === 0 && React.createElement(this.props.noResults, null)
         )
       )
     );

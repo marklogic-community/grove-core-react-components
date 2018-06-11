@@ -23,8 +23,8 @@ var SearchSnippets = function SearchSnippets(_ref) {
 
 var Header = function Header(props) {
   return React.createElement(
-    Link,
-    { to: props.detailPath + encodeURIComponent(props.result.uri) },
+    'h1',
+    { className: 'panel-title' },
     props.result.label || prettyUri(props.result.uri)
   );
 };
@@ -34,13 +34,20 @@ var CardResult = function CardResult(props) {
     Col,
     { xs: 12, sm: 6, md: 4, lg: 3, className: 'ml-search-result' },
     React.createElement(
-      Panel,
+      Link,
       {
-        bsStyle: 'info',
-        style: { height: '200px', overflow: 'hidden' },
-        header: props.header && React.createElement(props.header, props)
+        to: props.detailPath + encodeURIComponent(props.result.uri),
+        style: { textDecoration: 'none' }
       },
-      React.createElement(props.content, props)
+      React.createElement(
+        Panel,
+        {
+          bsStyle: 'info',
+          style: { height: '200px', overflow: 'hidden' },
+          header: props.header && React.createElement(props.header, props)
+        },
+        React.createElement(props.content, props)
+      )
     )
   );
 };

@@ -85,44 +85,48 @@ var DetailView = function (_Component) {
       Row,
       null,
       React.createElement(
-        'div',
-        { className: 'pull-right' },
-        React.createElement(
-          Button,
-          {
-            bsStyle: 'default',
-            bsSize: 'small',
-            className: 'btn-raised',
-            onClick: function onClick() {
-              return _this2.props.loadDetail(_this2.props.uri);
-            }
-          },
-          React.createElement(Glyphicon, { glyph: 'refresh' })
-        )
-      ),
-      this.props.error ? React.createElement(
         Col,
         { md: 12 },
         React.createElement(
-          'p',
-          null,
+          'div',
+          { className: 'pull-right' },
           React.createElement(
-            'strong',
-            null,
-            'There was an error retrieving this document.'
+            Button,
+            {
+              bsStyle: 'default',
+              bsSize: 'small',
+              className: 'btn-raised',
+              onClick: function onClick() {
+                return _this2.props.loadDetail(_this2.props.uri);
+              }
+            },
+            React.createElement(Glyphicon, { glyph: 'refresh' })
           )
         ),
-        React.createElement(
-          'p',
+        this.props.error ? React.createElement(
+          'div',
           null,
-          'The server sent the following error message:\xA0',
           React.createElement(
-            'span',
-            { className: 'text-danger' },
-            this.props.error
+            'p',
+            null,
+            React.createElement(
+              'strong',
+              null,
+              'There was an error retrieving this document.'
+            )
+          ),
+          React.createElement(
+            'p',
+            null,
+            'The server sent the following error message:\xA0',
+            React.createElement(
+              'span',
+              { className: 'text-danger' },
+              this.props.error
+            )
           )
-        )
-      ) : React.createElement(this.props.template, this.props)
+        ) : React.createElement(this.props.template, this.props)
+      )
     );
   };
 
