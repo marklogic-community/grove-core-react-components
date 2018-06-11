@@ -20,20 +20,25 @@ const SearchSnippets = ({ result }) => (
 );
 
 const Header = props => (
-  <Link to={props.detailPath + encodeURIComponent(props.result.uri)}>
+  <h1 className="panel-title">
     {props.result.label || prettyUri(props.result.uri)}
-  </Link>
+  </h1>
 );
 
 const CardResult = props => (
   <Col xs={12} sm={6} md={4} lg={3} className="ml-search-result">
-    <Panel
-      bsStyle="info"
-      style={{ height: '200px', overflow: 'hidden' }}
-      header={props.header && <props.header {...props} />}
+    <Link
+      to={props.detailPath + encodeURIComponent(props.result.uri)}
+      style={{ textDecoration: 'none' }}
     >
-      <props.content {...props} />
-    </Panel>
+      <Panel
+        bsStyle="info"
+        style={{ height: '200px', overflow: 'hidden' }}
+        header={props.header && <props.header {...props} />}
+      >
+        <props.content {...props} />
+      </Panel>
+    </Link>
   </Col>
 );
 
