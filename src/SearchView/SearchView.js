@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col } from 'react-bootstrap';
-import { isEqual } from 'lodash';
 
 import SearchBar from './SearchBar';
 import Facets from './Facets/Facets';
 import SearchResponseView from './SearchResponseView';
+import Fade from '../animations/Fade';
 
 class SearchView extends Component {
   constructor(props) {
@@ -63,18 +63,23 @@ class SearchView extends Component {
               onSearchExecute={this.search}
             />
           </Row>
-          {this.props.isSearchComplete && (
-            <SearchResponseView
-              error={this.props.error}
-              results={this.props.results}
-              executionTime={this.props.executionTime}
-              total={this.props.total}
-              page={this.props.page}
-              totalPages={this.props.totalPages}
-              handlePageSelection={this.handlePageSelection}
-              detailPath={this.props.detailPath}
-              resultComponent={this.props.resultComponent}
-            />
+          {this.props.isSearchComplete || this.props.isSearchPending ? (
+            <Fade in={this.props.isSearchComplete} appear={true}>
+              <SearchResponseView
+                error={this.props.error}
+                results={this.props.results}
+                executionTime={this.props.executionTime}
+                total={this.props.total}
+                page={this.props.page}
+                totalPages={this.props.totalPages}
+                handlePageSelection={this.handlePageSelection}
+                detailPath={this.props.detailPath}
+                resultComponent={this.props.resultComponent}
+                isSearchPending={this.props.isSearchPending}
+              />
+            </Fade>
+          ) : (
+            <p>Please click Search to find results.</p>
           )}
         </Col>
       </Row>

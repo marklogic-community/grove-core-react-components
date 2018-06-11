@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TransitionGroup from 'react-transition-group/TransitionGroup';
 import {
   Row,
   Col,
@@ -10,7 +9,6 @@ import {
 } from 'react-bootstrap';
 import CardResult from './CardResult';
 import ListResult from './ListResult';
-import Fade from '../../animations/Fade';
 
 const DefaultNoResults = () => (
   <Col md={12}>
@@ -69,21 +67,16 @@ class SearchResults extends React.Component {
         )}
         <Row className="ml-search-results">
           <Col md={12}>
-            <TransitionGroup appear={true}>
-              {this.props.results.map(result => (
-                <Fade duration={500} key={result.uri}>
-                  <this.state.resultComponent
-                    result={result}
-                    detailPath={this.props.detailPath || '/detail'}
-                  />
-                </Fade>
-              ))}
-              {this.props.results.length === 0 && (
-                <Fade duration={500}>
-                  <this.props.noResults />
-                </Fade>
-              )}
-            </TransitionGroup>
+            {this.props.results.map(result => (
+              <this.state.resultComponent
+                key={result.uri}
+                result={result}
+                detailPath={this.props.detailPath || '/detail'}
+              />
+            ))}
+            {!this.props.isSearchPending && this.props.results.length === 0 && (
+              <this.props.noResults />
+            )}
           </Col>
         </Row>
       </div>

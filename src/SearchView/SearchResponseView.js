@@ -29,6 +29,7 @@ const SearchResponseView = props => {
                 results={props.results || []}
                 detailPath={props.detailPath}
                 resultComponent={props.resultComponent}
+                isSearchPending={props.isSearchPending}
               />
               {props.totalPages > 1 && (
                 <Col md={12}>
