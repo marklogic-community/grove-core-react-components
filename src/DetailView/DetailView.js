@@ -46,29 +46,31 @@ class DetailView extends Component {
   render() {
     return (
       <Row>
-        <div className="pull-right">
-          <Button
-            bsStyle="default"
-            bsSize="small"
-            className="btn-raised"
-            onClick={() => this.props.loadDetail(this.props.uri)}
-          >
-            <Glyphicon glyph="refresh" />
-          </Button>
-        </div>
-        {this.props.error ? (
-          <Col md={12}>
-            <p>
-              <strong>There was an error retrieving this document.</strong>
-            </p>
-            <p>
-              The server sent the following error message:&nbsp;
-              <span className="text-danger">{this.props.error}</span>
-            </p>
-          </Col>
-        ) : (
-          <this.props.template {...this.props} />
-        )}
+        <Col md={12}>
+          <div className="pull-right">
+            <Button
+              bsStyle="default"
+              bsSize="small"
+              className="btn-raised"
+              onClick={() => this.props.loadDetail(this.props.uri)}
+            >
+              <Glyphicon glyph="refresh" />
+            </Button>
+          </div>
+          {this.props.error ? (
+            <div>
+              <p>
+                <strong>There was an error retrieving this document.</strong>
+              </p>
+              <p>
+                The server sent the following error message:&nbsp;
+                <span className="text-danger">{this.props.error}</span>
+              </p>
+            </div>
+          ) : (
+            <this.props.template {...this.props} />
+          )}
+        </Col>
       </Row>
     );
   }
