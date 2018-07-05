@@ -24,7 +24,7 @@ This component provides a default view of a single document, together with some 
 
 #### Providing a custom detail page
 
-<DetailView /> accepts a `template` attribute that will override the default template when a document is successfully retrieved. It gets passed all the props that <DetailView /> itself received. Typically, you will write a React component to render those props as desired. It can then be passed to <DetailView /> like so:
+<DetailView /> accepts a `template` prop that will override the default template when a document is successfully retrieved. It gets passed all the props that <DetailView /> itself received. Typically, you will write a React component to render those props as desired. It can then be passed to <DetailView /> like so:
 
     <DetailView template={myCustomDetailComponent} />
 
@@ -53,6 +53,68 @@ const mapStateToProps = (state, ownProps) => {
 ```
 
 Or, you could allow the code consuming your container to pass in the template, and simply grab it from the `ownProps` argument from `mapStateToProps`.
+
+### <SearchResults />
+
+The default behavior of the SearchResults component is to offer a choice between a CardResult and a ListResult.
+
+#### Customizing SearchResults
+
+You can override the presentation of SearchResults by passing a `resultComponent` prop to <SearchResults />. Your component will receive a `result` prop and a `detailPath`. 
+
+    <SearchResults resultComponent={myCustomSearchResult} />
+
+Providing a `resultComponent` suppresses the out-of-the-box choice between components in the UI, and simply uses the provided `resultComponent`.
+
+Note that you can also provide `resultComponent` to the higher-level <SearchView />, and it will be passed down to <SearchResults />.
+
+You can use the <CardResult> in this library as a starting point, if you wish. It accepts `content` and `header` component props. For example:
+
+```javascript
+import { CardResult, SearchView } from 'muir-react';
+
+const ImageSearchResultContent = ({result, detailPath, imageURL}) => {
+  return (
+  <div style={{textAlign: 'center'}}>
+    <Link to={detailPath + encodeURIComponent(result.uri)}>
+      <img style={{maxHeight: '170px', maxWidth: '200px'}} src={'/api/documents?uri=' + imageURL} />
+    </Link>
+  </div>
+  )
+};
+
+const ImageSearchResult = (props) => {
+  // suppress the header
+  // provide imageURL, which, like all props, will be passed to the content component
+  return (
+    <CardResult
+      {...props}
+      header={null}
+      imageURL={props.imageUrl}
+      content={ImageSearchResultContent}
+    />
+  );
+};
+return () => (
+  <SearchView
+    {...this.props}
+    detailPath="/detail/"
+    resultComponent={SearchResultConnection(ImageSearchResult)}
+  />
+)
+```
+
+
+#### Customizing display when no results are found
+
+You can also override the component displayed when no results are found, by passing in a component as a `noResults` prop:
+
+```javascript
+const customNoResults =  () => (
+  <p>Truly, there are no results.</p>
+)
+<SearchResults noResults={customNoResults} />
+```
 
 ### Storybook
 
