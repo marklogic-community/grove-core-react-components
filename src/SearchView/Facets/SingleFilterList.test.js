@@ -112,7 +112,7 @@ describe('<SingleFilterList/>', () => {
       />
     );
     wrapper
-      .find('.selectedFilterValues .ml-facet-remove-constraint')
+      .find('.selectedFilterValues .ml-facet-remove-filter')
       .simulate('click');
     expect(removeFilterSpy).toHaveBeenCalledWith('value1');
   });

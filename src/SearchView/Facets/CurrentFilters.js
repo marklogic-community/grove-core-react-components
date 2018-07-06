@@ -5,10 +5,10 @@ import TransitionGroup from 'react-transition-group/TransitionGroup';
 import Fade from '../../animations/Fade';
 
 // TODO: truncate values with a truncateLength option
-const CurrentFilters = ({ constraints, removeFilter }) => (
+const CurrentFilters = ({ filters, removeFilter }) => (
   <TransitionGroup className="chiclets" appear={true}>
-    {Object.keys(constraints).map(constraintName => {
-      const andValues = constraints[constraintName].and || [];
+    {Object.keys(filters).map(constraintName => {
+      const andValues = filters[constraintName].and || [];
       return (
         // <div ng-repeat="(index, facet) in facets | object2Array | filter:{selected: true}">
         <Fade key={constraintName}>
@@ -37,7 +37,7 @@ const CurrentFilters = ({ constraints, removeFilter }) => (
 );
 
 CurrentFilters.propTypes = {
-  constraints: PropTypes.object.isRequired,
+  filters: PropTypes.object.isRequired,
   removeFilter: PropTypes.func.isRequired
 };
 

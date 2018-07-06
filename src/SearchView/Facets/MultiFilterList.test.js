@@ -132,7 +132,7 @@ describe('<MultiFilterList/>', () => {
       />
     );
     wrapper
-      .find('.ml-facet-remove-constraint')
+      .find('.ml-facet-remove-filter')
       .simulate('change');
     expect(removeFilterSpy).toNotHaveBeenCalled();
     wrapper.find('.ml-facet-apply').simulate('click');
@@ -149,7 +149,7 @@ describe('<MultiFilterList/>', () => {
         selectedValues={[{ value: 'value1' }]}
       />
     );
-    const checkbox = wrapper.find('.ml-facet-remove-constraint');
+    const checkbox = wrapper.find('.ml-facet-remove-filter');
     checkbox.simulate('change');
     checkbox.simulate('change');
     wrapper.find('.ml-facet-apply').simulate('click');

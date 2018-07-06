@@ -63,7 +63,7 @@ class MultiFilterList extends React.Component {
                   .includes(value.value) && (
                   <div key={value.value}>
                     <input
-                      className="ml-facet-remove-constraint"
+                      className="ml-facet-remove-filter"
                       type="checkbox"
                       name={value.value}
                       checked={!this.state.valuesToRemove.includes(value.value)}

@@ -4,19 +4,19 @@ import expect from 'expect';
 import CurrentFilters from './CurrentFilters';
 
 describe('<CurrentFilters/>', () => {
-  it('renders without constraints', () => {
+  it('renders without filters', () => {
     expect(shallow(
       <CurrentFilters
-        constraints={{}}
+        filters={{}}
         removeFilter={() => {}}
       />
     ).length).toEqual(1);
   });
 
-  it('renders with constraints', () => {
+  it('renders with filters', () => {
     expect(shallow(
       <CurrentFilters
-        constraints={{Test: {and: [{name: 'value1'}, {name: 'value2'}]}}}
+        filters={{Test: {and: [{name: 'value1'}, {name: 'value2'}]}}}
         removeFilter={() => {}}
       />
     ).length).toEqual(1);

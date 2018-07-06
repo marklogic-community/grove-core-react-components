@@ -17,7 +17,7 @@ const SingleFilterList = ({
                 {removeFilter && (
                   <span
                     className={
-                      'glyphicon glyphicon-remove-circle icon-white ml-facet-remove-constraint'
+                      'glyphicon glyphicon-remove-circle icon-white ml-facet-remove-filter'
                     }
                     onClick={removeFilter.bind(null, value.value)}
                     style={{ cursor: 'pointer' }}
