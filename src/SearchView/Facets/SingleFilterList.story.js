@@ -3,21 +3,21 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import MultiConstraintList from './MultiConstraintList';
+import SingleFilterList from './SingleFilterList';
 import { defaultValues } from './shared';
 
-storiesOf('SearchView/Facets/MultiConstraintList', module)
+storiesOf('SearchView/Facets/SingleFilterList', module)
   .add('default', () => (
-    <MultiConstraintList
+    <SingleFilterList
       values={defaultValues}
-      addConstraint={action('addConstraint')}
+      addFilter={action('addFilter')}
     />
   ))
   .add('with a selection', () => (
-    <MultiConstraintList
+    <SingleFilterList
       values={defaultValues}
       selectedValues={[{ value: 'First' }]}
-      addConstraint={action('addConstraint')}
-      removeConstraint={action('removeConstraint')}
+      addFilter={action('addFilter')}
+      removeFilter={action('removeFilter')}
     />
   ));

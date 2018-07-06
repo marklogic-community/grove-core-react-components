@@ -8,7 +8,7 @@ const initialState = {
   valuesToRemove: []
 };
 
-class MultiConstraintList extends React.Component {
+class MultiFilterList extends React.Component {
   constructor(props) {
     super(props);
     this.state = initialState;
@@ -44,9 +44,9 @@ class MultiConstraintList extends React.Component {
   }
 
   applyChanges() {
-    this.state.valuesToAdd.forEach(value => this.props.addConstraint(value));
+    this.state.valuesToAdd.forEach(value => this.props.addFilter(value));
     this.state.valuesToRemove.forEach(value =>
-      this.props.removeConstraint(value)
+      this.props.removeFilter(value)
     );
     this.setState(initialState);
   }
@@ -55,7 +55,7 @@ class MultiConstraintList extends React.Component {
     return (
       <div>
         {this.props.selectedValues && (
-          <div className="selectedConstraintValues">
+          <div className="selectedFilterValues">
             {this.props.values.map(
               value =>
                 this.props.selectedValues
@@ -79,14 +79,14 @@ class MultiConstraintList extends React.Component {
             )}
           </div>
         )}
-        <div className="nonSelectedConstraintValues">
+        <div className="nonSelectedFilterValues">
           {this.props.values.map(
             value =>
               (!this.props.selectedValues ||
                 !this.props.selectedValues
                   .map(v => v.value)
                   .includes(value.value)) && (
-                <div className="nonSelectedConstraintValue" key={value.value}>
+                <div className="nonSelectedFilterValue" key={value.value}>
                   <input
                     className="ml-facet-add-pos"
                     type="checkbox"
@@ -134,7 +134,7 @@ class MultiConstraintList extends React.Component {
   }
 }
 
-MultiConstraintList.propTypes = {
+MultiFilterList.propTypes = {
   values: PropTypes.arrayOf(
     PropTypes.shape({
       value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -142,8 +142,8 @@ MultiConstraintList.propTypes = {
     })
   ).isRequired,
   selectedValues: PropTypes.array.isRequired,
-  addConstraint: PropTypes.func.isRequired,
-  removeConstraint: PropTypes.func.isRequired
+  addFilter: PropTypes.func.isRequired,
+  removeFilter: PropTypes.func.isRequired
 };
 
-export default MultiConstraintList;
+export default MultiFilterList;

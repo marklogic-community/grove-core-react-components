@@ -1,23 +1,23 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import expect from 'expect';
-import CurrentConstraints from './CurrentConstraints';
+import CurrentFilters from './CurrentFilters';
 
-describe('<CurrentConstraints/>', () => {
+describe('<CurrentFilters/>', () => {
   it('renders without constraints', () => {
     expect(shallow(
-      <CurrentConstraints
+      <CurrentFilters
         constraints={{}}
-        removeConstraint={() => {}}
+        removeFilter={() => {}}
       />
     ).length).toEqual(1);
   });
 
   it('renders with constraints', () => {
     expect(shallow(
-      <CurrentConstraints
+      <CurrentFilters
         constraints={{Test: {and: [{name: 'value1'}, {name: 'value2'}]}}}
-        removeConstraint={() => {}}
+        removeFilter={() => {}}
       />
     ).length).toEqual(1);
   });

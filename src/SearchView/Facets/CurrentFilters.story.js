@@ -3,12 +3,12 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import CurrentConstraints from './CurrentConstraints';
+import CurrentFilters from './CurrentFilters';
 
-storiesOf('SearchView/Facets/CurrentConstraints', module).add('default', () => (
+storiesOf('SearchView/Facets/CurrentFilters', module).add('default', () => (
   // TODO: allow state change
-  <CurrentConstraints
+  <CurrentFilters
     constraints={{ Example: { and: [{ name: 'selection1' }] } }}
-    removeConstraint={action('removeConstraint')}
+    removeFilter={action('removeFilter')}
   />
 ));

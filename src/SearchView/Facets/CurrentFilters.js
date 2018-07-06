@@ -5,7 +5,7 @@ import TransitionGroup from 'react-transition-group/TransitionGroup';
 import Fade from '../../animations/Fade';
 
 // TODO: truncate values with a truncateLength option
-const CurrentConstraints = ({ constraints, removeConstraint }) => (
+const CurrentFilters = ({ constraints, removeFilter }) => (
   <TransitionGroup className="chiclets" appear={true}>
     {Object.keys(constraints).map(constraintName => {
       const andValues = constraints[constraintName].and || [];
@@ -17,7 +17,7 @@ const CurrentConstraints = ({ constraints, removeConstraint }) => (
               <div
                 key={constraintName + value.name}
                 className="btn btn-success btn-raised"
-                onClick={removeConstraint.bind(
+                onClick={removeFilter.bind(
                   null,
                   constraintName,
                   value.name
@@ -36,9 +36,9 @@ const CurrentConstraints = ({ constraints, removeConstraint }) => (
   </TransitionGroup>
 );
 
-CurrentConstraints.propTypes = {
+CurrentFilters.propTypes = {
   constraints: PropTypes.object.isRequired,
-  removeConstraint: PropTypes.func.isRequired
+  removeFilter: PropTypes.func.isRequired
 };
 
-export default CurrentConstraints;
+export default CurrentFilters;

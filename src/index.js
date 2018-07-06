@@ -3,8 +3,8 @@ export SearchView from './SearchView/SearchView';
 export SearchBar from './SearchView/SearchBar';
 
 export Facets from './SearchView/Facets/Facets';
-export CurrentConstraints from './SearchView/Facets/CurrentConstraints';
-export SingleConstraintList from './SearchView/Facets/SingleConstraintList';
+export CurrentFilters from './SearchView/Facets/CurrentFilters';
+export SingleFilterList from './SearchView/Facets/SingleFilterList';
 
 export SearchResponseView from './SearchView/SearchResponseView';
 export SearchMetrics from './SearchView/SearchMetrics';

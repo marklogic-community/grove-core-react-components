@@ -31,9 +31,9 @@ class SearchView extends Component {
     if (
       prevProps.stagedSearch.page !== this.props.stagedSearch.page ||
       // Intentionally using != to test object reference (ie, is it the
-      // same object?) Because our Redux flow will swap out the constraints
+      // same object?) Because our Redux flow will swap out the filters
       // object on any change, but keep it referentially the same otherwise
-      prevProps.stagedSearch.constraints != this.props.stagedSearch.constraints
+      prevProps.stagedSearch.filters != this.props.stagedSearch.filters
     ) {
       // TODO: DRY up with this.search()?
       this.props.runSearch(this.props.stagedSearch);
@@ -49,10 +49,10 @@ class SearchView extends Component {
       <Row>
         <Col md={3}>
           <Facets
-            availableConstraints={this.props.facets}
-            activeConstraints={this.props.activeConstraints}
-            addConstraint={this.props.addConstraint}
-            removeConstraint={this.props.removeConstraint}
+            availableFilters={this.props.facets}
+            activeFilters={this.props.activeFilters}
+            addFilter={this.props.addFilter}
+            removeFilter={this.props.removeFilter}
           />
         </Col>
         <Col md={9}>
@@ -107,8 +107,8 @@ SearchView.propTypes = {
 
   // TODO: rename facets => activeConstraints?
   facets: PropTypes.object,
-  addConstraint: PropTypes.func.isRequired,
-  removeConstraint: PropTypes.func.isRequired
+  addFilter: PropTypes.func.isRequired,
+  removeFilter: PropTypes.func.isRequired
 };
 
 export default SearchView;

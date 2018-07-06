@@ -1,151 +1,151 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import expect from 'expect';
-import MultiConstraintList from './MultiConstraintList';
+import MultiFilterList from './MultiFilterList';
 
-describe('<MultiConstraintList/>', () => {
+describe('<MultiFilterList/>', () => {
   it('renders', () => {
     expect(
-      shallow(<MultiConstraintList values={[]} addConstraint={() => {}} />)
+      shallow(<MultiFilterList values={[]} addFilter={() => {}} />)
         .length
     ).toEqual(1);
   });
 
   it('renders with values', () => {
     const wrapper = shallow(
-      <MultiConstraintList
+      <MultiFilterList
         values={[{ value: 'value1', count: 1 }, { value: 'value2', count: 2 }]}
-        addConstraint={() => {}}
+        addFilter={() => {}}
       />
     );
     expect(wrapper.length).toEqual(1);
     expect(
       wrapper
-        .find('.nonSelectedConstraintValues')
+        .find('.nonSelectedFilterValues')
         .contains(<span title="value1"> value1</span>)
     ).toBe(true);
   });
 
   it('shows a single selected value', () => {
     const wrapper = shallow(
-      <MultiConstraintList
+      <MultiFilterList
         values={[{ value: 'value1', count: 1 }, { value: 'value2', count: 2 }]}
         selectedValues={[{ value: 'value1' }]}
-        removeConstraint={() => {}}
-        addConstraint={() => {}}
+        removeFilter={() => {}}
+        addFilter={() => {}}
       />
     );
     expect(
       wrapper
-        .find('.nonSelectedConstraintValues')
+        .find('.nonSelectedFilterValues')
         .contains(<span title="value1"> value1</span>)
     ).toBe(false);
     expect(
       wrapper
-        .find('.selectedConstraintValues')
+        .find('.selectedFilterValues')
         .contains(<span title="value1"> value1</span>)
     ).toBe(true);
   });
 
   it('shows two selected values', () => {
     const wrapper = shallow(
-      <MultiConstraintList
+      <MultiFilterList
         values={[{ value: 'value1', count: 1 }, { value: 'value2', count: 2 }]}
         selectedValues={[{ value: 'value1' }, { value: 'value2' }]}
-        addConstraint={() => {}}
-        removeConstraint={() => {}}
+        addFilter={() => {}}
+        removeFilter={() => {}}
       />
     );
     expect(
       wrapper
-        .find('.selectedConstraintValues')
+        .find('.selectedFilterValues')
         .contains(<span title="value1"> value1</span>)
     ).toBe(true);
     expect(
       wrapper
-        .find('.selectedConstraintValues')
+        .find('.selectedFilterValues')
         .contains(<span title="value2"> value2</span>)
     ).toBe(true);
   });
 
   it('allows a value to be selected', () => {
-    const addConstraintSpy = expect.createSpy();
+    const addFilterSpy = expect.createSpy();
     const wrapper = shallow(
-      <MultiConstraintList
+      <MultiFilterList
         values={[{ value: 'value1', count: 1 }, { value: 'value2', count: 2 }]}
-        addConstraint={addConstraintSpy}
+        addFilter={addFilterSpy}
       />
     );
     wrapper
-      .find('.nonSelectedConstraintValue .ml-facet-add-pos')
+      .find('.nonSelectedFilterValue .ml-facet-add-pos')
       .first()
       .simulate('change');
-    expect(addConstraintSpy).toNotHaveBeenCalled();
+    expect(addFilterSpy).toNotHaveBeenCalled();
     wrapper.find('.ml-facet-apply').simulate('click');
-    expect(addConstraintSpy).toHaveBeenCalledWith('value1');
+    expect(addFilterSpy).toHaveBeenCalledWith('value1');
   });
 
   it('does not select a value when it is checked, then unchecked', () => {
-    const addConstraintSpy = expect.createSpy();
+    const addFilterSpy = expect.createSpy();
     const wrapper = shallow(
-      <MultiConstraintList
+      <MultiFilterList
         values={[{ value: 'value1', count: 1 }, { value: 'value2', count: 2 }]}
-        addConstraint={addConstraintSpy}
+        addFilter={addFilterSpy}
       />
     );
     const checkbox = wrapper
-      .find('.nonSelectedConstraintValue .ml-facet-add-pos')
+      .find('.nonSelectedFilterValue .ml-facet-add-pos')
       .first();
     checkbox.simulate('change');
     checkbox.simulate('change');
-    expect(addConstraintSpy).toNotHaveBeenCalled();
+    expect(addFilterSpy).toNotHaveBeenCalled();
     wrapper.find('.ml-facet-apply').simulate('click');
-    expect(addConstraintSpy).toNotHaveBeenCalled();
+    expect(addFilterSpy).toNotHaveBeenCalled();
   });
 
   // TODO
   it('allows two values to be selected', () => {
-    const addConstraintSpy = expect.createSpy();
+    const addFilterSpy = expect.createSpy();
     const wrapper = shallow(
-      <MultiConstraintList
+      <MultiFilterList
         values={[{ value: 'value1', count: 1 }, { value: 'value2', count: 2 }]}
-        addConstraint={addConstraintSpy}
+        addFilter={addFilterSpy}
       />
     );
-    const checkboxes = wrapper.find('.nonSelectedConstraintValue .ml-facet-add-pos');
+    const checkboxes = wrapper.find('.nonSelectedFilterValue .ml-facet-add-pos');
     checkboxes.first().simulate('change');
     checkboxes.last().simulate('change');
-    expect(addConstraintSpy).toNotHaveBeenCalled();
+    expect(addFilterSpy).toNotHaveBeenCalled();
     wrapper.find('.ml-facet-apply').simulate('click');
-    expect(addConstraintSpy).toHaveBeenCalledWith('value1');
-    expect(addConstraintSpy).toHaveBeenCalledWith('value2');
+    expect(addFilterSpy).toHaveBeenCalledWith('value1');
+    expect(addFilterSpy).toHaveBeenCalledWith('value2');
   });
 
   it('allows a value to be de-selected', () => {
-    const removeConstraintSpy = expect.createSpy();
+    const removeFilterSpy = expect.createSpy();
     const wrapper = shallow(
-      <MultiConstraintList
+      <MultiFilterList
         values={[{ value: 'value1', count: 1 }, { value: 'value2', count: 2 }]}
-        addConstraint={() => {}}
-        removeConstraint={removeConstraintSpy}
+        addFilter={() => {}}
+        removeFilter={removeFilterSpy}
         selectedValues={[{ value: 'value1' }]}
       />
     );
     wrapper
       .find('.ml-facet-remove-constraint')
       .simulate('change');
-    expect(removeConstraintSpy).toNotHaveBeenCalled();
+    expect(removeFilterSpy).toNotHaveBeenCalled();
     wrapper.find('.ml-facet-apply').simulate('click');
-    expect(removeConstraintSpy).toHaveBeenCalledWith('value1');
+    expect(removeFilterSpy).toHaveBeenCalledWith('value1');
   });
 
   it('does not de-select value unchecked then re-checked', () => {
-    const removeConstraintSpy = expect.createSpy();
+    const removeFilterSpy = expect.createSpy();
     const wrapper = shallow(
-      <MultiConstraintList
+      <MultiFilterList
         values={[{ value: 'value1', count: 1 }, { value: 'value2', count: 2 }]}
-        addConstraint={() => {}}
-        removeConstraint={removeConstraintSpy}
+        addFilter={() => {}}
+        removeFilter={removeFilterSpy}
         selectedValues={[{ value: 'value1' }]}
       />
     );
@@ -153,6 +153,6 @@ describe('<MultiConstraintList/>', () => {
     checkbox.simulate('change');
     checkbox.simulate('change');
     wrapper.find('.ml-facet-apply').simulate('click');
-    expect(removeConstraintSpy).toNotHaveBeenCalled();
+    expect(removeFilterSpy).toNotHaveBeenCalled();
   });
 });

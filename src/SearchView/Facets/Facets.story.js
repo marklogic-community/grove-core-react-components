@@ -19,8 +19,8 @@ class InteractiveFacets extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeConstraints: {},
-      availableConstraints: defaultNonSelectedFacets
+      activeFilters: {},
+      availableFilters: defaultNonSelectedFacets
     };
   }
 
@@ -28,16 +28,16 @@ class InteractiveFacets extends React.Component {
     return (
       <div className="col-md-3">
         <Facets
-          activeConstraints={this.state.activeConstraints}
-          availableConstraints={this.state.availableConstraints}
-          addConstraint={(facetName, value) => {
+          activeFilters={this.state.activeFilters}
+          availableFilters={this.state.availableFilters}
+          addFilter={(facetName, value) => {
             this.setState({
-              activeConstraints: {
-                ...this.state.activeConstraints,
+              activeFilters: {
+                ...this.state.activeFilters,
                 [facetName]: { and: [{ name: value, value: value }] }
               },
-              availableConstraints: {
-                ...this.state.availableConstraints,
+              availableFilters: {
+                ...this.state.availableFilters,
                 [facetName]: {
                   facetValues: filter(defaultValues, {
                     name: value,
@@ -47,11 +47,11 @@ class InteractiveFacets extends React.Component {
               }
             });
           }}
-          removeConstraint={facetName => {
+          removeFilter={facetName => {
             this.setState({
-              activeConstraints: omit(this.state.activeConstraints, facetName),
-              availableConstraints: {
-                ...this.state.availableConstraints,
+              activeFilters: omit(this.state.activeFilters, facetName),
+              availableFilters: {
+                ...this.state.availableFilters,
                 [facetName]: {
                   facetValues: defaultValues
                 }
@@ -68,22 +68,22 @@ storiesOf('SearchView/Facets', module)
   .add('default', () => (
     <div className="col-md-3">
       <Facets
-        activeConstraints={{}}
-        availableConstraints={defaultNonSelectedFacets}
-        addConstraint={action('addConstraint')}
-        removeConstraint={action('removeConstraint')}
+        activeFilters={{}}
+        availableFilters={defaultNonSelectedFacets}
+        addFilter={action('addFilter')}
+        removeFilter={action('removeFilter')}
       />
     </div>
   ))
   .add('with a selection', () => (
     <div className="col-md-3">
       <Facets
-        activeConstraints={{
+        activeFilters={{
           Example: { and: [{ name: 'First', value: 'First' }] }
         }}
-        availableConstraints={defaultNonSelectedFacets}
-        addConstraint={action('addConstraint')}
-        removeConstraint={action('removeConstraint')}
+        availableFilters={defaultNonSelectedFacets}
+        addFilter={action('addFilter')}
+        removeFilter={action('removeFilter')}
       />
     </div>
   ))

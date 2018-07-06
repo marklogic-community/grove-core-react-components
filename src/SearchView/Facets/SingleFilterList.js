@@ -1,25 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const SingleConstraintList = ({
+const SingleFilterList = ({
   values,
   selectedValues,
-  addConstraint,
-  removeConstraint
+  addFilter,
+  removeFilter
 }) => (
   <div>
     {selectedValues && (
-      <div className="selectedConstraintValues">
+      <div className="selectedFilterValues">
         {values.map(
           value =>
             selectedValues.map(v => v.value).includes(value.value) && (
               <div key={value.value}>
-                {removeConstraint && (
+                {removeFilter && (
                   <span
                     className={
                       'glyphicon glyphicon-remove-circle icon-white ml-facet-remove-constraint'
                     }
-                    onClick={removeConstraint.bind(null, value.value)}
+                    onClick={removeFilter.bind(null, value.value)}
                     style={{ cursor: 'pointer' }}
                   />
                 )}
@@ -30,7 +30,7 @@ const SingleConstraintList = ({
         )}
       </div>
     )}
-    <div className="nonSelectedConstraintValues">
+    <div className="nonSelectedFilterValues">
       {values.map(
         value =>
           (!selectedValues ||
@@ -38,7 +38,7 @@ const SingleConstraintList = ({
             <div key={value.value}>
               <i
                 className="glyphicon glyphicon-plus-sign ml-facet-add-pos"
-                onClick={addConstraint.bind(null, value.value)}
+                onClick={addFilter.bind(null, value.value)}
                 style={{ cursor: 'pointer' }}
               />
               <span title={value.value}> {value.value}</span>
@@ -66,7 +66,7 @@ const SingleConstraintList = ({
   </div>
 );
 
-SingleConstraintList.propTypes = {
+SingleFilterList.propTypes = {
   values: PropTypes.arrayOf(
     PropTypes.shape({
       value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -74,8 +74,8 @@ SingleConstraintList.propTypes = {
     })
   ).isRequired,
   selectedValues: PropTypes.array,
-  addConstraint: PropTypes.func.isRequired,
-  removeConstraint: PropTypes.func
+  addFilter: PropTypes.func.isRequired,
+  removeFilter: PropTypes.func
 };
 
-export default SingleConstraintList;
+export default SingleFilterList;

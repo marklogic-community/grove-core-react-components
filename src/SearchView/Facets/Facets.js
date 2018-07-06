@@ -1,16 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import CurrentConstraints from './CurrentConstraints';
-import SingleConstraintList from './SingleConstraintList';
+import CurrentFilters from './CurrentFilters';
+import SingleFilterList from './SingleFilterList';
 
 // TODO: truncate names with a truncateLength option
 // TODO: handle blank values
 const Facets = ({
-  activeConstraints,
-  availableConstraints,
-  addConstraint,
-  removeConstraint
+  activeFilters,
+  availableFilters,
+  addFilter,
+  removeFilter
 }) => (
   <div className="ml-facet-list list-group">
     {
@@ -22,26 +22,26 @@ const Facets = ({
       //   toggle="toggle({facet:facet, value:value})"
       //   truncate="{{ truncateLength }}"></ml-chiclets>
     }
-    {!!activeConstraints && (
-      <CurrentConstraints
-        constraints={activeConstraints}
-        removeConstraint={removeConstraint}
+    {!!activeFilters && (
+      <CurrentFilters
+        filters={activeFilters}
+        removeFilter={removeFilter}
       />
     )}
-    {availableConstraints &&
-      Object.keys(availableConstraints).map(facetName => (
+    {availableFilters &&
+      Object.keys(availableFilters).map(facetName => (
         <div key={facetName} className="panel panel-primary ml-facet">
           <div className="panel-heading">
             <h3 className="panel-title">{facetName}</h3>
           </div>
           <div className="panel-body">
-            <SingleConstraintList
-              values={availableConstraints[facetName].facetValues}
+            <SingleFilterList
+              values={availableFilters[facetName].facetValues}
               selectedValues={
-                activeConstraints[facetName] && activeConstraints[facetName].and
+                activeFilters[facetName] && activeFilters[facetName].and
               }
-              addConstraint={addConstraint.bind(null, facetName)}
-              removeConstraint={removeConstraint.bind(null, facetName)}
+              addFilter={addFilter.bind(null, facetName)}
+              removeFilter={removeFilter.bind(null, facetName)}
             />
           </div>
         </div>
@@ -50,9 +50,9 @@ const Facets = ({
 );
 
 Facets.propTypes = {
-  activeConstraints: PropTypes.object.isRequired,
-  addConstraint: PropTypes.func.isRequired,
-  removeConstraint: PropTypes.func.isRequired
+  activeFilters: PropTypes.object.isRequired,
+  addFilter: PropTypes.func.isRequired,
+  removeFilter: PropTypes.func.isRequired
 };
 
 export default Facets;
