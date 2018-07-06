@@ -71,27 +71,30 @@ Note that you can also provide `resultComponent` to the higher-level <SearchView
 You can use the <CardResult> in this library as a starting point, if you wish. It accepts `content` and `header` component props. For example:
 
 ```javascript
-import { CardResult, SearchView } from 'muir-react';
+import { CardResult, SearchView, SearchSnippet} from 'muir-react';
 
-const ImageSearchResultContent = ({result, detailPath, imageURL}) => {
+const CustomSearchResultContent = ({result, detailPath}) => {
   return (
-  <div style={{textAlign: 'center'}}>
-    <Link to={detailPath + encodeURIComponent(result.uri)}>
-      <img style={{maxHeight: '170px', maxWidth: '200px'}} src={'/api/documents?uri=' + imageURL} />
-    </Link>
+  <div>
+    <p>You got a result!</p>
+    <div className="ml-search-result-matches">
+      {result.matches &&
+        result.matches.map((match, index) => (
+          <SearchSnippet match={match} key={index} />
+        ))}
+    </div>
   </div>
   )
 };
 
-const ImageSearchResult = (props) => {
+const CustomSearchResult = (props) => {
   // suppress the header
-  // provide imageURL, which, like all props, will be passed to the content component
+  // add 'You got a result!' to each result
   return (
     <CardResult
       {...props}
       header={null}
-      imageURL={props.imageUrl}
-      content={ImageSearchResultContent}
+      content={CustomSearchResultContent}
     />
   );
 };
@@ -99,11 +102,10 @@ return () => (
   <SearchView
     {...this.props}
     detailPath="/detail/"
-    resultComponent={SearchResultConnection(ImageSearchResult)}
+    resultComponent={CustomSearchResult}
   />
 )
 ```
-
 
 #### Customizing display when no results are found
 
