@@ -7,24 +7,23 @@ import Fade from '../../animations/Fade';
 // TODO: truncate values with a truncateLength option
 const CurrentFilters = ({ filters, removeFilter }) => (
   <TransitionGroup className="chiclets" appear={true}>
-    {Object.keys(filters).map(constraintName => {
-      const andValues = filters[constraintName].and || [];
+    {filters.map(filter => {
       return (
         // <div ng-repeat="(index, facet) in facets | object2Array | filter:{selected: true}">
-        <Fade key={constraintName}>
+        <Fade key={filter.constraint}>
           <div style={{ marginBottom: '10px' }}>
-            {andValues.map(value => (
+            {filter.value.map(value => (
               <div
-                key={constraintName + value.name}
+                key={filter.constraint + value}
                 className="btn btn-success btn-raised"
                 onClick={removeFilter.bind(
                   null,
-                  constraintName,
-                  value.name
+                  filter.constraint,
+                  value
                 )}
               >
-                <span title={value.name}>
-                  {constraintName}: {value.name}{' '}
+                <span title={value}>
+                  {filter.constraint}: {value}{' '}
                 </span>
                 <span className="glyphicon glyphicon-remove-circle icon-white" />
               </div>
@@ -37,7 +36,7 @@ const CurrentFilters = ({ filters, removeFilter }) => (
 );
 
 CurrentFilters.propTypes = {
-  filters: PropTypes.object.isRequired,
+  filters: PropTypes.array.isRequired,
   removeFilter: PropTypes.func.isRequired
 };
 

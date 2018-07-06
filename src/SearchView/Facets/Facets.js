@@ -22,7 +22,7 @@ const Facets = ({
       //   toggle="toggle({facet:facet, value:value})"
       //   truncate="{{ truncateLength }}"></ml-chiclets>
     }
-    {!!activeFilters && (
+    {(activeFilters.length > 0) && (
       <CurrentFilters
         filters={activeFilters}
         removeFilter={removeFilter}
@@ -50,7 +50,7 @@ const Facets = ({
 );
 
 Facets.propTypes = {
-  activeFilters: PropTypes.object.isRequired,
+  activeFilters: PropTypes.array.isRequired,
   addFilter: PropTypes.func.isRequired,
   removeFilter: PropTypes.func.isRequired
 };

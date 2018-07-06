@@ -105,8 +105,9 @@ SearchView.propTypes = {
   changePage: PropTypes.func,
   detailPath: PropTypes.string,
 
-  // TODO: rename facets => activeConstraints?
+  // TODO: rename facets => availableFilters?
   facets: PropTypes.object,
+  activeFilters: PropTypes.array.isRequired,
   addFilter: PropTypes.func.isRequired,
   removeFilter: PropTypes.func.isRequired
 };

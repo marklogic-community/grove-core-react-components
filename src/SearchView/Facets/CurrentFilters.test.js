@@ -7,7 +7,7 @@ describe('<CurrentFilters/>', () => {
   it('renders without filters', () => {
     expect(shallow(
       <CurrentFilters
-        filters={{}}
+        filters={[]}
         removeFilter={() => {}}
       />
     ).length).toEqual(1);
@@ -16,7 +16,11 @@ describe('<CurrentFilters/>', () => {
   it('renders with filters', () => {
     expect(shallow(
       <CurrentFilters
-        filters={{Test: {and: [{name: 'value1'}, {name: 'value2'}]}}}
+        filters={[{
+          constraint: 'Test',
+          mode: 'and',
+          value: ['value1', 'value2']
+        }]}
         removeFilter={() => {}}
       />
     ).length).toEqual(1);

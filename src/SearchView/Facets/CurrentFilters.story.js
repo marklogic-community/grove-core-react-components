@@ -8,7 +8,10 @@ import CurrentFilters from './CurrentFilters';
 storiesOf('SearchView/Facets/CurrentFilters', module).add('default', () => (
   // TODO: allow state change
   <CurrentFilters
-    filters={{ Example: { and: [{ name: 'selection1' }] } }}
+    filters={[{
+      constraint: 'Example',
+      value: [ 'selection1' ]
+    }]}
     removeFilter={action('removeFilter')}
   />
 ));

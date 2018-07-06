@@ -5,6 +5,6 @@ import Facets from './Facets';
 
 describe('<Facets/>', () => {
   it('renders', () => {
-    expect(shallow(<Facets />).length).toEqual(1);
+    expect(shallow(<Facets activeFilters={[]} />).length).toEqual(1);
   });
 });
