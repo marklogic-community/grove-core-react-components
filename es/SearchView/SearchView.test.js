@@ -5,15 +5,18 @@ import { mockResults } from './test/mockData';
 import SearchView from './SearchView';
 import SearchResponseView from './SearchResponseView';
 
+const requiredProps = {
+  activeFilters: []
+};
+
 const enterQueryText = (text, wrapper) => {
-  const typing = {target: {value: text}};
+  const typing = { target: { value: text } };
   wrapper.find('input.ml-qtext-input').simulate('change', typing);
 };
 
 describe('<SearchView />', () => {
-
   it('renders without crashing', () => {
-    shallow(<SearchView />);
+    shallow(<SearchView {...requiredProps} />);
   });
 
   const executedSearch = {
@@ -23,11 +26,13 @@ describe('<SearchView />', () => {
   };
 
   it('renders, integrated with children, without crashing', () => {
-    mount(<SearchView executedSearch={executedSearch} />);
+    mount(<SearchView {...requiredProps} executedSearch={executedSearch} />);
   });
 
   it('renders <SearchResponseView> if search complete', () => {
-    const wrapper = shallow(<SearchView isSearchComplete={true} />);
+    const wrapper = shallow(
+      <SearchView {...requiredProps} isSearchComplete={true} />
+    );
     expect(wrapper.find(SearchResponseView).length).toEqual(1);
   });
 
@@ -40,27 +45,33 @@ describe('<SearchView />', () => {
   it('runs a search', () => {
     const searchSpy = createSpy();
     const wrapper = mount(
-      <SearchView runSearch={searchSpy} queryText='Waldo' />
+      <SearchView {...requiredProps} runSearch={searchSpy} queryText="Waldo" />
     );
     wrapper.find('button.ml-execute-search').simulate('submit');
     expect(searchSpy).toHaveBeenCalled();
   });
 
   it('displays search results', () => {
-    const wrapper = render(<SearchView executedSearch={executedSearch}/>);
+    const wrapper = render(
+      <SearchView {...requiredProps} executedSearch={executedSearch} />
+    );
     wrapper.find('.ml-search-results').text('Another Search Result');
   });
 
   it('uses queryText from props', () => {
     const wrapper = mount(
-      <SearchView queryText={'from-props'}/>
+      <SearchView {...requiredProps} queryText={'from-props'} />
     );
-    expect(wrapper.find('input.ml-qtext-input').props().value).toEqual('from-props');
+    expect(wrapper.find('input.ml-qtext-input').props().value).toEqual(
+      'from-props'
+    );
   });
 
   it('calls props.handleQueryTextChange on typing', () => {
     const spy = createSpy();
-    const wrapper = mount(<SearchView handleQueryTextChange={spy}/>);
+    const wrapper = mount(
+      <SearchView {...requiredProps} handleQueryTextChange={spy} />
+    );
     enterQueryText('query', wrapper);
     expect(spy).toHaveBeenCalledWith('query');
     wrapper.find('button.ml-qtext-clear').simulate('click');
@@ -68,5 +79,4 @@ describe('<SearchView />', () => {
   });
 
   it('returns a helpful error when no runSearch() provided');
-
 });

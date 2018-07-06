@@ -5,36 +5,35 @@ import TransitionGroup from 'react-transition-group/TransitionGroup';
 import Fade from '../../animations/Fade';
 
 // TODO: truncate values with a truncateLength option
-var CurrentConstraints = function CurrentConstraints(_ref) {
-  var constraints = _ref.constraints,
-      removeConstraint = _ref.removeConstraint;
+var CurrentFilters = function CurrentFilters(_ref) {
+  var filters = _ref.filters,
+      removeFilter = _ref.removeFilter;
   return React.createElement(
     TransitionGroup,
     { className: 'chiclets', appear: true },
-    Object.keys(constraints).map(function (constraintName) {
-      var andValues = constraints[constraintName].and || [];
+    filters.map(function (filter) {
       return (
         // <div ng-repeat="(index, facet) in facets | object2Array | filter:{selected: true}">
         React.createElement(
           Fade,
-          { key: constraintName },
+          { key: filter.constraint },
           React.createElement(
             'div',
             { style: { marginBottom: '10px' } },
-            andValues.map(function (value) {
+            filter.value.map(function (value) {
               return React.createElement(
                 'div',
                 {
-                  key: constraintName + value.name,
+                  key: filter.constraint + value,
                   className: 'btn btn-success btn-raised',
-                  onClick: removeConstraint.bind(null, constraintName, value.name)
+                  onClick: removeFilter.bind(null, filter.constraint, value)
                 },
                 React.createElement(
                   'span',
-                  { title: value.name },
-                  constraintName,
+                  { title: value },
+                  filter.constraint,
                   ': ',
-                  value.name,
+                  value,
                   ' '
                 ),
                 React.createElement('span', { className: 'glyphicon glyphicon-remove-circle icon-white' })
@@ -47,9 +46,9 @@ var CurrentConstraints = function CurrentConstraints(_ref) {
   );
 };
 
-CurrentConstraints.propTypes = process.env.NODE_ENV !== "production" ? {
-  constraints: PropTypes.object.isRequired,
-  removeConstraint: PropTypes.func.isRequired
+CurrentFilters.propTypes = process.env.NODE_ENV !== "production" ? {
+  filters: PropTypes.array.isRequired,
+  removeFilter: PropTypes.func.isRequired
 } : {};
 
-export default CurrentConstraints;
+export default CurrentFilters;

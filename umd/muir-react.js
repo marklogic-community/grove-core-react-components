@@ -1,5 +1,5 @@
 /*!
- * muir-react v0.8.4
+ * muir-react v0.9.0
  * Apache-2.0 Licensed
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -8,9 +8,9 @@
 	else if(typeof define === 'function' && define.amd)
 		define(["react"], factory);
 	else if(typeof exports === 'object')
-		exports["MLTreehouse"] = factory(require("react"));
+		exports["MuirCoreReactComponents"] = factory(require("react"));
 	else
-		root["MLTreehouse"] = factory(root["React"]);
+		root["MuirCoreReactComponents"] = factory(root["React"]);
 })(typeof self !== 'undefined' ? self : this, function(__WEBPACK_EXTERNAL_MODULE_0__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -9532,8 +9532,8 @@ SearchBar.propTypes = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__CurrentConstraints__ = __webpack_require__(153);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__SingleConstraintList__ = __webpack_require__(156);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__CurrentFilters__ = __webpack_require__(153);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__SingleFilterList__ = __webpack_require__(156);
 
 
 
@@ -9543,18 +9543,18 @@ SearchBar.propTypes = {
 // TODO: truncate names with a truncateLength option
 // TODO: handle blank values
 var Facets = function Facets(_ref) {
-  var activeConstraints = _ref.activeConstraints,
-      availableConstraints = _ref.availableConstraints,
-      addConstraint = _ref.addConstraint,
-      removeConstraint = _ref.removeConstraint;
+  var activeFilters = _ref.activeFilters,
+      availableFilters = _ref.availableFilters,
+      addFilter = _ref.addFilter,
+      removeFilter = _ref.removeFilter;
   return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
     'div',
     { className: 'ml-facet-list list-group' },
-    !!activeConstraints && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__CurrentConstraints__["a" /* default */], {
-      constraints: activeConstraints,
-      removeConstraint: removeConstraint
+    activeFilters.length > 0 && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__CurrentFilters__["a" /* default */], {
+      filters: activeFilters,
+      removeFilter: removeFilter
     }),
-    availableConstraints && Object.keys(availableConstraints).map(function (facetName) {
+    availableFilters && Object.keys(availableFilters).map(function (facetName) {
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         { key: facetName, className: 'panel panel-primary ml-facet' },
@@ -9570,11 +9570,11 @@ var Facets = function Facets(_ref) {
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'div',
           { className: 'panel-body' },
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__SingleConstraintList__["a" /* default */], {
-            values: availableConstraints[facetName].facetValues,
-            selectedValues: activeConstraints[facetName] && activeConstraints[facetName].and,
-            addConstraint: addConstraint.bind(null, facetName),
-            removeConstraint: removeConstraint.bind(null, facetName)
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__SingleFilterList__["a" /* default */], {
+            values: availableFilters[facetName].facetValues,
+            selectedValues: activeFilters[facetName] && activeFilters[facetName].and,
+            addFilter: addFilter.bind(null, facetName),
+            removeFilter: removeFilter.bind(null, facetName)
           })
         )
       );
@@ -9583,9 +9583,9 @@ var Facets = function Facets(_ref) {
 };
 
 Facets.propTypes = {
-  activeConstraints: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.object.isRequired,
-  addConstraint: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.func.isRequired,
-  removeConstraint: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.func.isRequired
+  activeFilters: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.array.isRequired,
+  addFilter: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.func.isRequired,
+  removeFilter: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.func.isRequired
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (Facets);
@@ -9609,36 +9609,35 @@ Facets.propTypes = {
 
 
 // TODO: truncate values with a truncateLength option
-var CurrentConstraints = function CurrentConstraints(_ref) {
-  var constraints = _ref.constraints,
-      removeConstraint = _ref.removeConstraint;
+var CurrentFilters = function CurrentFilters(_ref) {
+  var filters = _ref.filters,
+      removeFilter = _ref.removeFilter;
   return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
     __WEBPACK_IMPORTED_MODULE_2_react_transition_group_TransitionGroup___default.a,
     { className: 'chiclets', appear: true },
-    Object.keys(constraints).map(function (constraintName) {
-      var andValues = constraints[constraintName].and || [];
+    filters.map(function (filter) {
       return (
         // <div ng-repeat="(index, facet) in facets | object2Array | filter:{selected: true}">
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           __WEBPACK_IMPORTED_MODULE_3__animations_Fade__["a" /* default */],
-          { key: constraintName },
+          { key: filter.constraint },
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'div',
             { style: { marginBottom: '10px' } },
-            andValues.map(function (value) {
+            filter.value.map(function (value) {
               return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
                 {
-                  key: constraintName + value.name,
+                  key: filter.constraint + value,
                   className: 'btn btn-success btn-raised',
-                  onClick: removeConstraint.bind(null, constraintName, value.name)
+                  onClick: removeFilter.bind(null, filter.constraint, value)
                 },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                   'span',
-                  { title: value.name },
-                  constraintName,
+                  { title: value },
+                  filter.constraint,
                   ': ',
-                  value.name,
+                  value,
                   ' '
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: 'glyphicon glyphicon-remove-circle icon-white' })
@@ -9651,12 +9650,12 @@ var CurrentConstraints = function CurrentConstraints(_ref) {
   );
 };
 
-CurrentConstraints.propTypes = {
-  constraints: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.object.isRequired,
-  removeConstraint: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.func.isRequired
+CurrentFilters.propTypes = {
+  filters: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.array.isRequired,
+  removeFilter: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.func.isRequired
 };
 
-/* harmony default export */ __webpack_exports__["a"] = (CurrentConstraints);
+/* harmony default export */ __webpack_exports__["a"] = (CurrentFilters);
 
 /***/ }),
 /* 154 */
@@ -10041,26 +10040,26 @@ var classNamesShape = exports.classNamesShape = _propTypes2.default.oneOfType([_
 
 
 
-var SingleConstraintList = function SingleConstraintList(_ref) {
+var SingleFilterList = function SingleFilterList(_ref) {
   var values = _ref.values,
       selectedValues = _ref.selectedValues,
-      addConstraint = _ref.addConstraint,
-      removeConstraint = _ref.removeConstraint;
+      addFilter = _ref.addFilter,
+      removeFilter = _ref.removeFilter;
   return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
     'div',
     null,
     selectedValues && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       'div',
-      { className: 'selectedConstraintValues' },
+      { className: 'selectedFilterValues' },
       values.map(function (value) {
         return selectedValues.map(function (v) {
           return v.value;
         }).includes(value.value) && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'div',
           { key: value.value },
-          removeConstraint && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', {
-            className: 'glyphicon glyphicon-remove-circle icon-white ml-facet-remove-constraint',
-            onClick: removeConstraint.bind(null, value.value),
+          removeFilter && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', {
+            className: 'glyphicon glyphicon-remove-circle icon-white ml-facet-remove-filter',
+            onClick: removeFilter.bind(null, value.value),
             style: { cursor: 'pointer' }
           }),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -10081,7 +10080,7 @@ var SingleConstraintList = function SingleConstraintList(_ref) {
     ),
     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       'div',
-      { className: 'nonSelectedConstraintValues' },
+      { className: 'nonSelectedFilterValues' },
       values.map(function (value) {
         return (!selectedValues || !selectedValues.map(function (v) {
           return v.value;
@@ -10090,7 +10089,7 @@ var SingleConstraintList = function SingleConstraintList(_ref) {
           { key: value.value },
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', {
             className: 'glyphicon glyphicon-plus-sign ml-facet-add-pos',
-            onClick: addConstraint.bind(null, value.value),
+            onClick: addFilter.bind(null, value.value),
             style: { cursor: 'pointer' }
           }),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -10112,17 +10111,17 @@ var SingleConstraintList = function SingleConstraintList(_ref) {
   );
 };
 
-SingleConstraintList.propTypes = {
+SingleFilterList.propTypes = {
   values: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.arrayOf(__WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.shape({
     value: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.oneOfType([__WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string, __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.number]),
     count: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.number
   })).isRequired,
   selectedValues: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.array,
-  addConstraint: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.func.isRequired,
-  removeConstraint: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.func
+  addFilter: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.func.isRequired,
+  removeFilter: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.func
 };
 
-/* harmony default export */ __webpack_exports__["a"] = (SingleConstraintList);
+/* harmony default export */ __webpack_exports__["a"] = (SingleFilterList);
 
 /***/ }),
 /* 157 */
@@ -11857,10 +11856,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "SearchBar", function() { return __WEBPACK_IMPORTED_MODULE_1__SearchView_SearchBar__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__SearchView_Facets_Facets__ = __webpack_require__(152);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Facets", function() { return __WEBPACK_IMPORTED_MODULE_2__SearchView_Facets_Facets__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__SearchView_Facets_CurrentConstraints__ = __webpack_require__(153);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "CurrentConstraints", function() { return __WEBPACK_IMPORTED_MODULE_3__SearchView_Facets_CurrentConstraints__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__SearchView_Facets_SingleConstraintList__ = __webpack_require__(156);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "SingleConstraintList", function() { return __WEBPACK_IMPORTED_MODULE_4__SearchView_Facets_SingleConstraintList__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__SearchView_Facets_CurrentFilters__ = __webpack_require__(153);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "CurrentFilters", function() { return __WEBPACK_IMPORTED_MODULE_3__SearchView_Facets_CurrentFilters__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__SearchView_Facets_SingleFilterList__ = __webpack_require__(156);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "SingleFilterList", function() { return __WEBPACK_IMPORTED_MODULE_4__SearchView_Facets_SingleFilterList__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__SearchView_SearchResponseView__ = __webpack_require__(157);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "SearchResponseView", function() { return __WEBPACK_IMPORTED_MODULE_5__SearchView_SearchResponseView__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__SearchView_SearchMetrics__ = __webpack_require__(168);
@@ -11979,9 +11978,9 @@ var SearchView = function (_Component) {
   SearchView.prototype.componentDidUpdate = function componentDidUpdate(prevProps) {
     if (prevProps.stagedSearch.page !== this.props.stagedSearch.page ||
     // Intentionally using != to test object reference (ie, is it the
-    // same object?) Because our Redux flow will swap out the constraints
+    // same object?) Because our Redux flow will swap out the filters
     // object on any change, but keep it referentially the same otherwise
-    prevProps.stagedSearch.constraints != this.props.stagedSearch.constraints) {
+    prevProps.stagedSearch.filters != this.props.stagedSearch.filters) {
       // TODO: DRY up with this.search()?
       this.props.runSearch(this.props.stagedSearch);
     }
@@ -11999,10 +11998,10 @@ var SearchView = function (_Component) {
         __WEBPACK_IMPORTED_MODULE_2_react_bootstrap__["c" /* Col */],
         { md: 3 },
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__Facets_Facets__["a" /* default */], {
-          availableConstraints: this.props.facets,
-          activeConstraints: this.props.activeConstraints,
-          addConstraint: this.props.addConstraint,
-          removeConstraint: this.props.removeConstraint
+          availableFilters: this.props.facets,
+          activeFilters: this.props.activeFilters,
+          addFilter: this.props.addFilter,
+          removeFilter: this.props.removeFilter
         })
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -12062,10 +12061,11 @@ SearchView.propTypes = {
   changePage: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.func,
   detailPath: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string,
 
-  // TODO: rename facets => activeConstraints?
+  // TODO: rename facets => availableFilters?
   facets: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.object,
-  addConstraint: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.func.isRequired,
-  removeConstraint: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.func.isRequired
+  activeFilters: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.array.isRequired,
+  addFilter: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.func.isRequired,
+  removeFilter: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.func.isRequired
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (SearchView);

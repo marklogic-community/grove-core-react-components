@@ -43,9 +43,9 @@ var SearchView = function (_Component) {
   SearchView.prototype.componentDidUpdate = function componentDidUpdate(prevProps) {
     if (prevProps.stagedSearch.page !== this.props.stagedSearch.page ||
     // Intentionally using != to test object reference (ie, is it the
-    // same object?) Because our Redux flow will swap out the constraints
+    // same object?) Because our Redux flow will swap out the filters
     // object on any change, but keep it referentially the same otherwise
-    prevProps.stagedSearch.constraints != this.props.stagedSearch.constraints) {
+    prevProps.stagedSearch.filters != this.props.stagedSearch.filters) {
       // TODO: DRY up with this.search()?
       this.props.runSearch(this.props.stagedSearch);
     }
@@ -63,10 +63,10 @@ var SearchView = function (_Component) {
         Col,
         { md: 3 },
         React.createElement(Facets, {
-          availableConstraints: this.props.facets,
-          activeConstraints: this.props.activeConstraints,
-          addConstraint: this.props.addConstraint,
-          removeConstraint: this.props.removeConstraint
+          availableFilters: this.props.facets,
+          activeFilters: this.props.activeFilters,
+          addFilter: this.props.addFilter,
+          removeFilter: this.props.removeFilter
         })
       ),
       React.createElement(
@@ -126,10 +126,11 @@ SearchView.propTypes = process.env.NODE_ENV !== "production" ? {
   changePage: PropTypes.func,
   detailPath: PropTypes.string,
 
-  // TODO: rename facets => activeConstraints?
+  // TODO: rename facets => availableFilters?
   facets: PropTypes.object,
-  addConstraint: PropTypes.func.isRequired,
-  removeConstraint: PropTypes.func.isRequired
+  activeFilters: PropTypes.array.isRequired,
+  addFilter: PropTypes.func.isRequired,
+  removeFilter: PropTypes.func.isRequired
 } : {};
 
 export default SearchView;

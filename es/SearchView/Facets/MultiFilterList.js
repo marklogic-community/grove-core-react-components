@@ -1,37 +1,24 @@
-'use strict';
-
-exports.__esModule = true;
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = require('prop-types');
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _without = require('lodash/without');
-
-var _without2 = _interopRequireDefault(_without);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+import React from 'react';
+import PropTypes from 'prop-types';
+
+import without from 'lodash/without';
+
 var initialState = {
   valuesToAdd: [],
   valuesToRemove: []
 };
 
-var MultiConstraintList = function (_React$Component) {
-  _inherits(MultiConstraintList, _React$Component);
+var MultiFilterList = function (_React$Component) {
+  _inherits(MultiFilterList, _React$Component);
 
-  function MultiConstraintList(props) {
-    _classCallCheck(this, MultiConstraintList);
+  function MultiFilterList(props) {
+    _classCallCheck(this, MultiFilterList);
 
     var _this = _possibleConstructorReturn(this, _React$Component.call(this, props));
 
@@ -42,10 +29,10 @@ var MultiConstraintList = function (_React$Component) {
     return _this;
   }
 
-  MultiConstraintList.prototype.handleSelectedCheckChange = function handleSelectedCheckChange(value) {
+  MultiFilterList.prototype.handleSelectedCheckChange = function handleSelectedCheckChange(value) {
     if (this.state.valuesToRemove.includes(value)) {
       this.setState({
-        valuesToRemove: (0, _without2.default)(this.state.valuesToRemove, value)
+        valuesToRemove: without(this.state.valuesToRemove, value)
       });
     } else {
       this.setState({
@@ -54,10 +41,10 @@ var MultiConstraintList = function (_React$Component) {
     }
   };
 
-  MultiConstraintList.prototype.handleNonSelectedCheckChange = function handleNonSelectedCheckChange(value) {
+  MultiFilterList.prototype.handleNonSelectedCheckChange = function handleNonSelectedCheckChange(value) {
     if (this.state.valuesToAdd.includes(value)) {
       this.setState({
-        valuesToAdd: (0, _without2.default)(this.state.valuesToAdd, value)
+        valuesToAdd: without(this.state.valuesToAdd, value)
       });
     } else {
       this.setState({
@@ -66,47 +53,47 @@ var MultiConstraintList = function (_React$Component) {
     }
   };
 
-  MultiConstraintList.prototype.applyChanges = function applyChanges() {
+  MultiFilterList.prototype.applyChanges = function applyChanges() {
     var _this2 = this;
 
     this.state.valuesToAdd.forEach(function (value) {
-      return _this2.props.addConstraint(value);
+      return _this2.props.addFilter(value);
     });
     this.state.valuesToRemove.forEach(function (value) {
-      return _this2.props.removeConstraint(value);
+      return _this2.props.removeFilter(value);
     });
     this.setState(initialState);
   };
 
-  MultiConstraintList.prototype.render = function render() {
+  MultiFilterList.prototype.render = function render() {
     var _this3 = this;
 
-    return _react2.default.createElement(
+    return React.createElement(
       'div',
       null,
-      this.props.selectedValues && _react2.default.createElement(
+      this.props.selectedValues && React.createElement(
         'div',
-        { className: 'selectedConstraintValues' },
+        { className: 'selectedFilterValues' },
         this.props.values.map(function (value) {
           return _this3.props.selectedValues.map(function (v) {
             return v.value;
-          }).includes(value.value) && _react2.default.createElement(
+          }).includes(value.value) && React.createElement(
             'div',
             { key: value.value },
-            _react2.default.createElement('input', {
-              className: 'ml-facet-remove-constraint',
+            React.createElement('input', {
+              className: 'ml-facet-remove-filter',
               type: 'checkbox',
               name: value.value,
               checked: !_this3.state.valuesToRemove.includes(value.value),
               onChange: _this3.handleSelectedCheckChange.bind(null, value.value)
             }),
-            _react2.default.createElement(
+            React.createElement(
               'span',
               { title: value.value },
               ' ',
               value.value
             ),
-            _react2.default.createElement(
+            React.createElement(
               'span',
               null,
               ' (',
@@ -116,29 +103,29 @@ var MultiConstraintList = function (_React$Component) {
           );
         })
       ),
-      _react2.default.createElement(
+      React.createElement(
         'div',
-        { className: 'nonSelectedConstraintValues' },
+        { className: 'nonSelectedFilterValues' },
         this.props.values.map(function (value) {
           return (!_this3.props.selectedValues || !_this3.props.selectedValues.map(function (v) {
             return v.value;
-          }).includes(value.value)) && _react2.default.createElement(
+          }).includes(value.value)) && React.createElement(
             'div',
-            { className: 'nonSelectedConstraintValue', key: value.value },
-            _react2.default.createElement('input', {
+            { className: 'nonSelectedFilterValue', key: value.value },
+            React.createElement('input', {
               className: 'ml-facet-add-pos',
               type: 'checkbox',
               name: value.value,
               checked: _this3.state.valuesToAdd.includes(value.value),
               onChange: _this3.handleNonSelectedCheckChange.bind(null, value.value)
             }),
-            _react2.default.createElement(
+            React.createElement(
               'span',
               { title: value.value },
               ' ',
               value.value
             ),
-            _react2.default.createElement(
+            React.createElement(
               'span',
               null,
               ' (',
@@ -148,7 +135,7 @@ var MultiConstraintList = function (_React$Component) {
           );
         })
       ),
-      _react2.default.createElement(
+      React.createElement(
         'button',
         {
           className: 'btn btn-default btn-sm ml-facet-apply',
@@ -160,18 +147,17 @@ var MultiConstraintList = function (_React$Component) {
     );
   };
 
-  return MultiConstraintList;
-}(_react2.default.Component);
+  return MultiFilterList;
+}(React.Component);
 
-MultiConstraintList.propTypes = process.env.NODE_ENV !== "production" ? {
-  values: _propTypes2.default.arrayOf(_propTypes2.default.shape({
-    value: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.number]),
-    count: _propTypes2.default.number
+MultiFilterList.propTypes = process.env.NODE_ENV !== "production" ? {
+  values: PropTypes.arrayOf(PropTypes.shape({
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    count: PropTypes.number
   })).isRequired,
-  selectedValues: _propTypes2.default.array.isRequired,
-  addConstraint: _propTypes2.default.func.isRequired,
-  removeConstraint: _propTypes2.default.func.isRequired
+  selectedValues: PropTypes.array.isRequired,
+  addFilter: PropTypes.func.isRequired,
+  removeFilter: PropTypes.func.isRequired
 } : {};
 
-exports.default = MultiConstraintList;
-module.exports = exports['default'];
+export default MultiFilterList;
