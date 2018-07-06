@@ -6,11 +6,11 @@ This library provides a set of React components useful for building applications
 
 ### Installation
 
-    npm install --save muir-react
+    npm install --save muir-core-react-components
 
 or
 
-    yarn add muir-react
+    yarn add muir-core-react-components
 
 ### Implementation
 
@@ -32,7 +32,7 @@ In many cases, in applications using Redux, <DetailView /> is the top-level 'dum
 
 ```javascript
 //...
-import { DetailView } from 'muir-react';
+import { DetailView } from 'muir-core-react-components';
 import myDetailComponent from '../components/myDetailComponent';
 
 import { actions, selectors } from 'ml-documents-redux';
@@ -71,7 +71,7 @@ Note that you can also provide `resultComponent` to the higher-level <SearchView
 You can use the <CardResult> in this library as a starting point, if you wish. It accepts `content` and `header` component props. For example:
 
 ```javascript
-import { CardResult, SearchView, SearchSnippet} from 'muir-react';
+import { CardResult, SearchView, SearchSnippet} from 'muir-core-react-components';
 
 const CustomSearchResultContent = ({result, detailPath}) => {
   return (
@@ -126,25 +126,25 @@ We are creating a storybook for all the components present in this library. To s
 
 ## Contributing
 
-### Local Development of `muir-react`
+### Local Development of `muir-core-react-components`
 
-You can use npm to link your local version of muir-react into an existing Muir React UI Application. First go into your `muir-react` directory and run the following to create a link on your machine from the name `muir-react` to this directory:
+You can use npm to link your local version of muir-core-react-components into an existing Muir React UI Application. First go into your `muir-core-react-components` directory and run the following to create a link on your machine from the name `muir-core-react-components` to this directory:
 
-    cd {path-to-your-copy-of-muir-react}
+    cd {path-to-your-copy-of-muir-core-react-components}
     npm link
 
-We need just one version of React. Because of the way the Node package manager (npm) can duplicate dependencies, this means we have to link your local `muir-react`'s version of React to your host application's.
+We need just one version of React. Because of the way the Node package manager (npm) can duplicate dependencies, this means we have to link your local `muir-core-react-components`'s version of React to your host application's.
 
     npm link {path-to-your-muir-project}/ui/node_modules/react
 
 To complete the link, go into your Muir Project's `/ui` directory and run:
 
     cd {path-to-your-muir-project}/ui
-    npm link muir-react
+    npm link muir-core-react-components
 
-In order to see your changes to muir-react in your Muir Project, you will have to build muir-react:
+In order to see your changes to muir-core-react-components in your Muir Project, you will have to build muir-core-react-components:
 
-    cd {path-to-your-copy-of-muir-react}
+    cd {path-to-your-copy-of-muir-core-react-components}
     npm run build
 
 ### Tests
