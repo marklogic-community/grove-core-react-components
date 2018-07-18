@@ -27,4 +27,6 @@ class SearchBarWithState extends React.Component {
   }
 }
 
-storiesOf('SearchView/SearchBar', module).add('default', () => <SearchBarWithState />);
+storiesOf('SearchView/SearchBar', module).add('default', () => (
+  <SearchBarWithState />
+));

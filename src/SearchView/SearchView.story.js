@@ -7,7 +7,7 @@ import { BrowserRouter } from 'react-router-dom';
 import SearchView from './SearchView';
 
 import { mockResults } from './test/mockData';
-import { defaultNonSelectedFacets  } from './Facets/Facets.story';
+import { defaultNonSelectedFacets } from './Facets/Facets.story';
 
 storiesOf('SearchView', module).add('displaying results', () => (
   <BrowserRouter>

@@ -8,10 +8,7 @@ import { defaultValues } from './shared';
 
 storiesOf('SearchView/Facets/MultiFilterList', module)
   .add('default', () => (
-    <MultiFilterList
-      values={defaultValues}
-      addFilter={action('addFilter')}
-    />
+    <MultiFilterList values={defaultValues} addFilter={action('addFilter')} />
   ))
   .add('with a selection', () => (
     <MultiFilterList

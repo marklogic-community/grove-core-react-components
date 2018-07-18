@@ -22,11 +22,8 @@ const Facets = ({
       //   toggle="toggle({facet:facet, value:value})"
       //   truncate="{{ truncateLength }}"></ml-chiclets>
     }
-    {(activeFilters.length > 0) && (
-      <CurrentFilters
-        filters={activeFilters}
-        removeFilter={removeFilter}
-      />
+    {activeFilters.length > 0 && (
+      <CurrentFilters filters={activeFilters} removeFilter={removeFilter} />
     )}
     {availableFilters &&
       Object.keys(availableFilters).map(facetName => (

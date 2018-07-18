@@ -79,10 +79,12 @@ storiesOf('SearchView/Facets', module)
   .add('with a selection', () => (
     <div className="col-md-3">
       <Facets
-        activeFilters={[{
-          constraint: 'Example',
-          value: [ 'First' ]
-        }]}
+        activeFilters={[
+          {
+            constraint: 'Example',
+            value: ['First']
+          }
+        ]}
         availableFilters={defaultNonSelectedFacets}
         addFilter={action('addFilter')}
         removeFilter={action('removeFilter')}

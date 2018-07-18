@@ -12,7 +12,10 @@ import ListResult from './ListResult';
 
 const DefaultNoResults = () => (
   <Col md={12}>
-    <p><br/><strong>No results matched your search.</strong></p>
+    <p>
+      <br />
+      <strong>No results matched your search.</strong>
+    </p>
   </Col>
 );
 
@@ -50,21 +53,22 @@ class SearchResults extends React.Component {
     // various types, though I could imagine letting the user specify > 1
     return (
       <div>
-        {this.props.results.length > 0 && !this.props.resultComponent && (
-          <Col xs={12} md={6} style={{ float: 'right' }}>
-            <ButtonToolbar style={{ float: 'right', marginBottom: '10px' }}>
-              <ToggleButtonGroup
-                type="radio"
-                name="result-options"
-                value={this.state.resultComponentName}
-                onChange={this.setResultType}
-              >
-                <ToggleButton value="Cards">Cards</ToggleButton>
-                <ToggleButton value="List">List</ToggleButton>
-              </ToggleButtonGroup>
-            </ButtonToolbar>
-          </Col>
-        )}
+        {this.props.results.length > 0 &&
+          !this.props.resultComponent && (
+            <Col xs={12} md={6} style={{ float: 'right' }}>
+              <ButtonToolbar style={{ float: 'right', marginBottom: '10px' }}>
+                <ToggleButtonGroup
+                  type="radio"
+                  name="result-options"
+                  value={this.state.resultComponentName}
+                  onChange={this.setResultType}
+                >
+                  <ToggleButton value="Cards">Cards</ToggleButton>
+                  <ToggleButton value="List">List</ToggleButton>
+                </ToggleButtonGroup>
+              </ButtonToolbar>
+            </Col>
+          )}
         <Row className="ml-search-results">
           <Col md={12}>
             {this.props.results.map(result => (
@@ -74,9 +78,8 @@ class SearchResults extends React.Component {
                 detailPath={this.props.detailPath || '/detail'}
               />
             ))}
-            {!this.props.isSearchPending && this.props.results.length === 0 && (
-              <this.props.noResults />
-            )}
+            {!this.props.isSearchPending &&
+              this.props.results.length === 0 && <this.props.noResults />}
           </Col>
         </Row>
       </div>

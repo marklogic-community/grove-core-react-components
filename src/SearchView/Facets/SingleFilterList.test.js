@@ -6,8 +6,7 @@ import SingleFilterList from './SingleFilterList';
 describe('<SingleFilterList/>', () => {
   it('renders without values', () => {
     expect(
-      shallow(<SingleFilterList values={[]} addFilter={() => {}} />)
-        .length
+      shallow(<SingleFilterList values={[]} addFilter={() => {}} />).length
     ).toEqual(1);
   });
 

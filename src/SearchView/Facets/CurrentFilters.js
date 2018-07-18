@@ -16,11 +16,7 @@ const CurrentFilters = ({ filters, removeFilter }) => (
               <div
                 key={filter.constraint + value}
                 className="btn btn-success btn-raised"
-                onClick={removeFilter.bind(
-                  null,
-                  filter.constraint,
-                  value
-                )}
+                onClick={removeFilter.bind(null, filter.constraint, value)}
               >
                 <span title={value}>
                   {filter.constraint}: {value}{' '}

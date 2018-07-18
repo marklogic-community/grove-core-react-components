@@ -5,7 +5,8 @@ import './FadeAndSlide.css';
 const FadeAndSlide = ({ children, ...props }) => (
   <CSSTransition
     {...props}
-    timeout={props.timeout || 1000} classNames="ml-fade-slide"
+    timeout={props.timeout || 1000}
+    classNames="ml-fade-slide"
   >
     {children}
   </CSSTransition>

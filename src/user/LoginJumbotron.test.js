@@ -5,5 +5,6 @@ import LoginJumbotron from './LoginJumbotron';
 
 describe('<LoginJumbotron />', () => {
   it('renders', () => {
-    expect(shallow(<LoginJumbotron />).length).toEqual(1); });
+    expect(shallow(<LoginJumbotron />).length).toEqual(1);
+  });
 });

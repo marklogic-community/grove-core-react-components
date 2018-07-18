@@ -3,36 +3,36 @@ import { shallow, mount } from 'enzyme';
 import expect, { createSpy } from 'expect';
 import SearchBar from './SearchBar';
 
-describe ('<SearchBar />', () => {
+describe('<SearchBar />', () => {
   it('renders without crashing', () => {
     expect(shallow(<SearchBar />).length).toEqual(1);
   });
 
   it('displays queryText', () => {
-    const wrapper = shallow(<SearchBar queryText='myQuery' />);
-    expect(
-      wrapper.find('.ml-qtext-input').props().value
-    ).toEqual('myQuery');
+    const wrapper = shallow(<SearchBar queryText="myQuery" />);
+    expect(wrapper.find('.ml-qtext-input').props().value).toEqual('myQuery');
   });
 
   it('shows a default placeholder', () => {
     const wrapper = shallow(<SearchBar />);
-    expect(
-      wrapper.find('.ml-qtext-input').props().placeholder
-    ).toEqual('Search...');
+    expect(wrapper.find('.ml-qtext-input').props().placeholder).toEqual(
+      'Search...'
+    );
   });
 
   it('allows custom placeholder', () => {
-    const wrapper = shallow(<SearchBar placeholder='Please Search!' />);
-    expect(
-      wrapper.find('.ml-qtext-input').props().placeholder
-    ).toEqual('Please Search!');
+    const wrapper = shallow(<SearchBar placeholder="Please Search!" />);
+    expect(wrapper.find('.ml-qtext-input').props().placeholder).toEqual(
+      'Please Search!'
+    );
   });
 
   it('calls correct function on queryText change', () => {
     const myHandleChange = createSpy();
     const wrapper = shallow(<SearchBar onQueryTextChange={myHandleChange} />);
-    wrapper.find('.ml-qtext-input').simulate('change', {target: {value: 'h'}});
+    wrapper
+      .find('.ml-qtext-input')
+      .simulate('change', { target: { value: 'h' } });
     expect(myHandleChange).toHaveBeenCalledWith('h');
   });
 
@@ -59,5 +59,4 @@ describe ('<SearchBar />', () => {
     wrapper.find('button.ml-execute-search').simulate('click');
     expect(mySearch).toNotHaveBeenCalled();
   });
-
 });

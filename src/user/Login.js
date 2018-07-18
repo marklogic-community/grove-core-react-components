@@ -1,10 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  FormGroup,
-  FormControl,
-  Button
-} from 'react-bootstrap';
+import { FormGroup, FormControl, Button } from 'react-bootstrap';
 
 class Login extends React.Component {
   constructor(props) {
