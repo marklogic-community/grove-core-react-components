@@ -1,5 +1,5 @@
 /*!
- * muir-react v0.9.0
+ * muir-core-react-components v0.9.0
  * Apache-2.0 Licensed
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -9550,10 +9550,7 @@ var Facets = function Facets(_ref) {
   return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
     'div',
     { className: 'ml-facet-list list-group' },
-    activeFilters.length > 0 && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__CurrentFilters__["a" /* default */], {
-      filters: activeFilters,
-      removeFilter: removeFilter
-    }),
+    activeFilters.length > 0 && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__CurrentFilters__["a" /* default */], { filters: activeFilters, removeFilter: removeFilter }),
     availableFilters && Object.keys(availableFilters).map(function (facetName) {
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
@@ -10992,9 +10989,7 @@ var prettyUri = function prettyUri(uri) {
 var ListResult = function ListResult(props) {
   return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
     __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["c" /* Col */],
-    { xs: 12,
-      className: 'ml-search-result'
-    },
+    { xs: 12, className: 'ml-search-result' },
     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       'h4',
       null,
@@ -11884,15 +11879,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "FadeAndSlide", function() { return __WEBPACK_IMPORTED_MODULE_15__animations_FadeAndSlide__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__animations_Fade__ = __webpack_require__(87);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Fade", function() { return __WEBPACK_IMPORTED_MODULE_16__animations_Fade__["a"]; });
-
-
-
-
-
-
-
-
-
 
 
 
@@ -50016,7 +50002,8 @@ var FadeAndSlide = function FadeAndSlide(_ref) {
   return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
     __WEBPACK_IMPORTED_MODULE_1_react_transition_group_CSSTransition___default.a,
     _extends({}, props, {
-      timeout: props.timeout || 1000, classNames: 'ml-fade-slide'
+      timeout: props.timeout || 1000,
+      classNames: 'ml-fade-slide'
     }),
     children
   );

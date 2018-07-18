@@ -14,10 +14,7 @@ var Facets = function Facets(_ref) {
   return React.createElement(
     'div',
     { className: 'ml-facet-list list-group' },
-    activeFilters.length > 0 && React.createElement(CurrentFilters, {
-      filters: activeFilters,
-      removeFilter: removeFilter
-    }),
+    activeFilters.length > 0 && React.createElement(CurrentFilters, { filters: activeFilters, removeFilter: removeFilter }),
     availableFilters && Object.keys(availableFilters).map(function (facetName) {
       return React.createElement(
         'div',

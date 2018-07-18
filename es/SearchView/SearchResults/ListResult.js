@@ -11,9 +11,7 @@ var prettyUri = function prettyUri(uri) {
 var ListResult = function ListResult(props) {
   return React.createElement(
     Col,
-    { xs: 12,
-      className: 'ml-search-result'
-    },
+    { xs: 12, className: 'ml-search-result' },
     React.createElement(
       'h4',
       null,

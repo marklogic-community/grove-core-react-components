@@ -7,10 +7,7 @@ import MultiFilterList from './MultiFilterList';
 import { defaultValues } from './shared';
 
 storiesOf('SearchView/Facets/MultiFilterList', module).add('default', function () {
-  return React.createElement(MultiFilterList, {
-    values: defaultValues,
-    addFilter: action('addFilter')
-  });
+  return React.createElement(MultiFilterList, { values: defaultValues, addFilter: action('addFilter') });
 }).add('with a selection', function () {
   return React.createElement(MultiFilterList, {
     values: defaultValues,

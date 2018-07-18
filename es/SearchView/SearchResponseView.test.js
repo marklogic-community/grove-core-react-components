@@ -7,7 +7,6 @@ import SearchResults from './SearchResults/SearchResults';
 import SearchMetrics from './SearchMetrics';
 
 describe('<SearchResponseView />', () => {
-
   it('renders', () => {
     shallow(<SearchResponseView />);
   });

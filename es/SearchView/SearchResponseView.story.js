@@ -30,7 +30,7 @@ storiesOf('SearchView/SearchResponseView', module).add('with results', function 
   return React.createElement(
     'div',
     { className: 'col-md-12' },
-    React.createElement(SearchResponseView, { results: [], total: 0, executionTime: 9.98080 })
+    React.createElement(SearchResponseView, { results: [], total: 0, executionTime: 9.9808 })
   );
 }).add('with an error', function () {
   return React.createElement(

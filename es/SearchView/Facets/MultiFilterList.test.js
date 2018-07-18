@@ -6,8 +6,7 @@ import MultiFilterList from './MultiFilterList';
 describe('<MultiFilterList/>', () => {
   it('renders', () => {
     expect(
-      shallow(<MultiFilterList values={[]} addFilter={() => {}} />)
-        .length
+      shallow(<MultiFilterList values={[]} addFilter={() => {}} />).length
     ).toEqual(1);
   });
 
@@ -112,7 +111,9 @@ describe('<MultiFilterList/>', () => {
         addFilter={addFilterSpy}
       />
     );
-    const checkboxes = wrapper.find('.nonSelectedFilterValue .ml-facet-add-pos');
+    const checkboxes = wrapper.find(
+      '.nonSelectedFilterValue .ml-facet-add-pos'
+    );
     checkboxes.first().simulate('change');
     checkboxes.last().simulate('change');
     expect(addFilterSpy).toNotHaveBeenCalled();
@@ -131,9 +132,7 @@ describe('<MultiFilterList/>', () => {
         selectedValues={[{ value: 'value1' }]}
       />
     );
-    wrapper
-      .find('.ml-facet-remove-filter')
-      .simulate('change');
+    wrapper.find('.ml-facet-remove-filter').simulate('change');
     expect(removeFilterSpy).toNotHaveBeenCalled();
     wrapper.find('.ml-facet-apply').simulate('click');
     expect(removeFilterSpy).toHaveBeenCalledWith('value1');

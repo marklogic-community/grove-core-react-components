@@ -13,7 +13,7 @@ it('renders a match without crashing', () => {
   const match = {
     'match-text': [
       'We found the word ',
-      {highlight: 'clandestine '},
+      { highlight: 'clandestine ' },
       'for you.'
     ]
   };

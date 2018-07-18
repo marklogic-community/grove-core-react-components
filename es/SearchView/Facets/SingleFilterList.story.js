@@ -7,10 +7,7 @@ import SingleFilterList from './SingleFilterList';
 import { defaultValues } from './shared';
 
 storiesOf('SearchView/Facets/SingleFilterList', module).add('default', function () {
-  return React.createElement(SingleFilterList, {
-    values: defaultValues,
-    addFilter: action('addFilter')
-  });
+  return React.createElement(SingleFilterList, { values: defaultValues, addFilter: action('addFilter') });
 }).add('with a selection', function () {
   return React.createElement(SingleFilterList, {
     values: defaultValues,

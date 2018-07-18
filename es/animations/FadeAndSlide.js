@@ -13,7 +13,8 @@ var FadeAndSlide = function FadeAndSlide(_ref) {
   return React.createElement(
     CSSTransition,
     _extends({}, props, {
-      timeout: props.timeout || 1000, classNames: 'ml-fade-slide'
+      timeout: props.timeout || 1000,
+      classNames: 'ml-fade-slide'
     }),
     children
   );
