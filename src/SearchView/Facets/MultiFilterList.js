@@ -44,6 +44,7 @@ class MultiFilterList extends React.Component {
   }
 
   applyChanges() {
+    // TODO: add {boolean: 'or'} ?
     this.state.valuesToAdd.forEach(value => this.props.addFilter(value));
     this.state.valuesToRemove.forEach(value => this.props.removeFilter(value));
     this.setState(initialState);
