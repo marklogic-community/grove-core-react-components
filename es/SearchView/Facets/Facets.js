@@ -34,7 +34,7 @@ var Facets = function Facets(_ref) {
           React.createElement(SingleFilterList, {
             values: availableFilters[facetName].facetValues,
             selectedValues: activeFilters[facetName] && activeFilters[facetName].and,
-            addFilter: addFilter.bind(null, facetName),
+            addFilter: addFilter.bind(null, facetName, availableFilters[facetName].type || null),
             removeFilter: removeFilter.bind(null, facetName)
           })
         )

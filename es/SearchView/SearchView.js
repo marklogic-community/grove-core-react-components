@@ -41,18 +41,25 @@ var SearchView = function (_Component) {
   };
 
   SearchView.prototype.componentDidUpdate = function componentDidUpdate(prevProps) {
-    if (prevProps.stagedSearch.page !== this.props.stagedSearch.page ||
+    if (
     // Intentionally using != to test object reference (ie, is it the
     // same object?) Because our Redux flow will swap out the filters
     // object on any change, but keep it referentially the same otherwise
     prevProps.stagedSearch.filters != this.props.stagedSearch.filters) {
+      this.search();
+    }
+    if (prevProps.stagedSearch.page !== this.props.stagedSearch.page) {
       // TODO: DRY up with this.search()?
       this.props.runSearch(this.props.stagedSearch);
     }
   };
 
   SearchView.prototype.search = function search() {
-    this.props.runSearch(this.props.stagedSearch);
+    if (this.props.stagedSearch.page == 1) {
+      this.props.runSearch(this.props.stagedSearch);
+    } else {
+      this.props.changePage(1);
+    }
   };
 
   SearchView.prototype.render = function render() {

@@ -1,5 +1,5 @@
 /*!
- * muir-core-react-components v0.9.0
+ * muir-core-react-components v0.10.0-alpha
  * Apache-2.0 Licensed
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -9570,7 +9570,7 @@ var Facets = function Facets(_ref) {
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__SingleFilterList__["a" /* default */], {
             values: availableFilters[facetName].facetValues,
             selectedValues: activeFilters[facetName] && activeFilters[facetName].and,
-            addFilter: addFilter.bind(null, facetName),
+            addFilter: addFilter.bind(null, facetName, availableFilters[facetName].type || null),
             removeFilter: removeFilter.bind(null, facetName)
           })
         )
@@ -11962,18 +11962,25 @@ var SearchView = function (_Component) {
   };
 
   SearchView.prototype.componentDidUpdate = function componentDidUpdate(prevProps) {
-    if (prevProps.stagedSearch.page !== this.props.stagedSearch.page ||
+    if (
     // Intentionally using != to test object reference (ie, is it the
     // same object?) Because our Redux flow will swap out the filters
     // object on any change, but keep it referentially the same otherwise
     prevProps.stagedSearch.filters != this.props.stagedSearch.filters) {
+      this.search();
+    }
+    if (prevProps.stagedSearch.page !== this.props.stagedSearch.page) {
       // TODO: DRY up with this.search()?
       this.props.runSearch(this.props.stagedSearch);
     }
   };
 
   SearchView.prototype.search = function search() {
-    this.props.runSearch(this.props.stagedSearch);
+    if (this.props.stagedSearch.page == 1) {
+      this.props.runSearch(this.props.stagedSearch);
+    } else {
+      this.props.changePage(1);
+    }
   };
 
   SearchView.prototype.render = function render() {
