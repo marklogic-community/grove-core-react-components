@@ -6,7 +6,10 @@ import SearchView from './SearchView';
 import SearchResponseView from './SearchResponseView';
 
 const requiredProps = {
-  activeFilters: []
+  activeFilters: [],
+  stagedSearch: {
+    page: 1
+  }
 };
 
 const enterQueryText = (text, wrapper) => {
@@ -43,9 +46,15 @@ describe('<SearchView />', () => {
 
   // TODO: do we have to actually pass queryText? We've already captured it
   it('runs a search', () => {
+    const changePageSpy = createSpy();
     const searchSpy = createSpy();
     const wrapper = mount(
-      <SearchView {...requiredProps} runSearch={searchSpy} queryText="Waldo" />
+      <SearchView
+        {...requiredProps}
+        changePage={changePageSpy}
+        runSearch={searchSpy}
+        queryText="Waldo"
+      />
     );
     wrapper.find('button.ml-execute-search').simulate('submit');
     expect(searchSpy).toHaveBeenCalled();
