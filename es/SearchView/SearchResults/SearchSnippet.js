@@ -7,7 +7,7 @@ var SearchSnippet = function SearchSnippet(_ref) {
     return React.createElement(
       'em',
       { className: text.highlight ? 'mark' : '', key: index },
-      text.highlight || text
+      typeof text === 'string' ? text : text.highlight
     );
   });
 

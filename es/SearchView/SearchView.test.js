@@ -6,7 +6,10 @@ import SearchView from './SearchView';
 import SearchResponseView from './SearchResponseView';
 
 const requiredProps = {
-  activeFilters: []
+  activeFilters: [],
+  stagedSearch: {
+    page: 1
+  }
 };
 
 const enterQueryText = (text, wrapper) => {
