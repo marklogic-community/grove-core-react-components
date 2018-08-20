@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, render } from 'enzyme';
 import SearchSnippet from './SearchSnippet';
 
 it('renders an empty match without crashing', () => {
@@ -18,4 +18,11 @@ it('renders a match without crashing', () => {
     ]
   };
   shallow(<SearchSnippet match={match} />);
+});
+
+it('renders a single highlight without crashing', () => {
+  const match = {
+    'match-text': [{ highlight: 0 }]
+  };
+  render(<SearchSnippet match={match} />);
 });

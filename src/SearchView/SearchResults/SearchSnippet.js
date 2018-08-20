@@ -4,7 +4,7 @@ const SearchSnippet = ({ match }) => {
   const matchSpans = match['match-text'].map((text, index) => {
     return (
       <em className={text.highlight ? 'mark' : ''} key={index}>
-        {text.highlight || text}
+        {typeof text === 'string' ? text : text.highlight}
       </em>
     );
   });
