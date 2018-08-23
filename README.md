@@ -20,103 +20,11 @@ If you are using these React components as stand-alone components, rather than a
 
 ### <DetailView />
 
-This component provides a default view of a single document, together with some error handling. It can be customized:
-
-#### Providing a custom detail page
-
-<DetailView /> accepts a `template` prop that will override the default template when a document is successfully retrieved. It gets passed all the props that <DetailView /> itself received. Typically, you will write a React component to render those props as desired. It can then be passed to <DetailView /> like so:
-
-    <DetailView template={myCustomDetailComponent} />
-
-In many cases, in applications using Redux, <DetailView /> is the top-level 'dumb' component being wrapped by a 'smart' Redux container. In that case, you can add your template to `mapStateToProps` directly, as in this example:
-
-```javascript
-//...
-import { DetailView } from 'muir-core-react-components';
-import myDetailComponent from '../components/myDetailComponent';
-
-import { actions, selectors } from 'ml-documents-redux';
-import { bindSelectors } from '../utils/redux-utils';
-const boundSelectors = bindSelectors(selectors, 'documents');
-
-const mapStateToProps = (state, ownProps) => {
-  const sel = boundSelectors;
-  return {
-    template: myDetailComponent,
-    detail: sel.documentByUri(state, ownProps.uri),
-    error: sel.errorByUri(state, ownProps.uri),
-    contentType: sel.contentTypeByUri(state, ownProps.uri)
-  };
-};
-
-//...
-```
-
-Or, you could allow the code consuming your container to pass in the template, and simply grab it from the `ownProps` argument from `mapStateToProps`.
+This component provides a default view of a single document, together with some error handling. It can be customized. See: https://wiki.marklogic.com/display/SAL/MUIR+React+Developer+Starter+Guide
 
 ### <SearchResults />
 
-The default behavior of the SearchResults component is to offer a choice between a CardResult and a ListResult.
-
-#### Customizing SearchResults
-
-You can override the presentation of SearchResults by passing a `resultComponent` prop to <SearchResults />. Your component will receive a `result` prop and a `detailPath`. 
-
-    <SearchResults resultComponent={myCustomSearchResult} />
-
-Providing a `resultComponent` suppresses the out-of-the-box choice between components in the UI, and simply uses the provided `resultComponent`.
-
-Note that you can also provide `resultComponent` to the higher-level <SearchView />, and it will be passed down to <SearchResults />.
-
-You can use the <CardResult> in this library as a starting point, if you wish. It accepts `content` and `header` component props. For example:
-
-```javascript
-import { CardResult, SearchView, SearchSnippet} from 'muir-core-react-components';
-
-const CustomSearchResultContent = ({result, detailPath}) => {
-  return (
-  <div>
-    <p>You got a result!</p>
-    <div className="ml-search-result-matches">
-      {result.matches &&
-        result.matches.map((match, index) => (
-          <SearchSnippet match={match} key={index} />
-        ))}
-    </div>
-  </div>
-  )
-};
-
-const CustomSearchResult = (props) => {
-  // suppress the header
-  // add 'You got a result!' to each result
-  return (
-    <CardResult
-      {...props}
-      header={null}
-      content={CustomSearchResultContent}
-    />
-  );
-};
-return () => (
-  <SearchView
-    {...this.props}
-    detailPath="/detail/"
-    resultComponent={CustomSearchResult}
-  />
-)
-```
-
-#### Customizing display when no results are found
-
-You can also override the component displayed when no results are found, by passing in a component as a `noResults` prop:
-
-```javascript
-const customNoResults =  () => (
-  <p>Truly, there are no results.</p>
-)
-<SearchResults noResults={customNoResults} />
-```
+The default behavior of the SearchResults component is to offer a choice between a CardResult and a ListResult. It can be customized. See: https://wiki.marklogic.com/display/SAL/MUIR+React+Developer+Starter+Guide
 
 ### Storybook
 
