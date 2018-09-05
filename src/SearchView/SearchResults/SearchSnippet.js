@@ -3,8 +3,8 @@ import React from 'react';
 const SearchSnippet = ({ match }) => {
   const matchSpans = match['match-text'].map((text, index) => {
     return (
-      <em className={text.highlight ? 'mark' : ''} key={index}>
-        {typeof text === 'string' ? text : text.highlight}
+      <em className={text.highlight !== undefined ? 'mark' : ''} key={index}>
+        {text.highlight !== undefined ? text.highlight : text}
       </em>
     );
   });
