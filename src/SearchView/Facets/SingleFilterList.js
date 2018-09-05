@@ -12,18 +12,18 @@ const SingleFilterList = ({
       <div className="selectedFilterValues">
         {values.map(
           value =>
-            selectedValues.map(v => v.value).includes(value.value) && (
-              <div key={value.value}>
+            selectedValues.includes(value.name) && (
+              <div key={value.name}>
                 {removeFilter && (
                   <span
                     className={
                       'glyphicon glyphicon-remove-circle icon-white ml-facet-remove-filter'
                     }
-                    onClick={removeFilter.bind(null, value.value)}
+                    onClick={removeFilter.bind(null, value.name)}
                     style={{ cursor: 'pointer' }}
                   />
                 )}
-                <span title={value.value}> {value.value}</span>
+                <span title={value.name}> {value.value}</span>
                 <span> ({value.count})</span>
               </div>
             )
@@ -33,15 +33,14 @@ const SingleFilterList = ({
     <div className="nonSelectedFilterValues">
       {values.map(
         value =>
-          (!selectedValues ||
-            !selectedValues.map(v => v.value).includes(value.value)) && (
-            <div key={value.value}>
+          (!selectedValues || !selectedValues.includes(value.name)) && (
+            <div key={value.name}>
               <i
                 className="glyphicon glyphicon-plus-sign ml-facet-add-pos"
-                onClick={addFilter.bind(null, value.value)}
+                onClick={addFilter.bind(null, value.name)}
                 style={{ cursor: 'pointer' }}
               />
-              <span title={value.value}> {value.value}</span>
+              <span title={value.name}> {value.value}</span>
               <span> ({value.count})</span>
               {
                 // TODO: negation as an option

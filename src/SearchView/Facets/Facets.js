@@ -26,27 +26,34 @@ const Facets = ({
       <CurrentFilters filters={activeFilters} removeFilter={removeFilter} />
     )}
     {availableFilters &&
-      Object.keys(availableFilters).map(facetName => (
-        <div key={facetName} className="panel panel-primary ml-facet">
-          <div className="panel-heading">
-            <h3 className="panel-title">{facetName}</h3>
+      Object.keys(availableFilters).map(facetName => {
+        let selectedValues;
+        const activeFilter = activeFilters.find(
+          filter => filter.constraint === facetName
+        );
+        if (activeFilter) {
+          selectedValues = activeFilter.value;
+        }
+        return (
+          <div key={facetName} className="panel panel-primary ml-facet">
+            <div className="panel-heading">
+              <h3 className="panel-title">{facetName}</h3>
+            </div>
+            <div className="panel-body">
+              <SingleFilterList
+                values={availableFilters[facetName].facetValues}
+                selectedValues={selectedValues}
+                addFilter={addFilter.bind(
+                  null,
+                  facetName,
+                  availableFilters[facetName].type || null
+                )}
+                removeFilter={removeFilter.bind(null, facetName)}
+              />
+            </div>
           </div>
-          <div className="panel-body">
-            <SingleFilterList
-              values={availableFilters[facetName].facetValues}
-              selectedValues={
-                activeFilters[facetName] && activeFilters[facetName].and
-              }
-              addFilter={addFilter.bind(
-                null,
-                facetName,
-                availableFilters[facetName].type || null
-              )}
-              removeFilter={removeFilter.bind(null, facetName)}
-            />
-          </div>
-        </div>
-      ))}
+        );
+      })}
   </div>
 );
 

@@ -13,7 +13,7 @@ storiesOf('SearchView/Facets/SingleFilterList', module)
   .add('with a selection', () => (
     <SingleFilterList
       values={defaultValues}
-      selectedValues={[{ value: 'First' }]}
+      selectedValues={['First']}
       addFilter={action('addFilter')}
       removeFilter={action('removeFilter')}
     />
