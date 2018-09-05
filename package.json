@@ -1,6 +1,6 @@
 {
   "name": "muir-core-react-components",
-  "version": "0.10.0-alpha.3",
+  "version": "0.10.0-alpha.4",
   "description": "React component library for apps backed by MarkLogic",
   "main": "lib/index.js",
   "module": "es/index.js",

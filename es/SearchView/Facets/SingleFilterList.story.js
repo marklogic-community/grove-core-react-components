@@ -11,7 +11,7 @@ storiesOf('SearchView/Facets/SingleFilterList', module).add('default', function 
 }).add('with a selection', function () {
   return React.createElement(SingleFilterList, {
     values: defaultValues,
-    selectedValues: [{ value: 'First' }],
+    selectedValues: ['First'],
     addFilter: action('addFilter'),
     removeFilter: action('removeFilter')
   });

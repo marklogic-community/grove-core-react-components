@@ -6,8 +6,8 @@ var SearchSnippet = function SearchSnippet(_ref) {
   var matchSpans = match['match-text'].map(function (text, index) {
     return React.createElement(
       'em',
-      { className: text.highlight ? 'mark' : '', key: index },
-      typeof text === 'string' ? text : text.highlight
+      { className: text.highlight !== undefined ? 'mark' : '', key: index },
+      text.highlight !== undefined ? text.highlight : text
     );
   });
 

@@ -1,3 +1,5 @@
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
 import React from 'react';
@@ -23,21 +25,29 @@ var Navbar = function Navbar(_ref) {
         BSNavbar.Brand,
         null,
         React.createElement(
-          'a',
-          { href: '/', className: 'navbar-left' },
-          React.createElement('img', {
-            src: logo,
-            style: logoStyle || { maxWidth: '100px', maxHeight: '45px' }
-          })
+          'div',
+          { className: 'navbar-left' },
+          React.createElement(
+            props.brandLink,
+            null,
+            React.createElement('img', {
+              src: logo,
+              style: logoStyle || { maxWidth: '100px', maxHeight: '45px' }
+            })
+          )
         )
       ),
       React.createElement(
         BSNavbar.Brand,
         null,
         React.createElement(
-          'a',
-          { href: '/' },
-          title
+          props.brandLink,
+          null,
+          React.createElement(
+            'span',
+            null,
+            title
+          )
         )
       ),
       React.createElement(BSNavbar.Toggle, null)
@@ -46,13 +56,27 @@ var Navbar = function Navbar(_ref) {
       BSNavbar.Collapse,
       null,
       children,
-      !withoutUser && React.createElement(UserInfo, props)
+      !withoutUser && React.createElement(UserInfo, {
+        isAuthenticated: props.isAuthenticated,
+        currentUsername: props.currentUsername,
+        submitLogout: props.submitLogout,
+        loginPath: props.loginPath
+      })
     )
   );
 };
 
+var defaultBrandLink = function defaultBrandLink(props) {
+  return React.createElement('a', _extends({ href: '/' }, props));
+};
+
+Navbar.defaultProps = {
+  brandLink: defaultBrandLink
+};
+
 Navbar.propTypes = process.env.NODE_ENV !== "production" ? {
   title: PropTypes.string,
+  brandLink: PropTypes.func,
   withoutUser: PropTypes.bool
 } : {};
 

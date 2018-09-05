@@ -13,19 +13,17 @@ var SingleFilterList = function SingleFilterList(_ref) {
       'div',
       { className: 'selectedFilterValues' },
       values.map(function (value) {
-        return selectedValues.map(function (v) {
-          return v.value;
-        }).includes(value.value) && React.createElement(
+        return selectedValues.includes(value.name) && React.createElement(
           'div',
-          { key: value.value },
+          { key: value.name },
           removeFilter && React.createElement('span', {
             className: 'glyphicon glyphicon-remove-circle icon-white ml-facet-remove-filter',
-            onClick: removeFilter.bind(null, value.value),
+            onClick: removeFilter.bind(null, value.name),
             style: { cursor: 'pointer' }
           }),
           React.createElement(
             'span',
-            { title: value.value },
+            { title: value.name },
             ' ',
             value.value
           ),
@@ -43,19 +41,17 @@ var SingleFilterList = function SingleFilterList(_ref) {
       'div',
       { className: 'nonSelectedFilterValues' },
       values.map(function (value) {
-        return (!selectedValues || !selectedValues.map(function (v) {
-          return v.value;
-        }).includes(value.value)) && React.createElement(
+        return (!selectedValues || !selectedValues.includes(value.name)) && React.createElement(
           'div',
-          { key: value.value },
+          { key: value.name },
           React.createElement('i', {
             className: 'glyphicon glyphicon-plus-sign ml-facet-add-pos',
-            onClick: addFilter.bind(null, value.value),
+            onClick: addFilter.bind(null, value.name),
             style: { cursor: 'pointer' }
           }),
           React.createElement(
             'span',
-            { title: value.value },
+            { title: value.name },
             ' ',
             value.value
           ),

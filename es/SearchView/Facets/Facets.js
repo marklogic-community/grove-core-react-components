@@ -16,6 +16,13 @@ var Facets = function Facets(_ref) {
     { className: 'ml-facet-list list-group' },
     activeFilters.length > 0 && React.createElement(CurrentFilters, { filters: activeFilters, removeFilter: removeFilter }),
     availableFilters && Object.keys(availableFilters).map(function (facetName) {
+      var selectedValues = void 0;
+      var activeFilter = activeFilters.find(function (filter) {
+        return filter.constraint === facetName;
+      });
+      if (activeFilter) {
+        selectedValues = activeFilter.value;
+      }
       return React.createElement(
         'div',
         { key: facetName, className: 'panel panel-primary ml-facet' },
@@ -33,7 +40,7 @@ var Facets = function Facets(_ref) {
           { className: 'panel-body' },
           React.createElement(SingleFilterList, {
             values: availableFilters[facetName].facetValues,
-            selectedValues: activeFilters[facetName] && activeFilters[facetName].and,
+            selectedValues: selectedValues,
             addFilter: addFilter.bind(null, facetName, availableFilters[facetName].type || null),
             removeFilter: removeFilter.bind(null, facetName)
           })

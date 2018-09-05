@@ -1,5 +1,5 @@
 /*!
- * muir-core-react-components v0.10.0-alpha.3
+ * muir-core-react-components v0.10.0-alpha.4
  * Apache-2.0 Licensed
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -4921,8 +4921,8 @@ var SearchSnippet = function SearchSnippet(_ref) {
   var matchSpans = match['match-text'].map(function (text, index) {
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       'em',
-      { className: text.highlight ? 'mark' : '', key: index },
-      typeof text === 'string' ? text : text.highlight
+      { className: text.highlight !== undefined ? 'mark' : '', key: index },
+      text.highlight !== undefined ? text.highlight : text
     );
   });
 
@@ -9354,6 +9354,13 @@ var Facets = function Facets(_ref) {
     { className: 'ml-facet-list list-group' },
     activeFilters.length > 0 && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__CurrentFilters__["a" /* default */], { filters: activeFilters, removeFilter: removeFilter }),
     availableFilters && Object.keys(availableFilters).map(function (facetName) {
+      var selectedValues = void 0;
+      var activeFilter = activeFilters.find(function (filter) {
+        return filter.constraint === facetName;
+      });
+      if (activeFilter) {
+        selectedValues = activeFilter.value;
+      }
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         { key: facetName, className: 'panel panel-primary ml-facet' },
@@ -9371,7 +9378,7 @@ var Facets = function Facets(_ref) {
           { className: 'panel-body' },
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__SingleFilterList__["a" /* default */], {
             values: availableFilters[facetName].facetValues,
-            selectedValues: activeFilters[facetName] && activeFilters[facetName].and,
+            selectedValues: selectedValues,
             addFilter: addFilter.bind(null, facetName, availableFilters[facetName].type || null),
             removeFilter: removeFilter.bind(null, facetName)
           })
@@ -10006,19 +10013,17 @@ var SingleFilterList = function SingleFilterList(_ref) {
       'div',
       { className: 'selectedFilterValues' },
       values.map(function (value) {
-        return selectedValues.map(function (v) {
-          return v.value;
-        }).includes(value.value) && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        return selectedValues.includes(value.name) && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'div',
-          { key: value.value },
+          { key: value.name },
           removeFilter && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', {
             className: 'glyphicon glyphicon-remove-circle icon-white ml-facet-remove-filter',
-            onClick: removeFilter.bind(null, value.value),
+            onClick: removeFilter.bind(null, value.name),
             style: { cursor: 'pointer' }
           }),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'span',
-            { title: value.value },
+            { title: value.name },
             ' ',
             value.value
           ),
@@ -10036,19 +10041,17 @@ var SingleFilterList = function SingleFilterList(_ref) {
       'div',
       { className: 'nonSelectedFilterValues' },
       values.map(function (value) {
-        return (!selectedValues || !selectedValues.map(function (v) {
-          return v.value;
-        }).includes(value.value)) && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        return (!selectedValues || !selectedValues.includes(value.name)) && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'div',
-          { key: value.value },
+          { key: value.name },
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', {
             className: 'glyphicon glyphicon-plus-sign ml-facet-add-pos',
-            onClick: addFilter.bind(null, value.value),
+            onClick: addFilter.bind(null, value.name),
             style: { cursor: 'pointer' }
           }),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'span',
-            { title: value.value },
+            { title: value.name },
             ' ',
             value.value
           ),
@@ -45109,6 +45112,8 @@ module.exports = hoistNonReactStatics;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_bootstrap__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__UserInfo__ = __webpack_require__(358);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
 
@@ -45134,21 +45139,29 @@ var Navbar = function Navbar(_ref) {
         __WEBPACK_IMPORTED_MODULE_2_react_bootstrap__["k" /* Navbar */].Brand,
         null,
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'a',
-          { href: '/', className: 'navbar-left' },
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', {
-            src: logo,
-            style: logoStyle || { maxWidth: '100px', maxHeight: '45px' }
-          })
+          'div',
+          { className: 'navbar-left' },
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            props.brandLink,
+            null,
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', {
+              src: logo,
+              style: logoStyle || { maxWidth: '100px', maxHeight: '45px' }
+            })
+          )
         )
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         __WEBPACK_IMPORTED_MODULE_2_react_bootstrap__["k" /* Navbar */].Brand,
         null,
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'a',
-          { href: '/' },
-          title
+          props.brandLink,
+          null,
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'span',
+            null,
+            title
+          )
         )
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_bootstrap__["k" /* Navbar */].Toggle, null)
@@ -45157,13 +45170,27 @@ var Navbar = function Navbar(_ref) {
       __WEBPACK_IMPORTED_MODULE_2_react_bootstrap__["k" /* Navbar */].Collapse,
       null,
       children,
-      !withoutUser && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__UserInfo__["a" /* default */], props)
+      !withoutUser && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__UserInfo__["a" /* default */], {
+        isAuthenticated: props.isAuthenticated,
+        currentUsername: props.currentUsername,
+        submitLogout: props.submitLogout,
+        loginPath: props.loginPath
+      })
     )
   );
 };
 
+var defaultBrandLink = function defaultBrandLink(props) {
+  return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('a', _extends({ href: '/' }, props));
+};
+
+Navbar.defaultProps = {
+  brandLink: defaultBrandLink
+};
+
 Navbar.propTypes = {
   title: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string,
+  brandLink: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.func,
   withoutUser: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.bool
 };
 
