@@ -15,28 +15,46 @@ const Navbar = ({
     <BSNavbar.Header>
       {logo && (
         <BSNavbar.Brand>
-          <a href="/" className="navbar-left">
-            <img
-              src={logo}
-              style={logoStyle || { maxWidth: '100px', maxHeight: '45px' }}
-            />
-          </a>
+          <div className="navbar-left">
+            <props.brandLink>
+              <img
+                src={logo}
+                style={logoStyle || { maxWidth: '100px', maxHeight: '45px' }}
+              />
+            </props.brandLink>
+          </div>
         </BSNavbar.Brand>
       )}
       <BSNavbar.Brand>
-        <a href="/">{title}</a>
+        <props.brandLink>
+          <span>{title}</span>
+        </props.brandLink>
       </BSNavbar.Brand>
       <BSNavbar.Toggle />
     </BSNavbar.Header>
     <BSNavbar.Collapse>
       {children}
-      {!withoutUser && <UserInfo {...props} />}
+      {!withoutUser && (
+        <UserInfo
+          isAuthenticated={props.isAuthenticated}
+          currentUsername={props.currentUsername}
+          submitLogout={props.submitLogout}
+          loginPath={props.loginPath}
+        />
+      )}
     </BSNavbar.Collapse>
   </BSNavbar>
 );
 
+const defaultBrandLink = props => <a href="/" {...props} />;
+
+Navbar.defaultProps = {
+  brandLink: defaultBrandLink
+};
+
 Navbar.propTypes = {
   title: PropTypes.string,
+  brandLink: PropTypes.func,
   withoutUser: PropTypes.bool
 };
 
