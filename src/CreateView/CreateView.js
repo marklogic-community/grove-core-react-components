@@ -25,7 +25,6 @@ class CreateView extends React.Component {
   constructor(props) {
     super(props);
 
-    this.resetForm = this.resetForm.bind(this);
     this.onCodeChange = this.onCodeChange.bind(this);
 
     let initCode =
@@ -53,11 +52,6 @@ class CreateView extends React.Component {
       this.setState({ invalid: true, code });
     }
   }
-
-  resetForm() {
-    this.setState({ code: '', invalid: false });
-  }
-
   render() {
     const icon = this.state.invalid ? 'remove' : 'ok';
     const cls = this.state.invalid ? 'invalid' : 'valid';
@@ -72,7 +66,7 @@ class CreateView extends React.Component {
             value={this.state.code}
             onChange={this.onCodeChange}
             autoCursor={false}
-            options={Object.assign({}, cmOptions)}
+            options={cmOptions}
           />
         </div>
         <form
@@ -90,14 +84,6 @@ class CreateView extends React.Component {
             disabled={this.state.invalid}
           >
             Submit
-          </Button>
-          <Button
-            type="button"
-            bsStyle="default"
-            className="btn-raised"
-            onClick={this.resetForm}
-          >
-            Cancel
           </Button>
         </form>
       </div>
