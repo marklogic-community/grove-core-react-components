@@ -20,6 +20,7 @@ export { default as Login } from './user/Login';
 export { default as LoginJumbotron } from './user/LoginJumbotron';
 
 export { default as DetailView } from './DetailView/DetailView';
+export { default as CreateView } from './CreateView/CreateView';
 
 export { default as FadeAndSlide } from './animations/FadeAndSlide';
 export { default as Fade } from './animations/Fade';
