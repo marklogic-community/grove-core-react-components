@@ -24,7 +24,6 @@ export { default as Navbar } from './Navbar/Navbar';
 
 export { default as Login } from './user/Login';
 export { default as LoginJumbotron } from './user/LoginJumbotron';
-export { default as LoggedOut } from './user/LoggedOut';
 
 export { default as DetailView } from './DetailView/DetailView';
 export { default as CreateView } from './CreateView/CreateView';
