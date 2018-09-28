@@ -12,7 +12,7 @@ class Demo extends Component {
   render() {
     return (
       <div>
-        <Navbar title="MarkLogic UI Resources" />
+        <Navbar title="MarkLogic Grove" />
         <SearchView queryText="" />
       </div>
     );
