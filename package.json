@@ -1,6 +1,6 @@
 {
-  "name": "muir-core-react-components",
-  "version": "0.10.0-alpha.4",
+  "name": "grove-core-react-components",
+  "version": "0.10.0-beta",
   "description": "React component library for apps backed by MarkLogic",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -55,10 +55,24 @@
   "author": "Patrick McElwee <patrick.mcelwee@marklogic.com>",
   "homepage": "",
   "license": "Apache-2.0",
-  "repository": "ssh://git@project.marklogic.com:7999/nacw/muir-core-react-components.git",
+  "repository": "ssh://git@project.marklogic.com:7999/nacw/grove-core-react-components.git",
   "keywords": [
     "react-component-library",
     "search",
     "MarkLogic"
+  ],
+  "contributors": [
+    {
+      "name": "Patrick McElwee",
+      "url": "https://github.com/patrickmcelwee"
+    },
+    {
+      "name": "Marianne Myers",
+      "url": "https://github.com/mariannemyers"
+    },
+    {
+      "name": "Geert Josten",
+      "url": "https://github.com/grtjn"
+    }
   ]
 }
