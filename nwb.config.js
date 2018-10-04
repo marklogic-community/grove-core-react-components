@@ -5,7 +5,7 @@ module.exports = {
   npm: {
     esModules: true,
     umd: {
-      global: 'MuirCoreReactComponents',
+      global: 'GroveCoreReactComponents',
       externals: {
         react: 'React'
       }
