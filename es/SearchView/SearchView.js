@@ -130,6 +130,7 @@ SearchView.propTypes = process.env.NODE_ENV !== "production" ? {
   page: PropTypes.number,
   totalPages: PropTypes.number,
   isSearchComplete: PropTypes.bool,
+  isSearchPending: PropTypes.bool,
   changePage: PropTypes.func,
   detailPath: PropTypes.string,
 

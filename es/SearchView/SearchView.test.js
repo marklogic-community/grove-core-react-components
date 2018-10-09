@@ -64,7 +64,20 @@ describe('<SearchView />', () => {
     const wrapper = render(
       <SearchView {...requiredProps} executedSearch={executedSearch} />
     );
-    wrapper.find('.ml-search-results').text('Another Search Result');
+    expect(
+      wrapper.find('.ml-search-results').text('Another Search Result')
+    ).toExist();
+  });
+
+  it('does not display search results when results pending', () => {
+    const wrapper = render(
+      <SearchView
+        {...requiredProps}
+        executedSearch={executedSearch}
+        isSearchPending={true}
+      />
+    );
+    expect(wrapper.find('.ml-search-results').length).toEqual(0);
   });
 
   it('uses queryText from props', () => {

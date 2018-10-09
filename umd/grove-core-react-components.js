@@ -10158,19 +10158,21 @@ var SearchResponseView = function SearchResponseView(props) {
               props.error
             )
           )
-        ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        ) : !props.isSearchPending && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'div',
           null,
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             __WEBPACK_IMPORTED_MODULE_2_react_bootstrap__["c" /* Col */],
             { md: 6 },
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__SearchMetrics__["a" /* default */], { time: props.executionTime, total: props.total })
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__SearchMetrics__["a" /* default */], {
+              time: props.executionTime,
+              total: props.total
+            })
           ),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__SearchResults_SearchResults__["a" /* default */], {
             results: props.results || [],
             detailPath: props.detailPath,
-            resultComponent: props.resultComponent,
-            isSearchPending: props.isSearchPending
+            resultComponent: props.resultComponent
           }),
           props.totalPages > 1 && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             __WEBPACK_IMPORTED_MODULE_2_react_bootstrap__["c" /* Col */],
@@ -10325,7 +10327,7 @@ var SearchResults = function (_React$Component) {
               detailPath: _this2.props.detailPath || '/detail'
             });
           }),
-          !this.props.isSearchPending && this.props.results.length === 0 && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(this.props.noResults, null)
+          this.props.results.length === 0 && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(this.props.noResults, null)
         )
       )
     );
@@ -22097,6 +22099,7 @@ SearchView.propTypes = {
   page: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.number,
   totalPages: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.number,
   isSearchComplete: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.bool,
+  isSearchPending: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.bool,
   changePage: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.func,
   detailPath: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string,
 

@@ -37,19 +37,21 @@ var SearchResponseView = function SearchResponseView(props) {
               props.error
             )
           )
-        ) : React.createElement(
+        ) : !props.isSearchPending && React.createElement(
           'div',
           null,
           React.createElement(
             Col,
             { md: 6 },
-            React.createElement(SearchMetrics, { time: props.executionTime, total: props.total })
+            React.createElement(SearchMetrics, {
+              time: props.executionTime,
+              total: props.total
+            })
           ),
           React.createElement(SearchResults, {
             results: props.results || [],
             detailPath: props.detailPath,
-            resultComponent: props.resultComponent,
-            isSearchPending: props.isSearchPending
+            resultComponent: props.resultComponent
           }),
           props.totalPages > 1 && React.createElement(
             Col,

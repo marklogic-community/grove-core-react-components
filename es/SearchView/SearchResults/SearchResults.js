@@ -110,7 +110,7 @@ var SearchResults = function (_React$Component) {
               detailPath: _this2.props.detailPath || '/detail'
             });
           }),
-          !this.props.isSearchPending && this.props.results.length === 0 && React.createElement(this.props.noResults, null)
+          this.props.results.length === 0 && React.createElement(this.props.noResults, null)
         )
       )
     );
