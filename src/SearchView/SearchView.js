@@ -108,6 +108,7 @@ SearchView.propTypes = {
   page: PropTypes.number,
   totalPages: PropTypes.number,
   isSearchComplete: PropTypes.bool,
+  isSearchPending: PropTypes.bool,
   changePage: PropTypes.func,
   detailPath: PropTypes.string,
 
