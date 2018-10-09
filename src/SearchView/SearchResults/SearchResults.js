@@ -78,8 +78,7 @@ class SearchResults extends React.Component {
                 detailPath={this.props.detailPath || '/detail'}
               />
             ))}
-            {!this.props.isSearchPending &&
-              this.props.results.length === 0 && <this.props.noResults />}
+            {this.props.results.length === 0 && <this.props.noResults />}
           </Col>
         </Row>
       </div>

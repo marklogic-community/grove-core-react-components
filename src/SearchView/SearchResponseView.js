@@ -21,28 +21,32 @@ const SearchResponseView = props => {
               </p>
             </Col>
           ) : (
-            <div>
-              <Col md={6}>
-                <SearchMetrics time={props.executionTime} total={props.total} />
-              </Col>
-              <SearchResults
-                results={props.results || []}
-                detailPath={props.detailPath}
-                resultComponent={props.resultComponent}
-                isSearchPending={props.isSearchPending}
-              />
-              {props.totalPages > 1 && (
-                <Col md={12}>
-                  <Pagination
-                    items={props.totalPages}
-                    maxButtons={10}
-                    boundaryLinks={true}
-                    activePage={props.page}
-                    onSelect={props.handlePageSelection}
+            !props.isSearchPending && (
+              <div>
+                <Col md={6}>
+                  <SearchMetrics
+                    time={props.executionTime}
+                    total={props.total}
                   />
                 </Col>
-              )}
-            </div>
+                <SearchResults
+                  results={props.results || []}
+                  detailPath={props.detailPath}
+                  resultComponent={props.resultComponent}
+                />
+                {props.totalPages > 1 && (
+                  <Col md={12}>
+                    <Pagination
+                      items={props.totalPages}
+                      maxButtons={10}
+                      boundaryLinks={true}
+                      activePage={props.page}
+                      onSelect={props.handlePageSelection}
+                    />
+                  </Col>
+                )}
+              </div>
+            )
           )}
         </Row>
       </Col>
