@@ -1,5 +1,5 @@
 /*!
- * muir-core-react-components v0.10.0-alpha.4
+ * grove-core-react-components v0.10.0-beta
  * Apache-2.0 Licensed
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -8,9 +8,9 @@
 	else if(typeof define === 'function' && define.amd)
 		define(["react"], factory);
 	else if(typeof exports === 'object')
-		exports["MuirCoreReactComponents"] = factory(require("react"));
+		exports["GroveCoreReactComponents"] = factory(require("react"));
 	else
-		root["MuirCoreReactComponents"] = factory(root["React"]);
+		root["GroveCoreReactComponents"] = factory(root["React"]);
 })(typeof self !== 'undefined' ? self : this, function(__WEBPACK_EXTERNAL_MODULE_0__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
