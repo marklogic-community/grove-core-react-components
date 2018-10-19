@@ -4,6 +4,9 @@
   "description": "React component library for apps backed by MarkLogic",
   "main": "lib/index.js",
   "module": "es/index.js",
+  "engines": {
+    "node": ">=8.6.0"
+  },
   "files": [
     "css",
     "es",
