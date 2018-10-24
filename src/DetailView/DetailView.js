@@ -4,7 +4,7 @@ import JSONTree from 'react-json-tree';
 import vkbeautify from 'vkbeautify';
 import { Row, Col, Button, Glyphicon } from 'react-bootstrap';
 
-const ViewAsJson = ({ detail, contentType, label, uri }) => {
+const ViewAsJson = ({ detail, contentType, label, id }) => {
   if (!detail) {
     return null;
   }
@@ -22,7 +22,7 @@ const ViewAsJson = ({ detail, contentType, label, uri }) => {
   }
   return (
     <div>
-      <h1>{label || uri}</h1>
+      <h1>{label || id}</h1>
       {renderedRawData}
     </div>
   );
@@ -31,14 +31,14 @@ const ViewAsJson = ({ detail, contentType, label, uri }) => {
 class DetailView extends Component {
   componentDidMount() {
     if (!this.props.detail) {
-      this.props.loadDetail(this.props.uri);
+      this.props.loadDetail(this.props.id);
     }
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.uri !== this.props.uri) {
+    if (prevProps.id !== this.props.id) {
       if (!this.props.detail) {
-        this.props.loadDetail(this.props.uri);
+        this.props.loadDetail(this.props.id);
       }
     }
   }
@@ -52,13 +52,13 @@ class DetailView extends Component {
               bsStyle="default"
               bsSize="small"
               className="btn-raised"
-              onClick={() => this.props.loadDetail(this.props.uri)}
+              onClick={() => this.props.loadDetail(this.props.id)}
             >
               <Glyphicon glyph="refresh" />
             </Button>
           </div>
           {this.props.error ? (
-            <div>
+            <div id="detail">
               <p>
                 <strong>There was an error retrieving this document.</strong>
               </p>
@@ -68,7 +68,11 @@ class DetailView extends Component {
               </p>
             </div>
           ) : (
-            <this.props.template {...this.props} />
+            this.props.detail && (
+              <div id="detail">
+                <this.props.template {...this.props} />
+              </div>
+            )
           )}
         </Col>
       </Row>

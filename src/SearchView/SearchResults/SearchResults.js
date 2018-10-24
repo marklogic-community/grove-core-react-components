@@ -73,7 +73,7 @@ class SearchResults extends React.Component {
           <Col md={12}>
             {this.props.results.map(result => (
               <this.state.resultComponent
-                key={result.uri}
+                key={result.id}
                 result={result}
                 detailPath={this.props.detailPath || '/detail'}
               />
@@ -95,7 +95,7 @@ SearchResults.propTypes = {
   noResults: PropTypes.func,
   results: PropTypes.arrayOf(
     PropTypes.shape({
-      uri: PropTypes.string
+      id: PropTypes.string
     })
   ).isRequired,
   detailPath: PropTypes.string

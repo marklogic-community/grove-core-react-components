@@ -11,7 +11,7 @@ export const mockResults = [
         ]
       }
     ],
-    uri: '/uri/1.json'
+    id: '/id/1.json'
   },
   {
     label: 'Another Search Result',
@@ -23,7 +23,7 @@ export const mockResults = [
         'match-text': ['He (', { highlight: 'Waldo' }, ') is over here too.']
       }
     ],
-    uri: '/uri/2.json'
+    id: '/id/2.json'
   },
   {
     label: 'A Search Result With a Particularly Long Label, Right?',
@@ -46,7 +46,7 @@ export const mockResults = [
         ]
       }
     ],
-    uri: '/uri/3.json'
+    id: '/id/3.json'
   },
   {
     matches: [
@@ -54,36 +54,36 @@ export const mockResults = [
         'match-text': ['But I did provide a ', { highlight: 'match' }, '!']
       }
     ],
-    uri: '/uri/no-label-provided.json'
+    id: '/id/no-label-provided.json'
   },
   {
     label: 'A Search Result',
     matches: [],
-    uri: '/uri/5.json'
+    id: '/id/5.json'
   },
   {
     label: 'A Search Result',
     matches: [],
-    uri: '/uri/6.json'
+    id: '/id/6.json'
   },
   {
     label: 'A Search Result',
     matches: [],
-    uri: '/uri/7.json'
+    id: '/id/7.json'
   },
   {
     label: 'A Search Result',
     matches: [],
-    uri: '/uri/8.json'
+    id: '/id/8.json'
   },
   {
     label: 'A Search Result',
     matches: [],
-    uri: '/uri/9.json'
+    id: '/id/9.json'
   },
   {
     label: 'A Search Result',
     matches: [],
-    uri: '/uri/10.json'
+    id: '/id/10.json'
   }
 ];

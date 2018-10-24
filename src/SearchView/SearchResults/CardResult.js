@@ -6,6 +6,9 @@ import SearchSnippet from './SearchSnippet.js';
 import './CardResult.css';
 
 const prettyUri = uri => {
+  if (!uri) {
+    return null;
+  }
   const uriParts = uri.split('/');
   return uriParts[uriParts.length - 1];
 };
@@ -21,14 +24,14 @@ const SearchSnippets = ({ result }) => (
 
 const Header = props => (
   <h1 className="panel-title">
-    {props.result.label || prettyUri(props.result.uri)}
+    {props.result.label || prettyUri(props.result.uri) || props.result.id}
   </h1>
 );
 
 const CardResult = props => (
   <Col xs={12} sm={6} md={4} lg={3} className="ml-search-result">
     <Link
-      to={props.detailPath + encodeURIComponent(props.result.uri)}
+      to={props.detailPath + encodeURIComponent(props.result.id)}
       style={{ textDecoration: 'none' }}
     >
       <Panel
@@ -53,7 +56,7 @@ CardResult.propTypes = {
   header: PropTypes.func,
   detailPath: PropTypes.string,
   result: PropTypes.shape({
-    uri: PropTypes.string
+    id: PropTypes.string
   })
 };
 

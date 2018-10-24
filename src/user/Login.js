@@ -33,6 +33,7 @@ class Login extends React.Component {
         <FormGroup>
           <FormControl
             type="text"
+            name="username"
             placeholder="Username"
             onChange={this.setUsername}
           />
@@ -40,6 +41,7 @@ class Login extends React.Component {
         <FormGroup>
           <FormControl
             type="password"
+            name="password"
             placeholder="Password"
             onChange={this.setPassword}
           />
