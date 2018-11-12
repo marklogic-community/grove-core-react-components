@@ -11,7 +11,7 @@ export const mockResults = [
         ]
       }
     ],
-    id: '/id/1.json'
+    id: '%2Fid%2F1.json'
   },
   {
     label: 'Another Search Result',
