@@ -5,11 +5,11 @@ import { Link } from 'react-router-dom';
 import SearchSnippet from './SearchSnippet.js';
 import './CardResult.css';
 
-const getFilename = uri => {
-  if (!uri) {
+const getFilename = id => {
+  if (!id) {
     return null;
   }
-  return uri.split('/').pop();
+  return id.split('%2F').pop();
 };
 
 const SearchSnippets = ({ result }) => (
@@ -23,7 +23,7 @@ const SearchSnippets = ({ result }) => (
 
 const Header = props => (
   <h1 className="panel-title">
-    {props.result.label || getFilename(props.result.uri) || props.result.id}
+    {props.result.label || getFilename(props.result.id) || props.result.uri}
   </h1>
 );
 

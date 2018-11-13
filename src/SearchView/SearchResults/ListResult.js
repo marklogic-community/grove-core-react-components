@@ -3,18 +3,18 @@ import { Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import SearchSnippet from './SearchSnippet.js';
 
-const getFilename = uri => {
-  if (!uri) {
+const getFilename = id => {
+  if (!id) {
     return null;
   }
-  return uri.split('/').pop();
+  return id.split('%2F').pop();
 };
 
 const ListResult = props => (
   <Col xs={12} className="ml-search-result">
     <h4>
       <Link to={props.detailPath + encodeURIComponent(props.result.id)}>
-        {props.result.label || getFilename(props.result.uri) || props.result.id}
+        {props.result.label || getFilename(props.result.id) || props.result.uri}
       </Link>
     </h4>
     <div className="ml-search-result-matches">
