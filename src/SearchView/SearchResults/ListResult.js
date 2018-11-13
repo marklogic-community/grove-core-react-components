@@ -13,7 +13,13 @@ const getFilename = id => {
 const ListResult = props => (
   <Col xs={12} className="ml-search-result">
     <h4>
-      <Link to={props.detailPath + encodeURIComponent(props.result.id)}>
+      <Link
+        to={{
+          pathname: props.detailPath,
+          state: { id: props.result.id },
+          search: `?id=${props.result.id}`
+        }}
+      >
         {props.result.label || getFilename(props.result.id) || props.result.uri}
       </Link>
     </h4>

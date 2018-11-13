@@ -30,7 +30,11 @@ const Header = props => (
 const CardResult = props => (
   <Col xs={12} sm={6} md={4} lg={3} className="ml-search-result">
     <Link
-      to={props.detailPath + encodeURIComponent(props.result.id)}
+      to={{
+        pathname: props.detailPath,
+        state: { id: props.result.id },
+        search: `?id=${props.result.id}`
+      }}
       style={{ textDecoration: 'none' }}
     >
       <Panel

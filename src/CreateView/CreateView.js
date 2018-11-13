@@ -39,7 +39,7 @@ class CreateView extends React.Component {
   componentDidUpdate(prevProps) {
     if (prevProps.docId !== this.props.docId) {
       this.props.history.push(
-        this.props.redirectPath + '/' + encodeURIComponent(this.props.docId)
+        this.props.redirectPath + '?id=' + this.props.docId
       );
     }
   }
