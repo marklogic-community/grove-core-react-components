@@ -15,7 +15,9 @@ var Facets = function Facets(_ref) {
     'div',
     { className: 'ml-facet-list list-group' },
     activeFilters.length > 0 && React.createElement(CurrentFilters, { filters: activeFilters, removeFilter: removeFilter }),
-    availableFilters && Object.keys(availableFilters).map(function (facetName) {
+    availableFilters && Object.keys(availableFilters).filter(function (facetName) {
+      return availableFilters[facetName].facetValues;
+    }).map(function (facetName) {
       var selectedValues = void 0;
       var activeFilter = activeFilters.find(function (filter) {
         return filter.constraint === facetName;
@@ -53,6 +55,7 @@ var Facets = function Facets(_ref) {
 Facets.propTypes = process.env.NODE_ENV !== "production" ? {
   activeFilters: PropTypes.array.isRequired,
   addFilter: PropTypes.func.isRequired,
+  availableFilters: PropTypes.object,
   removeFilter: PropTypes.func.isRequired
 } : {};
 

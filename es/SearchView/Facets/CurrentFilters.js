@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import TransitionGroup from 'react-transition-group/TransitionGroup';
 import Fade from '../../animations/Fade';
 
+import { some } from 'lodash';
+
 // TODO: truncate values with a truncateLength option
 var CurrentFilters = function CurrentFilters(_ref) {
   var filters = _ref.filters,
@@ -12,6 +14,11 @@ var CurrentFilters = function CurrentFilters(_ref) {
     TransitionGroup,
     { className: 'chiclets', appear: true },
     filters.map(function (filter) {
+      if (some(filter.value, function (value) {
+        return !(typeof value === 'string' || typeof value === 'number');
+      })) {
+        return null;
+      }
       return (
         // <div ng-repeat="(index, facet) in facets | object2Array | filter:{selected: true}">
         React.createElement(
@@ -19,7 +26,10 @@ var CurrentFilters = function CurrentFilters(_ref) {
           { key: filter.constraint },
           React.createElement(
             'div',
-            { style: { marginBottom: '10px' } },
+            {
+              style: { marginBottom: '10px' },
+              className: 'grove-current-filter'
+            },
             filter.value.map(function (value) {
               return React.createElement(
                 'div',
