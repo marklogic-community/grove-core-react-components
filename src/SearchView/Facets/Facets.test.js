@@ -8,5 +8,5 @@ describe('<Facets/>', () => {
     expect(shallow(<Facets activeFilters={[]} />).length).toEqual(1);
   });
 
-  it('renders SingleFilterLists', () => {});
+  xit('renders SingleFilterLists', () => {});
 });
