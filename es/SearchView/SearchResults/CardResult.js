@@ -5,9 +5,11 @@ import { Link } from 'react-router-dom';
 import SearchSnippet from './SearchSnippet.js';
 import './CardResult.css';
 
-var prettyUri = function prettyUri(uri) {
-  var uriParts = uri.split('/');
-  return uriParts[uriParts.length - 1];
+var getFilename = function getFilename(id) {
+  if (!id) {
+    return null;
+  }
+  return id.split('%2F').pop();
 };
 
 var SearchSnippets = function SearchSnippets(_ref) {
@@ -25,7 +27,7 @@ var Header = function Header(props) {
   return React.createElement(
     'h1',
     { className: 'panel-title' },
-    props.result.label || prettyUri(props.result.uri)
+    props.result.label || getFilename(props.result.id) || props.result.uri
   );
 };
 
@@ -36,7 +38,11 @@ var CardResult = function CardResult(props) {
     React.createElement(
       Link,
       {
-        to: props.detailPath + encodeURIComponent(props.result.uri),
+        to: {
+          pathname: props.detailPath,
+          state: { id: props.result.id },
+          search: '?id=' + props.result.id
+        },
         style: { textDecoration: 'none' }
       },
       React.createElement(
@@ -63,7 +69,7 @@ CardResult.propTypes = process.env.NODE_ENV !== "production" ? {
   header: PropTypes.func,
   detailPath: PropTypes.string,
   result: PropTypes.shape({
-    uri: PropTypes.string
+    id: PropTypes.string
   })
 } : {};
 

@@ -105,7 +105,7 @@ var SearchResults = function (_React$Component) {
           { md: 12 },
           this.props.results.map(function (result) {
             return React.createElement(_this2.state.resultComponent, {
-              key: result.uri,
+              key: result.id,
               result: result,
               detailPath: _this2.props.detailPath || '/detail'
             });
@@ -127,7 +127,7 @@ SearchResults.propTypes = process.env.NODE_ENV !== "production" ? {
   resultComponent: PropTypes.func,
   noResults: PropTypes.func,
   results: PropTypes.arrayOf(PropTypes.shape({
-    uri: PropTypes.string
+    id: PropTypes.string
   })).isRequired,
   detailPath: PropTypes.string
 } : {};

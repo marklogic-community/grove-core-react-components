@@ -3,9 +3,11 @@ import { Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import SearchSnippet from './SearchSnippet.js';
 
-var prettyUri = function prettyUri(uri) {
-  var uriParts = uri.split('/');
-  return uriParts[uriParts.length - 1];
+var getFilename = function getFilename(id) {
+  if (!id) {
+    return null;
+  }
+  return id.split('%2F').pop();
 };
 
 var ListResult = function ListResult(props) {
@@ -17,8 +19,14 @@ var ListResult = function ListResult(props) {
       null,
       React.createElement(
         Link,
-        { to: props.detailPath + encodeURIComponent(props.result.uri) },
-        props.result.label || prettyUri(props.result.uri)
+        {
+          to: {
+            pathname: props.detailPath,
+            state: { id: props.result.id },
+            search: '?id=' + props.result.id
+          }
+        },
+        props.result.label || getFilename(props.result.id) || props.result.uri
       )
     ),
     React.createElement(

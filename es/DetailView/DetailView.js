@@ -14,7 +14,7 @@ var ViewAsJson = function ViewAsJson(_ref) {
   var detail = _ref.detail,
       contentType = _ref.contentType,
       label = _ref.label,
-      uri = _ref.uri;
+      id = _ref.id;
 
   if (!detail) {
     return null;
@@ -49,7 +49,7 @@ var ViewAsJson = function ViewAsJson(_ref) {
     React.createElement(
       'h1',
       null,
-      label || uri
+      label || id
     ),
     renderedRawData
   );
@@ -66,14 +66,14 @@ var DetailView = function (_Component) {
 
   DetailView.prototype.componentDidMount = function componentDidMount() {
     if (!this.props.detail) {
-      this.props.loadDetail(this.props.uri);
+      this.props.loadDetail(this.props.id);
     }
   };
 
   DetailView.prototype.componentDidUpdate = function componentDidUpdate(prevProps) {
-    if (prevProps.uri !== this.props.uri) {
+    if (prevProps.id !== this.props.id) {
       if (!this.props.detail) {
-        this.props.loadDetail(this.props.uri);
+        this.props.loadDetail(this.props.id);
       }
     }
   };
@@ -97,7 +97,7 @@ var DetailView = function (_Component) {
               bsSize: 'small',
               className: 'btn-raised',
               onClick: function onClick() {
-                return _this2.props.loadDetail(_this2.props.uri);
+                return _this2.props.loadDetail(_this2.props.id);
               }
             },
             React.createElement(Glyphicon, { glyph: 'refresh' })
@@ -105,7 +105,7 @@ var DetailView = function (_Component) {
         ),
         this.props.error ? React.createElement(
           'div',
-          null,
+          { id: 'detail' },
           React.createElement(
             'p',
             null,
@@ -125,7 +125,11 @@ var DetailView = function (_Component) {
               this.props.error
             )
           )
-        ) : React.createElement(this.props.template, this.props)
+        ) : this.props.detail && React.createElement(
+          'div',
+          { id: 'detail' },
+          React.createElement(this.props.template, this.props)
+        )
       )
     );
   };

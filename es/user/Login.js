@@ -48,6 +48,7 @@ var Login = function (_React$Component) {
         null,
         React.createElement(FormControl, {
           type: 'text',
+          name: 'username',
           placeholder: 'Username',
           onChange: this.setUsername
         })
@@ -57,6 +58,7 @@ var Login = function (_React$Component) {
         null,
         React.createElement(FormControl, {
           type: 'password',
+          name: 'password',
           placeholder: 'Password',
           onChange: this.setPassword
         })
