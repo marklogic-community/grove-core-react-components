@@ -7,7 +7,9 @@ module.exports = {
     umd: {
       global: 'GroveCoreReactComponents',
       externals: {
-        react: 'React'
+        react: 'React',
+        'react-dom': 'ReactDOM',
+        'react-router': 'ReactRouter'
       }
     }
   },
