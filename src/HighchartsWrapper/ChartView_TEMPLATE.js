@@ -6,7 +6,7 @@ class MyChart extends ChartView {
     super(props);
     this.state = {
       // Defines chart config to use. Can be a JSON object or a reference to a chart config file in /components/highcharts-config/[name].js
-      config: 'myChartConfig',
+      config: 'myChartConfig.js',
       // Configuration for the default loadData() function called by the ChartView class.
       fetch: {
         type: 'GET',
