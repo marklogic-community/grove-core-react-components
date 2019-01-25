@@ -24,7 +24,7 @@ class Options {
       // If a configuration file is named, attempt to import it and use it. Otherwise, just use the config passed in.
       if (typeof config === 'string') {
         try {
-          let configFile = require('./' + config + '.js');
+          let configFile = require(config);
           config = configFile.config;
           this.modules = configFile.modules;
         } catch (e) {
