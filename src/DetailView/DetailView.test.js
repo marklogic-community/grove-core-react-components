@@ -5,6 +5,6 @@ import DetailView from './DetailView';
 
 describe('<DetailView />', () => {
   it('renders without crashing', () => {
-    expect(shallow(<DetailView loadDetail={() => {}} />).length).toEqual(1);
+    expect(shallow(<DetailView loadDetail={() => {}} loadSimilar={() => {}}/>).length).toEqual(1);
   });
 });

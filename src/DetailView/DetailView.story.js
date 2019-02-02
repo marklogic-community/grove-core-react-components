@@ -18,6 +18,7 @@ storiesOf('DetailView', module).add('default', () => (
     detail={detail}
     contentType="application/json"
     loadDetail={action('loadDetail')}
+    loadSimilar={action('loadSimilar')}
     uri="sample.json"
   />
 ));

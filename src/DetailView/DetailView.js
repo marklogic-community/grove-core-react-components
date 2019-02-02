@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import JSONTree from 'react-json-tree';
 import vkbeautify from 'vkbeautify';
 import { Row, Col, Button, Glyphicon } from 'react-bootstrap';
+import SimilarPanel from './SimilarPanel';
 
 const ViewAsJson = ({ detail, contentType, label, id }) => {
   if (!detail) {
@@ -33,6 +34,9 @@ class DetailView extends Component {
     if (!this.props.detail) {
       this.props.loadDetail(this.props.id);
     }
+    if (!this.props.similar) {
+      this.props.loadSimilar(this.props.id);
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -40,13 +44,16 @@ class DetailView extends Component {
       if (!this.props.detail) {
         this.props.loadDetail(this.props.id);
       }
+      if (!this.props.similar) {
+        this.props.loadSimilar(this.props.id);
+      }
     }
   }
 
   render() {
     return (
       <Row>
-        <Col md={12}>
+        <Col md={9}>
           <div className="pull-right">
             <Button
               bsStyle="default"
@@ -74,6 +81,9 @@ class DetailView extends Component {
               </div>
             )
           )}
+        </Col>
+        <Col md={3}>
+          <SimilarPanel ids={this.props.similar} />
         </Col>
       </Row>
     );
