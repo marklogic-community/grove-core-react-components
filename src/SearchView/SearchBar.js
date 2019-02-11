@@ -1,20 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Col,
-  FormGroup,
-  FormControl,
-  InputGroup,
-  Glyphicon,
-  Button
-} from 'react-bootstrap';
+import Autocomplete from './Autocomplete';
+import { Col, FormGroup, InputGroup, Glyphicon, Button } from 'react-bootstrap';
 
 const SearchBar = ({
   queryText,
   onQueryTextChange,
   onSearchExecute,
   placeholder = 'Search...',
-  searchPending
+  searchPending,
+  onSuggest,
+  suggestions
 }) => {
   return (
     <Col md={12} className="ml-search-bar">
@@ -27,12 +23,12 @@ const SearchBar = ({
       >
         <FormGroup controlId="searchBox">
           <InputGroup>
-            <FormControl
-              className="ml-qtext-input"
-              type="text"
+            <Autocomplete
+              onSuggest={onSuggest}
+              suggestions={suggestions}
+              onTermSelect={onQueryTextChange}
+              userInput={queryText}
               placeholder={placeholder}
-              value={queryText}
-              onChange={e => onQueryTextChange(e.target.value)}
             />
             <InputGroup.Button>
               <Button
@@ -63,7 +59,9 @@ SearchBar.propTypes = {
   onQueryTextClear: PropTypes.func,
   onSearchExecute: PropTypes.func,
   placeholder: PropTypes.string,
-  searchPending: PropTypes.bool
+  searchPending: PropTypes.bool,
+  onSuggest: PropTypes.func,
+  suggestions: PropTypes.array
 };
 
 export default SearchBar;

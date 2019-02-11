@@ -2,6 +2,7 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import expect, { createSpy } from 'expect';
 import SearchBar from './SearchBar';
+import Autocomplete from './Autocomplete';
 
 describe('<SearchBar />', () => {
   it('renders without crashing', () => {
@@ -10,19 +11,17 @@ describe('<SearchBar />', () => {
 
   it('displays queryText', () => {
     const wrapper = shallow(<SearchBar queryText="myQuery" />);
-    expect(wrapper.find('.ml-qtext-input').props().value).toEqual('myQuery');
+    expect(wrapper.find(Autocomplete).props().userInput).toEqual('myQuery');
   });
 
   it('shows a default placeholder', () => {
     const wrapper = shallow(<SearchBar />);
-    expect(wrapper.find('.ml-qtext-input').props().placeholder).toEqual(
-      'Search...'
-    );
+    expect(wrapper.find(Autocomplete).props().placeholder).toEqual('Search...');
   });
 
   it('allows custom placeholder', () => {
     const wrapper = shallow(<SearchBar placeholder="Please Search!" />);
-    expect(wrapper.find('.ml-qtext-input').props().placeholder).toEqual(
+    expect(wrapper.find(Autocomplete).props().placeholder).toEqual(
       'Please Search!'
     );
   });
@@ -30,9 +29,7 @@ describe('<SearchBar />', () => {
   it('calls correct function on queryText change', () => {
     const myHandleChange = createSpy();
     const wrapper = shallow(<SearchBar onQueryTextChange={myHandleChange} />);
-    wrapper
-      .find('.ml-qtext-input')
-      .simulate('change', { target: { value: 'h' } });
+    wrapper.find(Autocomplete).simulate('termSelect', 'h');
     expect(myHandleChange).toHaveBeenCalledWith('h');
   });
 

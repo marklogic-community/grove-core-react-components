@@ -64,6 +64,8 @@ class SearchView extends Component {
         <Col md={9}>
           <Row>
             <SearchBar
+              onSuggest={this.props.onSuggest}
+              suggestions={this.props.suggestions}
               queryText={this.props.queryText}
               onQueryTextChange={this.handleQueryTextChange}
               onSearchExecute={this.search}
@@ -116,7 +118,10 @@ SearchView.propTypes = {
   facets: PropTypes.object,
   activeFilters: PropTypes.array.isRequired,
   addFilter: PropTypes.func.isRequired,
-  removeFilter: PropTypes.func.isRequired
+  removeFilter: PropTypes.func.isRequired,
+
+  onSuggest: PropTypes.func,
+  suggestions: PropTypes.array
 };
 
 export default SearchView;

@@ -9,6 +9,8 @@ import SearchView from './SearchView';
 import { mockResults } from './test/mockData';
 import { defaultNonSelectedFacets } from './Facets/Facets.story';
 
+let suggestions = ['sample1', 'sample2', 'Example:', 'AnotherExample:'];
+
 storiesOf('SearchView', module).add('displaying results', () => (
   <BrowserRouter>
     <SearchView
@@ -28,6 +30,8 @@ storiesOf('SearchView', module).add('displaying results', () => (
       page={1}
       changePage={action('changePage')}
       handlePageSelection={action('handlePageSelection')}
+      onSuggest={action('getSuggestions')}
+      suggestions={suggestions}
     />
   </BrowserRouter>
 ));

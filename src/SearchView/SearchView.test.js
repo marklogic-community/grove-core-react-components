@@ -4,17 +4,13 @@ import expect, { createSpy } from 'expect';
 import { mockResults } from './test/mockData';
 import SearchView from './SearchView';
 import SearchResponseView from './SearchResponseView';
+import Autocomplete from './Autocomplete';
 
 const requiredProps = {
   activeFilters: [],
   stagedSearch: {
     page: 1
   }
-};
-
-const enterQueryText = (text, wrapper) => {
-  const typing = { target: { value: text } };
-  wrapper.find('input.ml-qtext-input').simulate('change', typing);
 };
 
 describe('<SearchView />', () => {
@@ -84,9 +80,7 @@ describe('<SearchView />', () => {
     const wrapper = mount(
       <SearchView {...requiredProps} queryText={'from-props'} />
     );
-    expect(wrapper.find('input.ml-qtext-input').props().value).toEqual(
-      'from-props'
-    );
+    expect(wrapper.find(Autocomplete).props().userInput).toEqual('from-props');
   });
 
   it('calls props.handleQueryTextChange on typing', () => {
@@ -94,7 +88,11 @@ describe('<SearchView />', () => {
     const wrapper = mount(
       <SearchView {...requiredProps} handleQueryTextChange={spy} />
     );
-    enterQueryText('query', wrapper);
+
+    wrapper
+      .find(Autocomplete)
+      .props()
+      .onTermSelect('query');
     expect(spy).toHaveBeenCalledWith('query');
     wrapper.find('button.ml-qtext-clear').simulate('click');
     expect(spy).toHaveBeenCalledWith('');
