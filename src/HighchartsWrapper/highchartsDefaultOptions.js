@@ -50,7 +50,6 @@ class Options {
     // Add the load handler
     if (opts.load) {
       this.values.chart.events.load = function() {
-        this.showLoading();
         opts.load(this);
       };
     }
