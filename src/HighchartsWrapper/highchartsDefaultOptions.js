@@ -26,7 +26,7 @@ class Options {
         try {
           let configFile = require(config);
           config = configFile.config;
-          this.modules = configFile.modules;
+          this.modules = this.modules.concat(configFile.modules || []);
         } catch (e) {
           throw new Error(
             config +
@@ -36,6 +36,10 @@ class Options {
       }
       // Merge any passed config with the default
       this.values = Object.assign({}, this.values, config);
+    }
+    // Check for any modules passed in and add them.
+    if (opts.modules) {
+      this.modules = this.modules.concat(opts.modules);
     }
     // Initialize the modules from the config file.
     if (this.modules.length) {
