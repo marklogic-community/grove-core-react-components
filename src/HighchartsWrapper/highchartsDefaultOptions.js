@@ -28,10 +28,7 @@ class Options {
           config = configFile.config;
           this.modules = this.modules.concat(configFile.modules || []);
         } catch (e) {
-          throw new Error(
-            config +
-              '.js does not exist.'
-          );
+          throw new Error(config + '.js does not exist.');
         }
       }
       // Merge any passed config with the default
