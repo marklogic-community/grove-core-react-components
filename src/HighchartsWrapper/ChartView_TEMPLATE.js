@@ -1,39 +1,40 @@
 //import ChartView from 'grove-core-react-components';
+import React from 'react';
 import ChartView from './ChartView.js';
 
-class MyChart extends ChartView {
-  constructor(props) {
-    super(props);
-    this.state = {
-      // Defines chart config to use. Can be a JSON object or a reference to a chart config file in /components/highcharts-config/[name].js
-      config: 'myChartConfig.js',
-      // Configuration for the default loadData() function called by the ChartView class.
-      fetch: {
-        type: 'GET',
-        url: '/api/my-end-point'
-      }
-    };
-  }
+let config = './MyCharts/myChartConfig.js';
 
-  loadData() {
-    // This function overloads ChartView::loadData() and is called when the chart is rendered.
-    // This should only be implimented to create a custom function for loading data.
+let load = chart => {
+  // Do something when the chart is rendered. Usually, load the data
+  if (chart.state.lastResponse.ok) {
+    // Do something with chart.state.lastResponse.data. Probably adding a series to chart.state.Highcharts
+  } else {
+    // Do something with chart.state.lastResponse.status
   }
+};
 
-  // Called by ChartView::loadData() with the results of the API call.
-  dataLoaded() {
-    // Do something with the returned data. Typically, you'll add a series to the chart or otherwise manipulate it.
-    this.state.HighCharts.charts[0].addSeries({
-      data: this.state.lastResponse.data.myValues
-    });
-  }
+// NOTE: Only load or fetch should be used to load data. Not both.
+let fetch = {
+  type: 'GET',
+  url: '/api/my-end-point'
+};
 
-  // Error handler called when the default loadData() function results in an error
-  loadFailed() {
-    //Do something with this.state.lastResponse
-    // status - HTTP response code
-    // statusText - HTTP response text
-  }
-}
+let loadFailed = chart => {
+  // Do something with chart.state.lastResponse.status
+  String(chart.state.lastResponse.status);
+};
 
-export default MyChart;
+let dataLoaded = chart => {
+  // Do something with chart.state.lastResponse.data. Probably adding a series to chart.state.Highcharts
+  chart.state.lastResponse.data.forEach(row => {
+    String(row.id);
+  });
+};
+
+<ChartView
+  config={config}
+  load={load}
+  fetch={fetch}
+  loadFailed={loadFailed}
+  dataLoaded={dataLoaded}
+/>;
