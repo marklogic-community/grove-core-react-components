@@ -30,7 +30,7 @@ class Options {
         } catch (e) {
           throw new Error(
             config +
-              '.js does not exist. Is it in components/highcharts-config?'
+              '.js does not exist.'
           );
         }
       }
