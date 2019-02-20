@@ -12,7 +12,7 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import Options from './highchartsDefaultOptions.js';
 
-class HighchartWrapper extends React.Component {
+class HighchartsWrapper extends React.Component {
   constructor(props) {
     super(props);
     var opt = new Options(Highcharts);
@@ -32,4 +32,4 @@ class HighchartWrapper extends React.Component {
   }
 }
 
-export default HighchartWrapper;
+export default HighchartsWrapper;
