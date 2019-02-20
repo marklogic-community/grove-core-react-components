@@ -7,8 +7,6 @@ Please be sure you have reviewed the Grove [Contributors Guide](https://wiki.mar
 ## Prerequisites
 
 [Node.js](http://nodejs.org/) >= v8 must be installed.
-NWB version 0.21.5
-- `npm install -g nwb@0.21.5`
 
 ## Installation
 
