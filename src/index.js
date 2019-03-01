@@ -30,3 +30,5 @@ export { default as CreateView } from './CreateView/CreateView';
 
 export { default as FadeAndSlide } from './animations/FadeAndSlide';
 export { default as Fade } from './animations/Fade';
+
+export { default as DataTable } from './DataTable/DataTable';
