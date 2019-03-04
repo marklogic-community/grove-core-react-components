@@ -65,9 +65,13 @@ class DataTable extends Component {
           a = this.formatForSorting(a, dataType);
           b = this.formatForSorting(b, dataType);
           if (order === 'asc') {
-            return dataType === 'string' || dataType === 'component' ? a.localeCompare(b) : a - b;
+            return dataType === 'string' || dataType === 'component'
+              ? a.localeCompare(b)
+              : a - b;
           } else {
-            return dataType === 'string' || dataType === 'component' ? b.localeCompare(a) : b - a;
+            return dataType === 'string' || dataType === 'component'
+              ? b.localeCompare(a)
+              : b - a;
           }
         },
         csvFormatter: cell => {
@@ -144,7 +148,11 @@ class DataTable extends Component {
     // Note that the component formatter may encounter other typed data and falls back on strings
     if (dataType === 'component') {
       if (val.props && val.props.children !== null) {
-        val = val.props.children;
+        var element = val;
+        while (typeof element.props !== 'undefined') {
+          element = element.props.children;
+        }
+        val = element;
       } else {
         val = typeof val.toString !== 'undefined' ? val.toString() : val;
       }

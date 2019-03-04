@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom'
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 const headers = {
   name: 'Name',
@@ -26,7 +27,11 @@ const data = [
   {
     name: 'Rodriguez, Bender Bending',
     age: '40',
-    link: <Link to="/">Robot Inc.</Link>,
+    link: (
+      <Link to="/">
+        <span>Robot Inc.</span>
+      </Link>
+    ),
     hireDate: '3000-01-01',
     isHuman: false
   },
@@ -58,4 +63,4 @@ const data = [
   }
 ];
 
-export { headers, data }
+export { headers, data };
