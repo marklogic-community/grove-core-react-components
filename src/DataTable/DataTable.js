@@ -65,9 +65,9 @@ class DataTable extends Component {
           a = this.formatForSorting(a, dataType);
           b = this.formatForSorting(b, dataType);
           if (order === 'asc') {
-            return dataType === 'string' ? a.localeCompare(b) : a - b;
+            return dataType === 'string' || dataType === 'component' ? a.localeCompare(b) : a - b;
           } else {
-            return dataType === 'string' ? b.localeCompare(a) : b - a;
+            return dataType === 'string' || dataType === 'component' ? b.localeCompare(a) : b - a;
           }
         },
         csvFormatter: cell => {
