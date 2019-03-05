@@ -8,7 +8,6 @@
  *   - headers:        Required - Object map of properties in the data array to column display names. (e.g., {col1: 'Column 1', col2: 'Column 2'})
  *   - exportFileName: Optional - Name given to the file downloaded with the export button. Defaults to "Report.csv"
  *   - minPagingRows:  Optional - Number of rows that must be present before the paging controls are shown. Default is 11.
- *   - showSearch:     Optional - Boolean to toggle the initial display of the search box.
  *   - pagination:     Optional - Pagination options. (See: https://react-bootstrap-table.github.io/react-bootstrap-table2/storybook/index.html?selectedKind=Pagination&selectedStory=Basic%20Pagination%20Table&full=0&addons=1&stories=1&panelRight=0&addonPanel=storybook%2Factions%2Factions-panel)
  *   - striped:        Optional - Boolean to toggle odd/even row color differences. Default is true.
  *   - hover:          Optional - Boolean to toggle row highlighting on mouseover. Default is true.
@@ -19,15 +18,16 @@
 import React, { Component } from 'react';
 import { Glyphicon } from 'react-bootstrap';
 import BootstrapTable from 'react-bootstrap-table-next';
-import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import paginationFactory from 'react-bootstrap-table2-paginator';
-import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
 import ToolkitProvider, {
   Search,
   CSVExport
 } from 'react-bootstrap-table2-toolkit';
-import 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css';
 import _ from 'lodash';
+
+import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
+import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
+import 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css';
 
 const { SearchBar } = Search;
 const { ExportCSVButton } = CSVExport;
@@ -50,8 +50,8 @@ class DataTable extends Component {
       data: [],
       headers: [],
       showSearch: false,
-      exportFileName: 'Report.csv',
-      minPagingRows: 11
+      exportFileName: this.props.exportFileName || 'Report.csv',
+      minPagingRows: this.props.minPagingRows || 11
     };
   }
 
@@ -70,7 +70,7 @@ class DataTable extends Component {
       this.setState({
         data: this.props.data,
         headers: this.props.headers,
-        showSearch: false,
+        showSearch: this.state.showSearch,
         exportFileName: this.props.exportFileName || this.state.exportFileName,
         minPagingRows: this.props.minPagingRows || this.state.minPagingRows
       });
@@ -140,6 +140,7 @@ class DataTable extends Component {
       }
       if (
         typeof d[dataField] === 'object' &&
+        d[dataField] !== null &&
         d[dataField].props &&
         d[dataField].props.children
       ) {
