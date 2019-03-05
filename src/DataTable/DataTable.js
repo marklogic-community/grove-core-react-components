@@ -21,7 +21,6 @@ class DataTable extends Component {
       data: [],
       headers: [],
       pagination: {},
-      defaultSorted: null,
       showSearch: false,
       exportFileName: 'Report.csv'
     };
@@ -32,7 +31,6 @@ class DataTable extends Component {
       data: this.props.data,
       headers: this.props.headers,
       pagination: this.props.pagination || {},
-      defaultSorted: this.props.defaultSorted || null,
       showSearch: false,
       exportFileName: this.props.exportFileName || this.state.exportFileName
     });
@@ -44,7 +42,6 @@ class DataTable extends Component {
         data: this.props.data,
         headers: this.props.headers,
         pagination: this.props.pagination || {},
-        defaultSorted: this.props.defaultSorted || null,
         showSearch: false,
         exportFileName: this.props.exportFileName || this.state.exportFileName
       });
@@ -85,6 +82,15 @@ class DataTable extends Component {
         }
       };
     });
+  }
+
+  getData() {
+    let data = [];
+    this.state.data.forEach((d, i) => {
+      d['_key'] = i;
+      data.push(d);
+    });
+    return data;
   }
 
   // Determine what data type to use for sorting consistency.
@@ -190,8 +196,8 @@ class DataTable extends Component {
   render() {
     return this.state.data && this.state.data.length ? (
       <ToolkitProvider
-        keyField="id"
-        data={this.state.data}
+        keyField="_key"
+        data={this.getData()}
         columns={this.getHeaders()}
         search
         exportCSV={{
@@ -208,7 +214,6 @@ class DataTable extends Component {
             this.state.data && this.state.data.length > 10
               ? paginationFactory(this.state.pagination)
               : null;
-          let defaultSorted = this.state.defaultSorted || null;
           return (
             <div>
               <button
@@ -227,7 +232,7 @@ class DataTable extends Component {
               <BootstrapTable
                 {...props.baseProps}
                 pagination={pagination}
-                defaultSorted={defaultSorted}
+                defaultSorted={this.passProp('defaultSorted', null)}
                 striped={this.passProp('striped', true)}
                 hover={this.passProp('hover', true)}
                 condensed={this.passProp('condensed', true)}
