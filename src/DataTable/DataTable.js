@@ -1,3 +1,22 @@
+/**
+ * DataTable
+ *
+ * Convenience wrapper for ract-bootstrap-table2 (https://react-bootstrap-table.github.io/react-bootstrap-table2)
+ *
+ * Properties:
+ *   - data:           Required - Array of objects to render as rows. (e.g., [{col1: 'Value 1', col2: 'Value2'}] )
+ *   - headers:        Required - Object map of properties in the data array to column display names. (e.g., {col1: 'Column 1', col2: 'Column 2'})
+ *   - exportFileName: Optional - Name given to the file downloaded with the export button. Defaults to "Report.csv"
+ *   - minPagingRows:  Optional - Number of rows that must be present before the paging controls are shown. Default is 11.
+ *   - showSearch:     Optional - Boolean to toggle the initial display of the search box.
+ *   - pagination:     Optional - Pagination options. (See: https://react-bootstrap-table.github.io/react-bootstrap-table2/storybook/index.html?selectedKind=Pagination&selectedStory=Basic%20Pagination%20Table&full=0&addons=1&stories=1&panelRight=0&addonPanel=storybook%2Factions%2Factions-panel)
+ *   - defaultSorted:  Optional - Set default sorted state. (See: https://react-bootstrap-table.github.io/react-bootstrap-table2/storybook/index.html?selectedKind=Sort%20Table&selectedStory=Default%20Sort%20Table&full=0&addons=1&stories=1&panelRight=0&addonPanel=storybook%2Factions%2Factions-panel)
+ *   - striped:        Optional - Boolean to toggle odd/even row color differences. Default is true.
+ *   - hover:          Optional - Boolean to toggle row highlighting on mouseover. Default is true.
+ *   - condensed:      Optional - Boolean to toggle using less cell padding. Default is true.
+ *   - bordered:       Optional - Boolean to toggle table border. Default is false.
+ */
+
 import React, { Component } from 'react';
 import { Glyphicon } from 'react-bootstrap';
 import BootstrapTable from 'react-bootstrap-table-next';
@@ -20,9 +39,9 @@ class DataTable extends Component {
     this.state = {
       data: [],
       headers: [],
-      pagination: {},
       showSearch: false,
-      exportFileName: 'Report.csv'
+      exportFileName: 'Report.csv',
+      minPagingRows: 11
     };
   }
 
@@ -30,9 +49,9 @@ class DataTable extends Component {
     this.setState({
       data: this.props.data,
       headers: this.props.headers,
-      pagination: this.props.pagination || {},
       showSearch: false,
-      exportFileName: this.props.exportFileName || this.state.exportFileName
+      exportFileName: this.props.exportFileName || this.state.exportFileName,
+      minPagingRows: this.props.minPagingRows || this.state.minPagingRows
     });
   }
 
@@ -41,9 +60,9 @@ class DataTable extends Component {
       this.setState({
         data: this.props.data,
         headers: this.props.headers,
-        pagination: this.props.pagination || {},
         showSearch: false,
-        exportFileName: this.props.exportFileName || this.state.exportFileName
+        exportFileName: this.props.exportFileName || this.state.exportFileName,
+        minPagingRows: this.props.minPagingRows || this.state.minPagingRows
       });
     }
   }
@@ -84,6 +103,7 @@ class DataTable extends Component {
     });
   }
 
+  // Appends a _key property to each row with a unique value to use for the ToolkitProvider keyField property
   getData() {
     let data = [];
     this.state.data.forEach((d, i) => {
@@ -209,10 +229,12 @@ class DataTable extends Component {
           let searchBar = this.state.showSearch ? (
             <SearchBar {...props.searchProps} autoFocus />
           ) : null;
-          // Only show pagination when there are > 10 records
+          // Only show pagination when there are > minPagingRows
+          // Invoke the paginationFactory with optional pagination prop
           let pagination =
-            this.state.data && this.state.data.length > 10
-              ? paginationFactory(this.state.pagination)
+            this.state.data &&
+            this.state.data.length >= this.state.minPagingRows
+              ? paginationFactory(this.passProp('pagination', {}))
               : null;
           return (
             <div>
