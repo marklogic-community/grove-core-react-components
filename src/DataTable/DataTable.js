@@ -180,6 +180,13 @@ class DataTable extends Component {
     });
   }
 
+  // Allows the default properties passed to BootstrapTable to be overridden
+  passProp(name, defaultValue) {
+    return typeof this.props[name] !== 'undefined'
+      ? this.props[name]
+      : defaultValue;
+  }
+
   render() {
     return this.state.data && this.state.data.length ? (
       <ToolkitProvider
@@ -221,10 +228,10 @@ class DataTable extends Component {
                 {...props.baseProps}
                 pagination={pagination}
                 defaultSorted={defaultSorted}
-                striped
-                hover
-                condensed
-                bordered={false}
+                striped={this.passProp('striped', true)}
+                hover={this.passProp('hover', true)}
+                condensed={this.passProp('condensed', true)}
+                bordered={this.passProp('bordered', false)}
               />
             </div>
           );
