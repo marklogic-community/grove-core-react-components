@@ -1,7 +1,13 @@
 /**
  * DataTable
  *
- * Convenience wrapper for ract-bootstrap-table2 (https://react-bootstrap-table.github.io/react-bootstrap-table2)
+ * Convenience wrapper for react-bootstrap-table2 (https://react-bootstrap-table.github.io/react-bootstrap-table2)
+ * This component impliments the React Bootstrap Table component via react-bootstrap-table2 in a manner that is simple to call for a
+ * full featured table. The only requres properties are "headers," which define the appearance of the table headers and which data to render,
+ * and "data," which is an array of objects that represent each row of data.
+ *
+ * Reasonable defaults are set for searching/filtering, client side paging, and an intelligent sort that autodetects data types. Defaults can be overriden,
+ * and props passed directly through to the BootstrapTable component, allowing all of the customization options provided by it. (See: https://react-bootstrap-table.github.io/react-bootstrap-table2/storybook/index.html?selectedKind=Welcome&selectedStory=react%20bootstrap%20table%202%20&full=0&addons=1&stories=1&panelRight=0&addonPanel=storybook%2Factions%2Factions-panel)
  *
  * Properties:
  *   - data:           Required - Array of objects to render as rows. (e.g., [{col1: 'Value 1', col2: 'Value2'}] )
@@ -13,6 +19,11 @@
  *   - hover:          Optional - Boolean to toggle row highlighting on mouseover. Default is true.
  *   - condensed:      Optional - Boolean to toggle using less cell padding. Default is true.
  *   - bordered:       Optional - Boolean to toggle table border. Default is false.
+ *
+ * TODO:
+ *   - Impliment the "Remote" and "Data" features for remote data loading, sorting, searching, and paging using the MarkLogic APIs.
+ *   - Fully explore all of the factories avalable and make sure they are implimented for use.
+ *   - Review and possibly refactor getType() and formatForSorting() for reliability.
  */
 
 import React, { Component } from 'react';
@@ -40,7 +51,7 @@ const tableDefaults = {
   bordered: false
 };
 
-// // Array of properties reserved for the DataTable component (not to be passed to the BootstrapTable component)
+// Array of properties reserved for the DataTable component (not to be passed to the BootstrapTable component)
 const dataTableProps = ['data', 'headers', 'minPagingRows', 'pagination'];
 
 class DataTable extends Component {
@@ -217,6 +228,7 @@ class DataTable extends Component {
     });
   }
 
+  // Build the props to pass through to the BootstratTable component
   getTableProps() {
     let props = tableDefaults;
     Object.keys(this.props).forEach(key => {
@@ -225,6 +237,13 @@ class DataTable extends Component {
       }
     });
     return props;
+  }
+
+  // Set the pagination prop for the BootstrapTable component
+  getPagination() {
+    return this.state.data && this.state.data.length >= this.state.minPagingRows
+      ? paginationFactory(this.props.pagination || {})
+      : null;
   }
 
   render() {
@@ -239,17 +258,6 @@ class DataTable extends Component {
         }}
       >
         {props => {
-          // Toggle the search bar
-          let searchBar = this.state.showSearch ? (
-            <SearchBar {...props.searchProps} autoFocus />
-          ) : null;
-          // Only show pagination when there are > minPagingRows
-          // Invoke the paginationFactory with optional pagination prop
-          let pagination =
-            this.state.data &&
-            this.state.data.length >= this.state.minPagingRows
-              ? paginationFactory(this.props.pagination || {})
-              : null;
           return (
             <div>
               <button
@@ -263,12 +271,14 @@ class DataTable extends Component {
                 <Glyphicon glyph="download-alt" />
               </ExportCSVButton>
 
-              {searchBar}
+              {this.state.showSearch && (
+                <SearchBar {...props.searchProps} autoFocus />
+              )}
 
               <BootstrapTable
                 {...props.baseProps}
                 {...this.getTableProps()}
-                pagination={pagination}
+                pagination={this.getPagination()}
               />
             </div>
           );
