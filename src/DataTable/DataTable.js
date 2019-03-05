@@ -10,7 +10,6 @@
  *   - minPagingRows:  Optional - Number of rows that must be present before the paging controls are shown. Default is 11.
  *   - showSearch:     Optional - Boolean to toggle the initial display of the search box.
  *   - pagination:     Optional - Pagination options. (See: https://react-bootstrap-table.github.io/react-bootstrap-table2/storybook/index.html?selectedKind=Pagination&selectedStory=Basic%20Pagination%20Table&full=0&addons=1&stories=1&panelRight=0&addonPanel=storybook%2Factions%2Factions-panel)
- *   - defaultSorted:  Optional - Set default sorted state. (See: https://react-bootstrap-table.github.io/react-bootstrap-table2/storybook/index.html?selectedKind=Sort%20Table&selectedStory=Default%20Sort%20Table&full=0&addons=1&stories=1&panelRight=0&addonPanel=storybook%2Factions%2Factions-panel)
  *   - striped:        Optional - Boolean to toggle odd/even row color differences. Default is true.
  *   - hover:          Optional - Boolean to toggle row highlighting on mouseover. Default is true.
  *   - condensed:      Optional - Boolean to toggle using less cell padding. Default is true.
@@ -32,6 +31,17 @@ import _ from 'lodash';
 
 const { SearchBar } = Search;
 const { ExportCSVButton } = CSVExport;
+
+// Store our default prop values to pass to the BootstrapTable component
+const tableDefaults = {
+  striped: true,
+  hover: true,
+  condensed: true,
+  bordered: false
+};
+
+// // Array of properties reserved for the DataTable component (not to be passed to the BootstrapTable component)
+const dataTableProps = ['data', 'headers', 'minPagingRows', 'pagination'];
 
 class DataTable extends Component {
   constructor(props) {
@@ -206,11 +216,14 @@ class DataTable extends Component {
     });
   }
 
-  // Allows the default properties passed to BootstrapTable to be overridden
-  passProp(name, defaultValue) {
-    return typeof this.props[name] !== 'undefined'
-      ? this.props[name]
-      : defaultValue;
+  getTableProps() {
+    let props = tableDefaults;
+    Object.keys(this.props).forEach(key => {
+      if (!dataTableProps.includes(key)) {
+        props[key] = this.props[key];
+      }
+    });
+    return props;
   }
 
   render() {
@@ -234,7 +247,7 @@ class DataTable extends Component {
           let pagination =
             this.state.data &&
             this.state.data.length >= this.state.minPagingRows
-              ? paginationFactory(this.passProp('pagination', {}))
+              ? paginationFactory(this.props.pagination || {})
               : null;
           return (
             <div>
@@ -253,12 +266,8 @@ class DataTable extends Component {
 
               <BootstrapTable
                 {...props.baseProps}
+                {...this.getTableProps()}
                 pagination={pagination}
-                defaultSorted={this.passProp('defaultSorted', null)}
-                striped={this.passProp('striped', true)}
-                hover={this.passProp('hover', true)}
-                condensed={this.passProp('condensed', true)}
-                bordered={this.passProp('bordered', false)}
               />
             </div>
           );
