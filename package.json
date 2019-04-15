@@ -1,5 +1,5 @@
 {
-  "name": "grove-core-react-components",
+  "name": "@marklogic-community/grove-core-react-components",
   "version": "1.0.0-rc.1",
   "description": "React component library for apps backed by MarkLogic",
   "main": "lib/index.js",
@@ -53,9 +53,14 @@
     "react-dom": "^16.0.0"
   },
   "author": "Patrick McElwee <patrick.mcelwee@marklogic.com>",
-  "homepage": "",
   "license": "Apache-2.0",
-  "repository": "ssh://git@project.marklogic.com:7999/nacw/grove-core-react-components.git",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:marklogic-community/grove-core-react-components.git"
+  },
+  "bugs": {
+    "url": "https://github.com/marklogic-community/grove-core-react-components/issues"
+  },
   "keywords": [
     "react-component-library",
     "search",
