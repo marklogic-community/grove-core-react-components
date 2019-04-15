@@ -4,6 +4,12 @@ import PropTypes from 'prop-types';
 import CurrentFilters from './CurrentFilters';
 import SingleFilterList from './SingleFilterList';
 
+const bindOptions = (func, optionsToBind) => {
+  return options => {
+    return func({ ...optionsToBind, ...options });
+  };
+};
+
 // TODO: truncate names with a truncateLength option
 // TODO: handle blank values
 const Facets = ({
@@ -47,11 +53,10 @@ const Facets = ({
                 <SingleFilterList
                   values={availableFilters[facetName].facetValues}
                   selectedValues={selectedValues}
-                  addFilter={addFilter.bind(
-                    null,
-                    facetName,
-                    availableFilters[facetName].type || null
-                  )}
+                  addFilter={bindOptions(addFilter, {
+                    constraintName: facetName,
+                    constraintType: availableFilters[facetName].type
+                  })}
                   removeFilter={removeFilter.bind(null, facetName)}
                 />
               </div>
