@@ -16,5 +16,7 @@ storiesOf('SearchView/Facets/SingleFilterList', module)
       selectedValues={['First']}
       addFilter={action('addFilter')}
       removeFilter={action('removeFilter')}
+      facetName={'facet name'}
+      facetType={null}
     />
   ));
