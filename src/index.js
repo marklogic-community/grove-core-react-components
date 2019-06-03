@@ -17,6 +17,9 @@ export {
 export { default as CardResult } from './SearchView/SearchResults/CardResult';
 export { default as ListResult } from './SearchView/SearchResults/ListResult';
 export {
+  default as SearchSnippets
+} from './SearchView/SearchResults/SearchSnippets';
+export {
   default as SearchSnippet
 } from './SearchView/SearchResults/SearchSnippet';
 

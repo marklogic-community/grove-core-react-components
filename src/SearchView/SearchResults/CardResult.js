@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Panel, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import SearchSnippet from './SearchSnippet.js';
+import SearchSnippets from './SearchSnippets.js';
 import './CardResult.css';
 
 const getFilename = id => {
@@ -11,15 +11,6 @@ const getFilename = id => {
   }
   return id.split('%2F').pop();
 };
-
-const SearchSnippets = ({ result }) => (
-  <div className="ml-search-result-matches">
-    {result.matches &&
-      result.matches.map((match, index) => (
-        <SearchSnippet match={match} key={index} />
-      ))}
-  </div>
-);
 
 const Header = props => (
   <h1 className="panel-title">
