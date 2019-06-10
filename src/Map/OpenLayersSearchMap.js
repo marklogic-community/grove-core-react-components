@@ -252,7 +252,7 @@ class OpenLayersSearchMap extends React.Component {
     });
   }
 
-  handleMapMove(event) {
+  handleMapMove() {
     let size = this.state.map.getSize();
     let extent = this.state.map.getView().calculateExtent(size);
     let convertedExtent = transformExtent(extent, 'EPSG:3857', 'EPSG:4326');
@@ -280,7 +280,7 @@ class OpenLayersSearchMap extends React.Component {
     if (features && features.length > 0) {
       // Group the features into buckets based on layer.
       let layers = {};
-      features.forEach(function(feature, index) {
+      features.forEach(function(feature) {
         let layer = feature.get('layer');
         let uri = feature.get('uri');
         if (layer && uri) {
