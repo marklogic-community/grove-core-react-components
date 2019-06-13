@@ -6,11 +6,11 @@ This library provides a set of React components useful for building applications
 
 ### Installation
 
-    npm install --save grove-core-react-components
+    npm install @marklogic-components/grove-core-react-components --save
 
 or
 
-    yarn add grove-core-react-components
+    yarn add @marklogic-components/grove-core-react-components
 
 ### Implementation
 
@@ -43,12 +43,18 @@ You can use npm to link your local version of grove-core-react-components into a
 
 We need just one version of React. Because of the way the Node package manager (npm) can duplicate dependencies, this means we have to link your local `grove-core-react-components`'s version of React to your host application's.
 
-    npm link {path-to-your-grove-project}/ui/node_modules/react
+    npm link {path-to-your-grove-project}/ui/node_modules/react    
 
-To complete the link, go into your Grove Project's `/ui` directory and run:
+Update the link for grove-core-react-components in both `grove-core-react-redux-containers` and 
+your Grove Project's `/ui` directory by running:
 
+    cd {path-to-your-grove-core-react-redux-containers}
+    npm link @marklogic-community/grove-core-react-components
+    npm link
+    
     cd {path-to-your-grove-project}/ui
-    npm link grove-core-react-components
+    npm link @marklogic-community/grove-core-react-components
+    npm link @marklogic-community/grove-core-react-redux-containers 
 
 In order to see your changes to grove-core-react-components in your Grove Project, you will have to build grove-core-react-components:
 
