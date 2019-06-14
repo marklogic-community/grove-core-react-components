@@ -12,6 +12,7 @@ import SearchBar from './SearchBar';
 import Facets from './Facets/Facets';
 import SearchResponseView from './SearchResponseView';
 import Fade from '../animations/Fade';
+import OpenLayersSearchMap from '../Map/OpenLayersSearchMap';
 
 var SearchView = function (_Component) {
   _inherits(SearchView, _Component);
@@ -86,6 +87,19 @@ var SearchView = function (_Component) {
             queryText: this.props.queryText,
             onQueryTextChange: this.handleQueryTextChange,
             onSearchExecute: this.search
+          })
+        ),
+        React.createElement(
+          Row,
+          null,
+          React.createElement(OpenLayersSearchMap, {
+            facets: this.props.facets,
+            onSearch: this.search,
+            geoFacetName: 'GeoPoint',
+            activeFilters: this.props.activeFilters,
+            replaceFilter: this.props.replaceFilter,
+            addFilter: this.props.addFilter,
+            removeFilter: this.props.removeFilter
           })
         ),
         this.props.isSearchComplete || this.props.isSearchPending ? React.createElement(
