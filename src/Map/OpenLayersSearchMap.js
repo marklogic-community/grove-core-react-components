@@ -339,6 +339,9 @@ class OpenLayersSearchMap extends React.Component {
         <div
           id={this.state.mapTargetId}
           className={this.props.class || 'olmap'}
+          style={
+            !this.state.showMap ? { display: 'none' } : { display: 'block' }
+          }
         />
         <div id={this.state.popupContentTargetId} className="ol-popup">
           <div id={this.state.popupContentTargetId} />

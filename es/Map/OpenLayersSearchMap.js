@@ -336,7 +336,8 @@ var OpenLayersSearchMap = function (_React$Component) {
       ),
       React.createElement('div', {
         id: this.state.mapTargetId,
-        className: this.props.class || 'olmap'
+        className: this.props.class || 'olmap',
+        style: !this.state.showMap ? { display: 'none' } : { display: 'block' }
       }),
       React.createElement(
         'div',
