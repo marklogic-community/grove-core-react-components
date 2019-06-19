@@ -6,14 +6,37 @@
 import { fromLonLat } from 'ol/proj';
 
 var mapUtils = {
-  convertFacetsToGeoJson: function convertFacetsToGeoJson(facets, facetName) {
+  getGeoFacetNames: function getGeoFacetNames(facets, facetName) {
+    var geoFacetNames = [];
+    if (facets) {
+      if (facetName && facets[facetName] && facets[facetName].boxes && facets[facetName].boxes.length > 0) {
+        geoFacetNames = [facetName];
+      } else {
+        var facetObjects = Object.values(facets);
+        facetObjects.forEach(function (facet) {
+          if (facet.boxes && facet.boxes.length > 0) {
+            geoFacetNames.push(facet.name);
+          }
+        });
+      }
+    }
+    return geoFacetNames;
+  },
+
+  convertFacetsToGeoJson: function convertFacetsToGeoJson(facets, facetNames) {
     var geoJson = {
       type: 'FeatureCollection',
       features: []
     };
 
-    if (facets && facets[facetName] && facets[facetName].boxes && facets[facetName].boxes.length > 0) {
-      facets[facetName].boxes.forEach(function (value, index) {
+    var geoFacetNames = [];
+    if (facetNames && facetNames.length > 0) {
+      geoFacetNames = facetNames;
+    }
+
+    geoFacetNames.forEach(function (facetName) {
+      var facet = facets[facetName];
+      facet.boxes.forEach(function (value, index) {
         if (value.count > 0) {
           var lng = (value.w + value.e) / 2;
           var lat = (value.s + value.n) / 2;
@@ -35,7 +58,7 @@ var mapUtils = {
           });
         }
       });
-    }
+    });
 
     return geoJson;
   },

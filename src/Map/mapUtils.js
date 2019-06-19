@@ -6,19 +6,42 @@
 import { fromLonLat } from 'ol/proj';
 
 const mapUtils = {
-  convertFacetsToGeoJson: function(facets, facetName) {
+  getGeoFacetNames: function(facets, facetName) {
+    let geoFacetNames = [];
+    if (facets) {
+      if (
+        facetName &&
+        facets[facetName] &&
+        facets[facetName].boxes &&
+        facets[facetName].boxes.length > 0
+      ) {
+        geoFacetNames = [facetName];
+      } else {
+        const facetObjects = Object.values(facets);
+        facetObjects.forEach(function(facet) {
+          if (facet.boxes && facet.boxes.length > 0) {
+            geoFacetNames.push(facet.name);
+          }
+        });
+      }
+    }
+    return geoFacetNames;
+  },
+
+  convertFacetsToGeoJson: function(facets, facetNames) {
     let geoJson = {
       type: 'FeatureCollection',
       features: []
     };
 
-    if (
-      facets &&
-      facets[facetName] &&
-      facets[facetName].boxes &&
-      facets[facetName].boxes.length > 0
-    ) {
-      facets[facetName].boxes.forEach(function(value, index) {
+    let geoFacetNames = [];
+    if (facetNames && facetNames.length > 0) {
+      geoFacetNames = facetNames;
+    }
+
+    geoFacetNames.forEach(function(facetName) {
+      const facet = facets[facetName];
+      facet.boxes.forEach(function(value, index) {
         if (value.count > 0) {
           let lng = (value.w + value.e) / 2;
           let lat = (value.s + value.n) / 2;
@@ -40,7 +63,7 @@ const mapUtils = {
           });
         }
       });
-    }
+    });
 
     return geoJson;
   },

@@ -27,7 +27,8 @@ class OpenLayersSearchMap extends React.Component {
       },
       mapTargetId: 'olmap-' + mapId,
       popupContentTargetId: 'olmap-popup-content-' + mapId,
-      showMap: true
+      showMap: true,
+      geoFacetNames: []
     };
   }
 
@@ -123,11 +124,17 @@ class OpenLayersSearchMap extends React.Component {
 
   processData() {
     // Create the main point layer features.
-    let primaryGeoJson = mapUtils.convertFacetsToGeoJson(
+    let geoFacetNames = mapUtils.getGeoFacetNames(
       this.props.facets,
       this.props.geoFacetName
     );
+    let primaryGeoJson = mapUtils.convertFacetsToGeoJson(
+      this.props.facets,
+      geoFacetNames
+    );
     let convertedGeoJson = new GeoJSON().readFeatures(primaryGeoJson);
+
+    this.setState({ geoFacetNames: geoFacetNames });
 
     // Update the layer.
     this.state.primaryLayer.getSource().clear();
@@ -136,13 +143,20 @@ class OpenLayersSearchMap extends React.Component {
 
   initializeMap() {
     // Create the main point layer.
-    let primaryGeoJson = mapUtils.convertFacetsToGeoJson(
+    let geoFacetNames = mapUtils.getGeoFacetNames(
       this.props.facets,
       this.props.geoFacetName
     );
+    let primaryGeoJson = mapUtils.convertFacetsToGeoJson(
+      this.props.facets,
+      geoFacetNames
+    );
+    let convertedGeoJson = new GeoJSON().readFeatures(primaryGeoJson);
+
+    this.setState({ geoFacetNames: geoFacetNames });
     let primarySource = new VectorSource({
       projection: 'EPSG:4326',
-      features: new GeoJSON().readFeatures(primaryGeoJson)
+      features: convertedGeoJson
     });
 
     let primaryLayer = new VectorLayer({
@@ -318,8 +332,12 @@ class OpenLayersSearchMap extends React.Component {
         }
       ]
     };
+
+    var that = this;
     // Assumes that geospatial constraint can be used to filter search.
-    this.props.replaceFilter(this.props.geoFacetName, 'custom', geoSearch);
+    this.state.geoFacetNames.forEach(function(geoFacetName) {
+      that.props.replaceFilter(geoFacetName, 'custom', geoSearch);
+    });
   }
 
   handleMapClick(event) {

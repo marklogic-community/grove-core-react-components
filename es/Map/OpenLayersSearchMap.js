@@ -103,7 +103,8 @@ var OpenLayersSearchMap = function (_React$Component) {
       },
       mapTargetId: 'olmap-' + mapId,
       popupContentTargetId: 'olmap-popup-content-' + mapId,
-      showMap: true
+      showMap: true,
+      geoFacetNames: []
     };
     return _this;
   }
@@ -133,8 +134,11 @@ var OpenLayersSearchMap = function (_React$Component) {
 
   OpenLayersSearchMap.prototype.processData = function processData() {
     // Create the main point layer features.
-    var primaryGeoJson = mapUtils.convertFacetsToGeoJson(this.props.facets, this.props.geoFacetName);
+    var geoFacetNames = mapUtils.getGeoFacetNames(this.props.facets, this.props.geoFacetName);
+    var primaryGeoJson = mapUtils.convertFacetsToGeoJson(this.props.facets, geoFacetNames);
     var convertedGeoJson = new GeoJSON().readFeatures(primaryGeoJson);
+
+    this.setState({ geoFacetNames: geoFacetNames });
 
     // Update the layer.
     this.state.primaryLayer.getSource().clear();
@@ -143,10 +147,14 @@ var OpenLayersSearchMap = function (_React$Component) {
 
   OpenLayersSearchMap.prototype.initializeMap = function initializeMap() {
     // Create the main point layer.
-    var primaryGeoJson = mapUtils.convertFacetsToGeoJson(this.props.facets, this.props.geoFacetName);
+    var geoFacetNames = mapUtils.getGeoFacetNames(this.props.facets, this.props.geoFacetName);
+    var primaryGeoJson = mapUtils.convertFacetsToGeoJson(this.props.facets, geoFacetNames);
+    var convertedGeoJson = new GeoJSON().readFeatures(primaryGeoJson);
+
+    this.setState({ geoFacetNames: geoFacetNames });
     var primarySource = new VectorSource({
       projection: 'EPSG:4326',
-      features: new GeoJSON().readFeatures(primaryGeoJson)
+      features: convertedGeoJson
     });
 
     var primaryLayer = new VectorLayer({
@@ -305,8 +313,12 @@ var OpenLayersSearchMap = function (_React$Component) {
         east: convertedExtent[2]
       }]
     };
+
+    var that = this;
     // Assumes that geospatial constraint can be used to filter search.
-    this.props.replaceFilter(this.props.geoFacetName, 'custom', geoSearch);
+    this.state.geoFacetNames.forEach(function (geoFacetName) {
+      that.props.replaceFilter(geoFacetName, 'custom', geoSearch);
+    });
   };
 
   OpenLayersSearchMap.prototype.handleMapClick = function handleMapClick(event) {
