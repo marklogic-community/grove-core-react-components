@@ -369,7 +369,7 @@ class OpenLayersSearchMap extends React.Component {
           let label =
             primFeat.get('label') || primFeat.get('name') || uri || 'unknown';
           display +=
-            '<li><a href="/detail/?id=' +
+            '<li><a href="/detail/' +
             encodeURIComponent(uri) +
             '">' +
             label +

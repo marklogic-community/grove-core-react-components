@@ -348,7 +348,7 @@ var OpenLayersSearchMap = function (_React$Component) {
         layers['primary'].forEach(function (primFeat) {
           var uri = primFeat.get('uri');
           var label = primFeat.get('label') || primFeat.get('name') || uri || 'unknown';
-          display += '<li><a href="/detail/?id=' + encodeURIComponent(uri) + '">' + label + '</a></li>';
+          display += '<li><a href="/detail/' + encodeURIComponent(uri) + '">' + label + '</a></li>';
         });
         display += '</ul></div>';
       }
