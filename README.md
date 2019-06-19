@@ -6,11 +6,11 @@ This library provides a set of React components useful for building applications
 
 ### Installation
 
-    npm install @marklogic-components/grove-core-react-components --save
+    npm install @marklogic-community/grove-core-react-components --save
 
 or
 
-    yarn add @marklogic-components/grove-core-react-components
+    yarn add @marklogic-community/grove-core-react-components
 
 ### Implementation
 
