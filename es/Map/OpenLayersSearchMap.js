@@ -157,7 +157,7 @@ var OpenLayersSearchMap = function (_React$Component) {
     // Convert from EPSG:4326 to EPSG:3857 coordinates because that is the default for
     // OpenLayers and the base maps look better in that projection.
     //
-    var center = fromLonLat([-95.79, 34.48]);
+    var center = this.props.lonLat ? fromLonLat(this.props.lonLat) : fromLonLat([-95.79, 34.48]);
 
     // If there is only 1 feature, use it as the map center.
     if (primarySource.getFeatures().length === 1) {
@@ -227,7 +227,7 @@ var OpenLayersSearchMap = function (_React$Component) {
       view: new View({
         projection: 'EPSG:3857',
         center: center,
-        zoom: 4
+        zoom: this.props.zoom ? this.props.zoom : 4
       }),
       controls: defaultControls().extend([new FullScreen(), new MousePosition({
         coordinateFormat: createStringXY(4),
@@ -293,7 +293,7 @@ var OpenLayersSearchMap = function (_React$Component) {
         layers['primary'].forEach(function (primFeat) {
           var uri = primFeat.get('uri');
           var label = primFeat.get('label') || primFeat.get('name') || uri || 'unknown';
-          display += '<li><a href="/detail/?id=' + uri + '">' + label + '</a></li>';
+          display += '<li><a href="/detail/?id=' + encodeURIComponent(uri) + '">' + label + '</a></li>';
         });
         display += '</ul></div>';
       }
