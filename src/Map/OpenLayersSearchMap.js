@@ -9,6 +9,7 @@ import { Circle as CircleStyle, Fill, Stroke, Style, Text } from 'ol/style.js';
 import { fromLonLat, transformExtent } from 'ol/proj';
 import { createStringXY } from 'ol/coordinate.js';
 import { defaults as defaultControls, FullScreen } from 'ol/control.js';
+import { Draw } from 'ol/interaction.js';
 import MousePosition from 'ol/control/MousePosition.js';
 import mapUtils from './mapUtils.js';
 
@@ -240,6 +241,51 @@ class OpenLayersSearchMap extends React.Component {
       ])
     });
 
+    var typeSelect = document.getElementById('map-selection-type');
+    var draw; // global so we can remove them later
+
+    function addInteractions() {
+      if (draw) {
+        map.removeInteraction(draw);
+      }
+      draw = new Draw({
+        source: primarySource,
+        type: typeSelect.value
+      });
+      map.addInteraction(draw);
+    }
+
+    /**
+     * Handle change event.
+     */
+    typeSelect.onchange = function() {
+      addInteractions();
+    };
+
+    addInteractions();
+
+    var that = this;
+    var addedFeature;
+    var addFeatureLocked = false;
+    primarySource.on('addfeature', function(event) {
+      if (!addFeatureLocked) {
+        addFeatureLocked = true;
+        var extent = event.feature.getGeometry().getExtent();
+        // If the feature is new
+        if (
+          !addedFeature ||
+          addedFeature
+            .getGeometry()
+            .getExtent()
+            .toString() !== extent.toString()
+        ) {
+          addedFeature = event.feature;
+          that.updateMapFilter(extent);
+        }
+        addFeatureLocked = false;
+      }
+    });
+
     // Bind handler for map clicks.
     map.on('click', this.handleMapClick.bind(this));
 
@@ -257,6 +303,10 @@ class OpenLayersSearchMap extends React.Component {
   handleMapMove() {
     let size = this.state.map.getSize();
     let extent = this.state.map.getView().calculateExtent(size);
+    this.updateMapFilter(extent);
+  }
+
+  updateMapFilter(extent) {
     let convertedExtent = transformExtent(extent, 'EPSG:3857', 'EPSG:4326');
     let geoSearch = {
       box: [
@@ -268,7 +318,6 @@ class OpenLayersSearchMap extends React.Component {
         }
       ]
     };
-
     // Assumes that geospatial constraint can be used to filter search.
     this.props.replaceFilter(this.props.geoFacetName, 'custom', geoSearch);
   }
@@ -341,6 +390,16 @@ class OpenLayersSearchMap extends React.Component {
             />
             <span> Show Map</span>
           </span>
+        </div>
+        <div className="inline-block">
+          <label>Geometry type &nbsp;</label>
+          <select id="map-selection-type">
+            <option value="Point">Point</option>
+            <option value="LineString">LineString</option>
+            <option value="Polygon">Polygon</option>
+            <option value="Circle">Circle</option>
+            <option value="None">None</option>
+          </select>
         </div>
         <div
           id={this.state.mapTargetId}
