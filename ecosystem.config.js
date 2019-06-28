@@ -5,7 +5,7 @@ module.exports = {
       name: 'grove-react-storybook',
       script: '/usr/bin/http-server',
       args: ['-p', '8099'],
-      cwd: './.storybook/',
+      cwd: './.storybook/dist/',
       watch: true,
       restart_delay: 4000,
       env: {
