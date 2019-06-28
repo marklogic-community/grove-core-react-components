@@ -18,6 +18,8 @@ If you are using these React components as stand-alone components, rather than a
 
 ## Components
 
+TODO: update the list, or just refer to the public storybook?
+
 ### <DetailView />
 
 This component provides a default view of a single document, together with some error handling. It can be customized. See: https://wiki.marklogic.com/display/SAL/Grove+React+Developer+Starter+Guide
@@ -28,9 +30,25 @@ The default behavior of the SearchResults component is to offer a choice between
 
 ### Storybook
 
-We are creating a storybook for all the components present in this library. To see it, for the moment, clone this repository and run:
+A storybook for all the components present in this library is provided as part of this project. There is a public copy available at:
 
-    npm run storybook
+    http://grove-components.demo.marklogic.com/
+
+Or you can view it locally by cloning this project, and running:
+
+    npm install && npm run storybook
+
+After that you can typically open it in your browser at:
+
+    http://localhost:9001/
+
+#### Updating Public Storybook
+
+Make sure all changes are committed and pushed. Also make sure you have installed pm2 (`sudo npm install -g pm2`), that you can update all necessary files on the server (they might be published by someone else), and just run:
+
+    pm2 deploy production
+
+Post-install should install, test, and build the components and the storybook. A browser refresh is all one need after that.
 
 ## Contributing
 
