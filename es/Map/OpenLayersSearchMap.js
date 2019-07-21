@@ -5,28 +5,19 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 import React from 'react';
-import Map from 'ol/Map';
-import View from 'ol/View';
-import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer.js';
-import GeoJSON from 'ol/format/GeoJSON.js';
-import Overlay from 'ol/Overlay.js';
-import { OSM, Vector as VectorSource } from 'ol/source.js';
 import { Circle as CircleStyle, Fill, Stroke, Style, Text } from 'ol/style.js';
-import { fromLonLat, transformExtent } from 'ol/proj';
-import { createStringXY } from 'ol/coordinate.js';
-import { defaults as defaultControls, FullScreen } from 'ol/control.js';
+import { transformExtent } from 'ol/proj';
 import { Draw } from 'ol/interaction.js';
-import MousePosition from 'ol/control/MousePosition.js';
 import mapUtils from './mapUtils.js';
+import OpenLayersMap from './OpenLayersMap.js';
 
-var OpenLayersSearchMap = function (_React$Component) {
-  _inherits(OpenLayersSearchMap, _React$Component);
+var OpenLayersSearchMap = function (_OpenLayersMap) {
+  _inherits(OpenLayersSearchMap, _OpenLayersMap);
 
   function OpenLayersSearchMap(props) {
     _classCallCheck(this, OpenLayersSearchMap);
 
-    // Create a unique map identifier so multiple maps can exist on the same view.
-    var _this = _possibleConstructorReturn(this, _React$Component.call(this, props));
+    var _this = _possibleConstructorReturn(this, _OpenLayersMap.call(this, props));
 
     _this.createClusterMarker = function (feature) {
       var radius = 10;
@@ -94,15 +85,11 @@ var OpenLayersSearchMap = function (_React$Component) {
       _this.setState({ showMap: !_this.state.showMap });
     };
 
-    var mapId = Math.floor(Math.random() * 1000 + 1);
+    var mapId = _this.getMapId();
     _this.state = {
-      geoJsonData: {
-        projection: 'EPSG:4326',
-        type: 'FeatureCollection',
-        features: []
-      },
-      mapTargetId: 'olmap-' + mapId,
-      popupContentTargetId: 'olmap-popup-content-' + mapId,
+      geoJsonData: _this.getJsonData(),
+      mapTargetId: _this.getMapTargetId(mapId),
+      popupContentTargetId: _this.getPopupContentTargetId(mapId),
       showMap: true,
       geoFacetNames: []
     };
@@ -110,7 +97,7 @@ var OpenLayersSearchMap = function (_React$Component) {
   }
 
   OpenLayersSearchMap.prototype.componentDidMount = function componentDidMount() {
-    this.initializeMap();
+    this.processData();
   };
 
   OpenLayersSearchMap.prototype.componentDidUpdate = function componentDidUpdate(previousProps) {
@@ -132,127 +119,25 @@ var OpenLayersSearchMap = function (_React$Component) {
     });
   };
 
-  OpenLayersSearchMap.prototype.processData = function processData() {
-    // Create the main point layer features.
+  OpenLayersSearchMap.prototype.getPrimaryGeoJson = function getPrimaryGeoJson() {
     var geoFacetNames = mapUtils.getGeoFacetNames(this.props.facets, this.props.geoFacetName);
-    var primaryGeoJson = mapUtils.convertFacetsToGeoJson(this.props.facets, geoFacetNames);
-    var convertedGeoJson = new GeoJSON().readFeatures(primaryGeoJson);
 
     this.setState({ geoFacetNames: geoFacetNames });
 
-    // Update the layer.
-    this.state.primaryLayer.getSource().clear();
-    this.state.primaryLayer.getSource().addFeatures(convertedGeoJson);
+    return mapUtils.convertFacetsToGeoJson(this.props.facets, geoFacetNames);
   };
 
-  OpenLayersSearchMap.prototype.initializeMap = function initializeMap() {
-    // Create the main point layer.
-    var geoFacetNames = mapUtils.getGeoFacetNames(this.props.facets, this.props.geoFacetName);
-    var primaryGeoJson = mapUtils.convertFacetsToGeoJson(this.props.facets, geoFacetNames);
-    var convertedGeoJson = new GeoJSON().readFeatures(primaryGeoJson);
+  OpenLayersSearchMap.prototype.getPrimaryStyle = function getPrimaryStyle() {
+    return this.createClusterMarker;
+  };
 
-    this.setState({ geoFacetNames: geoFacetNames });
-    var primarySource = new VectorSource({
-      projection: 'EPSG:4326',
-      features: convertedGeoJson
-    });
-
-    var primaryLayer = new VectorLayer({
-      source: primarySource,
-      style: this.createClusterMarker
-    });
-
-    //
-    // Convert from EPSG:4326 to EPSG:3857 coordinates because that is the default for
-    // OpenLayers and the base maps look better in that projection.
-    //
-    var center = this.props.lonLat ? fromLonLat(this.props.lonLat) : fromLonLat([-95.79, 34.48]);
-
-    // If there is only 1 feature, use it as the map center.
-    if (primarySource.getFeatures().length === 1) {
-      center = primarySource.getFeatures()[0].getGeometry().getCoordinates();
-    }
-
-    // Setup overlay for popups
-    var container = document.getElementById(this.state.popupContentTargetId);
-    var overlay = new Overlay({
-      element: container,
-      autoPan: true,
-      autoPanAnimation: {
-        duration: 250
-      }
-    });
-
-    var map = new Map({
-      target: this.state.mapTargetId,
-      layers: [
-      // This is an example of an Esri base map.  The following imports are needed:
-      //
-      // import XYZ from 'ol/source/XYZ.js';
-      //
-      // new TileLayer({
-      //   source: new XYZ({
-      //     attributions:
-      //       'Tiles © <a href="https://services.arcgisonline.com/ArcGIS/' +
-      //       'rest/services/World_Topo_Map/MapServer">ArcGIS</a>',
-      //     url:
-      //       'https://server.arcgisonline.com/ArcGIS/rest/services/' +
-      //       'World_Topo_Map/MapServer/tile/{z}/{y}/{x}'
-      //   })
-      // }),
-
-      // Default base map is Open Street Map.
-      new TileLayer({
-        source: new OSM()
-      }),
-
-      // This is an example of 2 layers from a local map server when internet
-      // access is not available.
-      //
-      // The following imports are needed:
-      //
-      // import { Image as ImageLayer } from 'ol/layer.js';
-      // import ImageWMS from 'ol/source.js';
-      //
-      // new ImageLayer({
-      //   source: new ImageWMS({
-      //     url: 'http://localhost:8080/geoserver/tm_world/wms',
-      //     params: {
-      //       LAYERS: 'tm_world:TM_WORLD_BORDERS-0.3'
-      //     }
-      //   })
-      // }),
-      // new ImageLayer({
-      //   source: new ImageWMS({
-      //     url: 'http://localhost:8080/geoserver/topp/wms',
-      //     params: {
-      //       LAYERS: 'topp:states'
-      //     }
-      //   })
-      // }),
-
-      primaryLayer],
-      overlays: [overlay],
-      view: new View({
-        projection: 'EPSG:3857',
-        center: center,
-        zoom: this.props.zoom ? this.props.zoom : 4
-      }),
-      controls: defaultControls().extend([new FullScreen(), new MousePosition({
-        coordinateFormat: createStringXY(4),
-        projection: 'EPSG:4326'
-      })])
-    });
-
+  OpenLayersSearchMap.prototype.afterProcessData = function afterProcessData(map, primaryLayer) {
     var typeSelect = document.getElementById('map-selection-type');
     var draw; // global so we can remove them later
 
     function addInteractions() {
-      if (draw) {
-        map.removeInteraction(draw);
-      }
       draw = new Draw({
-        source: primarySource,
+        source: primaryLayer.getSource(),
         type: typeSelect.value
       });
       map.addInteraction(draw);
@@ -262,15 +147,18 @@ var OpenLayersSearchMap = function (_React$Component) {
      * Handle change event.
      */
     typeSelect.onchange = function () {
+      if (draw) {
+        map.removeInteraction(draw);
+      }
       addInteractions();
     };
 
     addInteractions();
 
     var that = this;
-    var addedFeature;
+    var addedFeature = void 0;
     var addFeatureLocked = false;
-    primarySource.on('addfeature', function (event) {
+    primaryLayer.getSource().on('addfeature', function (event) {
       if (!addFeatureLocked) {
         addFeatureLocked = true;
         var extent = event.feature.getGeometry().getExtent();
@@ -288,13 +176,6 @@ var OpenLayersSearchMap = function (_React$Component) {
 
     // Comment out this line to prevent filtering the search using the map bounds.
     map.on('moveend', this.handleMapMove.bind(this));
-
-    // save map and layer references to local state
-    this.setState({
-      map: map,
-      primaryLayer: primaryLayer,
-      overlay: overlay
-    });
   };
 
   OpenLayersSearchMap.prototype.handleMapMove = function handleMapMove() {
@@ -441,6 +322,6 @@ var OpenLayersSearchMap = function (_React$Component) {
   };
 
   return OpenLayersSearchMap;
-}(React.Component);
+}(OpenLayersMap);
 
 export default OpenLayersSearchMap;

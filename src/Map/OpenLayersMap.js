@@ -16,17 +16,33 @@ class OpenLayersMap extends React.Component {
   constructor(props) {
     super(props);
 
-    // Create a unique map identifier so multiple maps can exist on the same view.
-    let mapId = Math.floor(Math.random() * 1000 + 1);
+    let mapId = this.getMapId();
     this.state = {
-      geoJsonData: {
-        projection: 'EPSG:4326',
-        type: 'FeatureCollection',
-        features: []
-      },
-      mapTargetId: 'olmap-' + mapId,
-      popupContentTargetId: 'olmap-popup-content-' + mapId
+      geoJsonData: this.getJsonData(),
+      mapTargetId: this.getMapTargetId(mapId),
+      popupContentTargetId: this.getPopupContentTargetId(mapId)
     };
+  }
+
+  getJsonData() {
+    return {
+      projection: 'EPSG:4326',
+      type: 'FeatureCollection',
+      features: []
+    };
+  }
+
+  getMapId() {
+    // Create a unique map identifier so multiple maps can exist on the same view.
+    return Math.floor(Math.random() * 1000 + 1);
+  }
+
+  getMapTargetId(mapId) {
+    return 'olmap-' + mapId;
+  }
+
+  getPopupContentTargetId(mapId) {
+    return 'olmap-popup-content-' + mapId;
   }
 
   componentDidMount() {
@@ -39,16 +55,11 @@ class OpenLayersMap extends React.Component {
     }
   }
 
-  processData() {
-    // Create shape
-    let primaryStyle = new Style({
-      image: new CircleStyle({
-        radius: 7,
-        fill: new Fill({ color: 'red' }),
-        stroke: new Stroke({ color: 'red', width: 1 })
-      })
-    });
+  getPrimaryGeoJson() {
+    return mapUtils.convertPropsToGeoJson(this.props);
+  }
 
+  getPrimaryStyle() {
     // Example of a green square shape
     // The following import is needed:
     //
@@ -64,109 +75,136 @@ class OpenLayersMap extends React.Component {
     //   })
     // });
 
-    // Create the point layer.
-    let primaryGeoJson = mapUtils.convertPropsToGeoJson(this.props);
-    let primarySource = new VectorSource({
-      projection: 'EPSG:4326',
-      features: new GeoJSON().readFeatures(primaryGeoJson)
-    });
-    let primaryLayer = new VectorLayer({
-      source: primarySource,
-      style: primaryStyle
-    });
-
-    let center = fromLonLat([-95.79, 34.48]);
-
-    // If there is only 1 feature, use it as the map center.
-    if (primarySource.getFeatures().length === 1) {
-      center = primarySource
-        .getFeatures()[0]
-        .getGeometry()
-        .getCoordinates();
-    }
-
-    // Setup overlay for popups
-    let container = document.getElementById(this.state.popupContentTargetId);
-    let overlay = new Overlay({
-      element: container,
-      autoPan: true,
-      autoPanAnimation: {
-        duration: 250
-      }
-    });
-
-    let map = new Map({
-      target: this.state.mapTargetId,
-      layers: [
-        // This is an example of an Esri base map.  The following imports are needed:
-        //
-        // import XYZ from 'ol/source/XYZ.js';
-        //
-        // new TileLayer({
-        //   source: new XYZ({
-        //     attributions:
-        //       'Tiles © <a href="https://services.arcgisonline.com/ArcGIS/' +
-        //       'rest/services/World_Topo_Map/MapServer">ArcGIS</a>',
-        //     url:
-        //       'https://server.arcgisonline.com/ArcGIS/rest/services/' +
-        //       'World_Topo_Map/MapServer/tile/{z}/{y}/{x}'
-        //   })
-        // }),
-
-        // Default base map is Open Street Map.
-        new TileLayer({
-          source: new OSM()
-        }),
-
-        // This is an example of 2 layers from a local map server when internet
-        // access is not available.
-        //
-        // The following imports are needed:
-        //
-        // import { Image as ImageLayer } from 'ol/layer.js';
-        // import ImageWMS from 'ol/source.js';
-        //
-        // new ImageLayer({
-        //   source: new ImageWMS({
-        //     url: 'http://localhost:8080/geoserver/tm_world/wms',
-        //     params: {
-        //       LAYERS: 'tm_world:TM_WORLD_BORDERS-0.3'
-        //     }
-        //   })
-        // }),
-        // new ImageLayer({
-        //   source: new ImageWMS({
-        //     url: 'http://localhost:8080/geoserver/topp/wms',
-        //     params: {
-        //       LAYERS: 'topp:states'
-        //     }
-        //   })
-        // }),
-
-        primaryLayer
-      ],
-      overlays: [overlay],
-      view: new View({
-        projection: 'EPSG:3857',
-        center: center,
-        zoom: 4
-      }),
-      controls: defaultControls().extend([
-        new FullScreen(),
-        new MousePosition({
-          coordinateFormat: createStringXY(4),
-          projection: 'EPSG:4326'
-        })
-      ])
-    });
-
-    // save map and layer references to local state
-    this.setState({
-      map: map,
-      primaryLayer: primaryLayer,
-      overlay: overlay
+    return new Style({
+      image: new CircleStyle({
+        radius: 7,
+        fill: new Fill({ color: 'red' }),
+        stroke: new Stroke({ color: 'red', width: 1 })
+      })
     });
   }
+
+  processData() {
+    // Create the point layer.
+    let primaryGeoJson = this.getPrimaryGeoJson();
+    let convertedGeoJson = new GeoJSON().readFeatures(primaryGeoJson);
+
+    // Update the layer.
+    if (
+      this.state.primaryLayer != null &&
+      this.state.primaryLayer.getSource() != null
+    ) {
+      this.state.primaryLayer.getSource().clear();
+      this.state.primaryLayer.getSource().addFeatures(convertedGeoJson);
+    } else {
+      //create source and layer
+      let primarySource = new VectorSource({
+        projection: 'EPSG:4326',
+        features: convertedGeoJson
+      });
+      let primaryLayer = new VectorLayer({
+        source: primarySource,
+        style: this.getPrimaryStyle()
+      });
+
+      let center = this.props.lonLat
+        ? fromLonLat(this.props.lonLat)
+        : fromLonLat([-95.79, 34.48]);
+
+      // If there is only 1 feature, use it as the map center.
+      if (primarySource.getFeatures().length === 1) {
+        center = primarySource
+          .getFeatures()[0]
+          .getGeometry()
+          .getCoordinates();
+      }
+
+      // Setup overlay for popups
+      let container = document.getElementById(this.state.popupContentTargetId);
+      let overlay = new Overlay({
+        element: container,
+        autoPan: true,
+        autoPanAnimation: {
+          duration: 250
+        }
+      });
+
+      let map = new Map({
+        target: this.state.mapTargetId,
+        layers: [
+          // This is an example of an Esri base map.  The following imports are needed:
+          //
+          // import XYZ from 'ol/source/XYZ.js';
+          //
+          // new TileLayer({
+          //   source: new XYZ({
+          //     attributions:
+          //       'Tiles © <a href="https://services.arcgisonline.com/ArcGIS/' +
+          //       'rest/services/World_Topo_Map/MapServer">ArcGIS</a>',
+          //     url:
+          //       'https://server.arcgisonline.com/ArcGIS/rest/services/' +
+          //       'World_Topo_Map/MapServer/tile/{z}/{y}/{x}'
+          //   })
+          // }),
+
+          // Default base map is Open Street Map.
+          new TileLayer({
+            source: new OSM()
+          }),
+
+          // This is an example of 2 layers from a local map server when internet
+          // access is not available.
+          //
+          // The following imports are needed:
+          //
+          // import { Image as ImageLayer } from 'ol/layer.js';
+          // import ImageWMS from 'ol/source.js';
+          //
+          // new ImageLayer({
+          //   source: new ImageWMS({
+          //     url: 'http://localhost:8080/geoserver/tm_world/wms',
+          //     params: {
+          //       LAYERS: 'tm_world:TM_WORLD_BORDERS-0.3'
+          //     }
+          //   })
+          // }),
+          // new ImageLayer({
+          //   source: new ImageWMS({
+          //     url: 'http://localhost:8080/geoserver/topp/wms',
+          //     params: {
+          //       LAYERS: 'topp:states'
+          //     }
+          //   })
+          // }),
+
+          primaryLayer
+        ],
+        overlays: [overlay],
+        view: new View({
+          projection: 'EPSG:3857',
+          center: center,
+          zoom: this.props.zoom ? this.props.zoom : 4
+        }),
+        controls: defaultControls().extend([
+          new FullScreen(),
+          new MousePosition({
+            coordinateFormat: createStringXY(4),
+            projection: 'EPSG:4326'
+          })
+        ])
+      });
+
+      // save map and layer references to local state
+      let state = {
+        map: map,
+        primaryLayer: primaryLayer,
+        overlay: overlay
+      };
+      this.setState(state, this.afterProcessData(map, primaryLayer));
+    }
+  }
+
+  afterProcessData() {}
 
   render() {
     return (
