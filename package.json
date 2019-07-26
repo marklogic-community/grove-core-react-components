@@ -1,6 +1,6 @@
 {
   "name": "@marklogic-community/grove-core-react-components",
-  "version": "1.0.0-rc.1",
+  "version": "1.0.0",
   "description": "React component library for apps backed by MarkLogic",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -68,8 +68,8 @@
   ],
   "contributors": [
     {
-      "name": "Patrick McElwee",
-      "url": "https://github.com/patrickmcelwee"
+      "name": "Matt Pileggi",
+      "url": "https://github.com/withjam"
     },
     {
       "name": "Marianne Myers",
