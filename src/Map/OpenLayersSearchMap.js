@@ -15,7 +15,8 @@ class OpenLayersSearchMap extends OpenLayersMap {
       mapTargetId: this.getMapTargetId(mapId),
       popupContentTargetId: this.getPopupContentTargetId(mapId),
       showMap: true,
-      geoFacetNames: []
+      geoFacetNames: [],
+      drawnBounds: {}
     };
   }
 
@@ -125,8 +126,9 @@ class OpenLayersSearchMap extends OpenLayersMap {
   }
 
   afterProcessData(map, primaryLayer) {
-    var typeSelect = document.getElementById('map-selection-type');
-    var draw; // global so we can remove them later
+    let that = this;
+    let typeSelect = document.getElementById('map-selection-type');
+    let draw; // global so we can remove them later
 
     function addInteractions() {
       draw = new Draw({
@@ -142,29 +144,33 @@ class OpenLayersSearchMap extends OpenLayersMap {
     typeSelect.onchange = function() {
       if (draw) {
         map.removeInteraction(draw);
+        that.setState({ drawnBounds: {} });
       }
       addInteractions();
     };
 
     addInteractions();
 
-    let that = this;
     let addedFeature;
     let addFeatureLocked = false;
     primaryLayer.getSource().on('addfeature', function(event) {
       if (!addFeatureLocked) {
         addFeatureLocked = true;
-        var extent = event.feature.getGeometry().getExtent();
+        let extent = event.feature.getGeometry().getExtent();
         // If the feature is new
         if (
-          !addedFeature ||
-          addedFeature
-            .getGeometry()
-            .getExtent()
-            .toString() !== extent.toString()
+          typeSelect.value &&
+          (!addedFeature ||
+            addedFeature
+              .getGeometry()
+              .getExtent()
+              .toString() !== extent.toString())
         ) {
           addedFeature = event.feature;
-          that.updateMapFilter(extent);
+          that.updateDrawnBounds(
+            typeSelect.value.toLowerCase(),
+            addedFeature.getGeometry()
+          );
         }
         addFeatureLocked = false;
       }
@@ -172,35 +178,56 @@ class OpenLayersSearchMap extends OpenLayersMap {
 
     // Bind handler for map clicks.
     map.on('click', this.handleMapClick.bind(this));
-
-    // Comment out this line to prevent filtering the search using the map bounds.
-    map.on('moveend', this.handleMapMove.bind(this));
   }
 
-  handleMapMove() {
-    let size = this.state.map.getSize();
-    let extent = this.state.map.getView().calculateExtent(size);
-    this.updateMapFilter(extent);
-  }
-
-  updateMapFilter(extent) {
+  getBoxBounds(extent) {
     let convertedExtent = transformExtent(extent, 'EPSG:3857', 'EPSG:4326');
-    let geoSearch = {
-      box: [
-        {
-          south: convertedExtent[1],
-          west: convertedExtent[0],
-          north: convertedExtent[3],
-          east: convertedExtent[2]
-        }
-      ]
+    return {
+      south: convertedExtent[1],
+      west: convertedExtent[0],
+      north: convertedExtent[3],
+      east: convertedExtent[2]
     };
+  }
 
-    var that = this;
-    // Assumes that geospatial constraint can be used to filter search.
-    this.state.geoFacetNames.forEach(function(geoFacetName) {
-      that.props.replaceFilter(geoFacetName, 'custom', geoSearch);
-    });
+  getCircleBounds(geometry) {
+    let center = geometry.getCenter();
+    return {
+      radius: geometry.getRadius(),
+      point: {
+        latitude: center[1],
+        longitude: center[0]
+      }
+    };
+  }
+
+  getPointBounds(geometry) {
+    let lonLat = geometry.getCoordinates();
+    return {
+      latitude: lonLat[1],
+      longitude: lonLat[0]
+    };
+  }
+
+  updateDrawnBounds(shape, geometry) {
+    let bounds = {};
+    if (shape === 'point') {
+      bounds = this.getPointBounds(geometry);
+    } else if (shape === 'circle') {
+      bounds = this.getCircleBounds(geometry);
+    } else {
+      shape = 'box';
+      bounds = this.getBoxBounds(geometry.getExtent());
+    }
+
+    if (!this.state.drawnBounds[shape]) {
+      this.state.drawnBounds[shape] = [];
+    }
+    this.state.drawnBounds[shape].push(bounds);
+
+    if (this.props.boundsChanged) {
+      this.props.boundsChanged(this.state.drawnBounds);
+    }
   }
 
   handleMapClick(event) {
@@ -276,7 +303,6 @@ class OpenLayersSearchMap extends OpenLayersMap {
           <label>Geometry type &nbsp;</label>
           <select id="map-selection-type">
             <option value="Point">Point</option>
-            <option value="LineString">LineString</option>
             <option value="Polygon">Polygon</option>
             <option value="Circle">Circle</option>
             <option value="None">None</option>
