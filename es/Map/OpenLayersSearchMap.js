@@ -41,42 +41,46 @@ var OpenLayersSearchMap = function (_OpenLayersMap) {
       var countValue = count > 1 ? count.toString() : '';
       var styles = [];
       var color = feature.getProperties()['color'];
-      if (count === 1) {
-        styles = [new Style({
-          image: new CircleStyle({
-            radius: radius,
-            fill: new Fill({ color: color }),
-            stroke: new Stroke({
-              color: 'black',
-              width: strokeWidth,
-              lineDash: lineDash
+      if (color) {
+        if (count === 1) {
+          styles = [new Style({
+            image: new CircleStyle({
+              radius: radius,
+              fill: new Fill({ color: color }),
+              stroke: new Stroke({
+                color: 'black',
+                width: strokeWidth,
+                lineDash: lineDash
+              })
+            }),
+            text: _this.createClusterTextStyle(countValue)
+          })];
+        } else {
+          styles = [new Style({
+            image: new CircleStyle({
+              radius: radius + 8,
+              fill: new Fill({ color: color }),
+              stroke: new Stroke({
+                color: 'black',
+                width: strokeWidth,
+                lineDash: lineDash
+              })
             })
-          }),
-          text: _this.createClusterTextStyle(countValue)
-        })];
+          }), new Style({
+            image: new CircleStyle({
+              radius: radius,
+              fill: new Fill({ color: '#cce0ff' }),
+              stroke: new Stroke({
+                color: 'black',
+                width: strokeWidth,
+                lineDash: lineDash
+              })
+            }),
+            text: _this.createClusterTextStyle(countValue)
+          })];
+        }
       } else {
-        styles = [new Style({
-          image: new CircleStyle({
-            radius: radius + 8,
-            fill: new Fill({ color: color }),
-            stroke: new Stroke({
-              color: 'black',
-              width: strokeWidth,
-              lineDash: lineDash
-            })
-          })
-        }), new Style({
-          image: new CircleStyle({
-            radius: radius,
-            fill: new Fill({ color: '#cce0ff' }),
-            stroke: new Stroke({
-              color: 'black',
-              width: strokeWidth,
-              lineDash: lineDash
-            })
-          }),
-          text: _this.createClusterTextStyle(countValue)
-        })];
+        styles = [_this.state.geoStyles[feature.getGeometry().getType()]];
       }
 
       return styles;
@@ -93,7 +97,35 @@ var OpenLayersSearchMap = function (_OpenLayersMap) {
       popupContentTargetId: _this.getPopupContentTargetId(mapId),
       showMap: true,
       geoFacets: [],
-      drawnBounds: {}
+      drawnBounds: {},
+      geoStyles: {
+        Point: new Style({
+          image: new CircleStyle({
+            radius: 5,
+            fill: null,
+            stroke: new Stroke({ color: 'blue', width: 1 })
+          })
+        }),
+        Polygon: new Style({
+          stroke: new Stroke({
+            color: 'blue',
+            lineDash: [4],
+            width: 3
+          }),
+          fill: new Fill({
+            color: 'rgba(0, 0, 255, 0.1)'
+          })
+        }),
+        Circle: new Style({
+          stroke: new Stroke({
+            color: 'red',
+            width: 2
+          }),
+          fill: new Fill({
+            color: 'rgba(255,0,0,0.2)'
+          })
+        })
+      }
     };
     return _this;
   }
@@ -139,11 +171,14 @@ var OpenLayersSearchMap = function (_OpenLayersMap) {
     var draw = void 0; // global so we can remove them later
 
     function addInteractions() {
-      draw = new Draw({
-        source: primaryLayer.getSource(),
-        type: typeSelect.value
-      });
-      map.addInteraction(draw);
+      var value = typeSelect.value;
+      if (value !== 'None') {
+        draw = new Draw({
+          source: primaryLayer.getSource(),
+          type: value
+        });
+        map.addInteraction(draw);
+      }
     }
 
     /**
@@ -152,7 +187,6 @@ var OpenLayersSearchMap = function (_OpenLayersMap) {
     typeSelect.onchange = function () {
       if (draw) {
         map.removeInteraction(draw);
-        that.setState({ drawnBounds: {} });
       }
       addInteractions();
     };
