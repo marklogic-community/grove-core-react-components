@@ -15,7 +15,7 @@ class OpenLayersSearchMap extends OpenLayersMap {
       mapTargetId: this.getMapTargetId(mapId),
       popupContentTargetId: this.getPopupContentTargetId(mapId),
       showMap: true,
-      geoFacetNames: [],
+      geoFacets: [],
       drawnBounds: {}
     };
   }
@@ -64,12 +64,13 @@ class OpenLayersSearchMap extends OpenLayersMap {
 
     let countValue = count > 1 ? count.toString() : '';
     let styles = [];
+    let color = feature.getProperties()['color'];
     if (count === 1) {
       styles = [
         new Style({
           image: new CircleStyle({
             radius: radius,
-            fill: new Fill({ color: '#0066ff' }),
+            fill: new Fill({ color: color }),
             stroke: new Stroke({
               color: 'black',
               width: strokeWidth,
@@ -84,7 +85,7 @@ class OpenLayersSearchMap extends OpenLayersMap {
         new Style({
           image: new CircleStyle({
             radius: radius + 8,
-            fill: new Fill({ color: '#0066ff' }),
+            fill: new Fill({ color: color }),
             stroke: new Stroke({
               color: 'black',
               width: strokeWidth,
@@ -111,14 +112,14 @@ class OpenLayersSearchMap extends OpenLayersMap {
   };
 
   getPrimaryGeoJson() {
-    let geoFacetNames = mapUtils.getGeoFacetNames(
+    let geoFacets = mapUtils.getGeoFacets(
       this.props.facets,
-      this.props.geoFacetName
+      this.props.geoFacetNames
     );
 
-    this.setState({ geoFacetNames: geoFacetNames });
+    this.setState({ geoFacets: geoFacets });
 
-    return mapUtils.convertFacetsToGeoJson(this.props.facets, geoFacetNames);
+    return mapUtils.convertFacetsToGeoJson(geoFacets);
   }
 
   getPrimaryStyle() {
@@ -288,7 +289,7 @@ class OpenLayersSearchMap extends OpenLayersMap {
   render() {
     return (
       <div>
-        <div>
+        <div className="inline-block">
           <span>
             <input
               name="showMap"
@@ -298,8 +299,7 @@ class OpenLayersSearchMap extends OpenLayersMap {
             />
             <span> Show Map</span>
           </span>
-        </div>
-        <div className="inline-block">
+          &nbsp;&nbsp;
           <label>Geometry type &nbsp;</label>
           <select id="map-selection-type">
             <option value="Point">Point</option>
@@ -307,6 +307,16 @@ class OpenLayersSearchMap extends OpenLayersMap {
             <option value="Circle">Circle</option>
             <option value="None">None</option>
           </select>
+          &nbsp;&nbsp;
+          <label>Legend &nbsp;</label>
+          {this.state.geoFacets.map((geoFacet, index) => (
+            <span key={index}>
+              <b style={{ color: geoFacet.color }}>&#9673;</b>
+              &nbsp;
+              {geoFacet.facet.name}
+              &nbsp;
+            </span>
+          ))}
         </div>
         <div
           id={this.state.mapTargetId}

@@ -40,11 +40,12 @@ var OpenLayersSearchMap = function (_OpenLayersMap) {
 
       var countValue = count > 1 ? count.toString() : '';
       var styles = [];
+      var color = feature.getProperties()['color'];
       if (count === 1) {
         styles = [new Style({
           image: new CircleStyle({
             radius: radius,
-            fill: new Fill({ color: '#0066ff' }),
+            fill: new Fill({ color: color }),
             stroke: new Stroke({
               color: 'black',
               width: strokeWidth,
@@ -57,7 +58,7 @@ var OpenLayersSearchMap = function (_OpenLayersMap) {
         styles = [new Style({
           image: new CircleStyle({
             radius: radius + 8,
-            fill: new Fill({ color: '#0066ff' }),
+            fill: new Fill({ color: color }),
             stroke: new Stroke({
               color: 'black',
               width: strokeWidth,
@@ -91,7 +92,7 @@ var OpenLayersSearchMap = function (_OpenLayersMap) {
       mapTargetId: _this.getMapTargetId(mapId),
       popupContentTargetId: _this.getPopupContentTargetId(mapId),
       showMap: true,
-      geoFacetNames: [],
+      geoFacets: [],
       drawnBounds: {}
     };
     return _this;
@@ -121,11 +122,11 @@ var OpenLayersSearchMap = function (_OpenLayersMap) {
   };
 
   OpenLayersSearchMap.prototype.getPrimaryGeoJson = function getPrimaryGeoJson() {
-    var geoFacetNames = mapUtils.getGeoFacetNames(this.props.facets, this.props.geoFacetName);
+    var geoFacets = mapUtils.getGeoFacets(this.props.facets, this.props.geoFacetNames);
 
-    this.setState({ geoFacetNames: geoFacetNames });
+    this.setState({ geoFacets: geoFacets });
 
-    return mapUtils.convertFacetsToGeoJson(this.props.facets, geoFacetNames);
+    return mapUtils.convertFacetsToGeoJson(geoFacets);
   };
 
   OpenLayersSearchMap.prototype.getPrimaryStyle = function getPrimaryStyle() {
@@ -278,7 +279,7 @@ var OpenLayersSearchMap = function (_OpenLayersMap) {
       null,
       React.createElement(
         'div',
-        null,
+        { className: 'inline-block' },
         React.createElement(
           'span',
           null,
@@ -293,11 +294,8 @@ var OpenLayersSearchMap = function (_OpenLayersMap) {
             null,
             ' Show Map'
           )
-        )
-      ),
-      React.createElement(
-        'div',
-        { className: 'inline-block' },
+        ),
+        '\xA0\xA0',
         React.createElement(
           'label',
           null,
@@ -326,7 +324,27 @@ var OpenLayersSearchMap = function (_OpenLayersMap) {
             { value: 'None' },
             'None'
           )
-        )
+        ),
+        '\xA0\xA0',
+        React.createElement(
+          'label',
+          null,
+          'Legend \xA0'
+        ),
+        this.state.geoFacets.map(function (geoFacet, index) {
+          return React.createElement(
+            'span',
+            { key: index },
+            React.createElement(
+              'b',
+              { style: { color: geoFacet.color } },
+              '\u25C9'
+            ),
+            '\xA0',
+            geoFacet.facet.name,
+            '\xA0'
+          );
+        })
       ),
       React.createElement('div', {
         id: this.state.mapTargetId,

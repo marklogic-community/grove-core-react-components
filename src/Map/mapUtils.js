@@ -5,42 +5,50 @@
 
 import { fromLonLat } from 'ol/proj';
 
+function getRandomColor() {
+  return '#000000'.replace(/0/g, function() {
+    return (~~(Math.random() * 16)).toString(16);
+  });
+}
+
 const mapUtils = {
-  getGeoFacetNames: function(facets, facetName) {
-    let geoFacetNames = [];
+  getGeoFacets: function(facets, facetNames) {
+    let geoFacets = [];
     if (facets) {
-      if (
-        facetName &&
-        facets[facetName] &&
-        facets[facetName].boxes &&
-        facets[facetName].boxes.length > 0
-      ) {
-        geoFacetNames = [facetName];
+      if (facetNames && facetNames.length > 0) {
+        facetNames.forEach(function(facetName) {
+          const facet = facets[facetName];
+          if (facet && facet.boxes && facet.boxes.length > 0) {
+            geoFacets.push({
+              color: getRandomColor(),
+              facet: facet
+            });
+          }
+        });
       } else {
         const facetObjects = Object.values(facets);
         facetObjects.forEach(function(facet) {
           if (facet.boxes && facet.boxes.length > 0) {
-            geoFacetNames.push(facet.name);
+            geoFacets.push({
+              color: getRandomColor(),
+              facet: facet
+            });
           }
         });
       }
     }
-    return geoFacetNames;
+    return geoFacets;
   },
 
-  convertFacetsToGeoJson: function(facets, facetNames) {
+  convertFacetsToGeoJson: function(geoFacets) {
     let geoJson = {
       type: 'FeatureCollection',
       features: []
     };
 
-    let geoFacetNames = [];
-    if (facetNames && facetNames.length > 0) {
-      geoFacetNames = facetNames;
-    }
-
-    geoFacetNames.forEach(function(facetName) {
-      const facet = facets[facetName];
+    geoFacets.forEach(function(geoFacet) {
+      const facet = geoFacet.facet;
+      let color = geoFacet.color;
       facet.boxes.forEach(function(value, index) {
         if (value.count > 0) {
           let lng = (value.w + value.e) / 2;
@@ -54,11 +62,12 @@ const mapUtils = {
               coordinates: ptConverted
             },
             properties: {
-              label: value.label || '',
+              label: facet.name,
               id: value.id || 'feature' + index,
               layer: 'primary',
               count: value.count,
-              uri: value.uri
+              uri: value.uri,
+              color: color
             }
           });
         }

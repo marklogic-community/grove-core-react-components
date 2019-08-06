@@ -87,6 +87,11 @@ class OpenLayersMap extends React.Component {
   processData() {
     // Create the point layer.
     let primaryGeoJson = this.getPrimaryGeoJson();
+
+    if (primaryGeoJson.features.length === 0) {
+      return;
+    }
+
     let convertedGeoJson = new GeoJSON().readFeatures(primaryGeoJson);
 
     // Update the layer.
