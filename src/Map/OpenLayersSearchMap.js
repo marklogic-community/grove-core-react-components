@@ -215,6 +215,11 @@ class OpenLayersSearchMap extends OpenLayersMap {
 
     // Bind handler for map clicks.
     map.on('click', this.handleMapClick.bind(this));
+
+    // Bind handler for right clicks.
+    map.getViewport().addEventListener('contextmenu', function() {
+      that.processData();
+    });
   }
 
   getBoxBounds(extent) {
@@ -354,6 +359,8 @@ class OpenLayersSearchMap extends OpenLayersMap {
               &nbsp;
             </span>
           ))}
+          &nbsp;&nbsp;
+          <i>Right click will clear the drawings</i>
         </div>
         <div
           id={this.state.mapTargetId}

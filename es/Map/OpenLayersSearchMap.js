@@ -212,6 +212,11 @@ var OpenLayersSearchMap = function (_OpenLayersMap) {
 
     // Bind handler for map clicks.
     map.on('click', this.handleMapClick.bind(this));
+
+    // Bind handler for right clicks.
+    map.getViewport().addEventListener('contextmenu', function () {
+      that.processData();
+    });
   };
 
   OpenLayersSearchMap.prototype.getBoxBounds = function getBoxBounds(extent) {
@@ -386,7 +391,13 @@ var OpenLayersSearchMap = function (_OpenLayersMap) {
             geoFacet.facet.name,
             '\xA0'
           );
-        })
+        }),
+        '\xA0\xA0',
+        React.createElement(
+          'i',
+          null,
+          'Right click will clear the drawings'
+        )
       ),
       React.createElement('div', {
         id: this.state.mapTargetId,
