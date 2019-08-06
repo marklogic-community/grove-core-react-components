@@ -194,9 +194,12 @@ class OpenLayersSearchMap extends OpenLayersMap {
       if (!addFeatureLocked) {
         addFeatureLocked = true;
         let extent = event.feature.getGeometry().getExtent();
+        let isGeoFacet =
+          event.feature.getProperties() &&
+          event.feature.getProperties()['layer'] === 'primary';
         // If the feature is new
         if (
-          typeSelect.value &&
+          !isGeoFacet &&
           (!addedFeature ||
             addedFeature
               .getGeometry()
@@ -204,10 +207,7 @@ class OpenLayersSearchMap extends OpenLayersMap {
               .toString() !== extent.toString())
         ) {
           addedFeature = event.feature;
-          that.updateDrawnBounds(
-            typeSelect.value.toLowerCase(),
-            addedFeature.getGeometry()
-          );
+          that.updateDrawnBounds(addedFeature.getGeometry());
         }
         addFeatureLocked = false;
       }
@@ -218,7 +218,12 @@ class OpenLayersSearchMap extends OpenLayersMap {
 
     // Bind handler for right clicks.
     map.getViewport().addEventListener('contextmenu', function() {
+      that.resetDrawnBounds();
       that.processData();
+      if (interaction) {
+        map.removeInteraction(interaction);
+      }
+      addInteractions();
     });
   }
 
@@ -251,22 +256,33 @@ class OpenLayersSearchMap extends OpenLayersMap {
     };
   }
 
-  updateDrawnBounds(shape, geometry) {
+  updateDrawnBounds(geometry) {
     let bounds = {};
-    if (shape === 'point') {
+    let shape = geometry.getType();
+    if (shape === 'Point') {
       bounds = this.getPointBounds(geometry);
-    } else if (shape === 'circle') {
+    } else if (shape === 'Circle') {
       bounds = this.getCircleBounds(geometry);
-    } else {
-      shape = 'box';
+    } else if (shape === 'Polygon') {
+      shape = 'Box';
       bounds = this.getBoxBounds(geometry.getExtent());
     }
 
-    if (!this.state.drawnBounds[shape]) {
-      this.state.drawnBounds[shape] = [];
+    if (shape) {
+      shape = shape.toLowerCase();
+      if (!this.state.drawnBounds[shape]) {
+        this.state.drawnBounds[shape] = [];
+      }
+      this.state.drawnBounds[shape].push(bounds);
     }
-    this.state.drawnBounds[shape].push(bounds);
 
+    if (this.props.boundsChanged) {
+      this.props.boundsChanged(this.state.drawnBounds);
+    }
+  }
+
+  resetDrawnBounds() {
+    this.setState({ drawnBounds: {} });
     if (this.props.boundsChanged) {
       this.props.boundsChanged(this.state.drawnBounds);
     }
@@ -344,10 +360,10 @@ class OpenLayersSearchMap extends OpenLayersMap {
           &nbsp;&nbsp;
           <label>Interaction &nbsp;</label>
           <select id="map-selection-type">
+            <option value="Free Hand">Free Hand</option>
             <option value="Point">Draw Point</option>
             <option value="Polygon">Draw Polygon</option>
             <option value="Circle">Draw Circle</option>
-            <option value="Free Hand">Free Hand</option>
           </select>
           &nbsp;&nbsp;
           <label>Legend &nbsp;</label>

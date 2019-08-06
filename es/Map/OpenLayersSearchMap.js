@@ -201,10 +201,11 @@ var OpenLayersSearchMap = function (_OpenLayersMap) {
       if (!addFeatureLocked) {
         addFeatureLocked = true;
         var extent = event.feature.getGeometry().getExtent();
+        var isGeoFacet = event.feature.getProperties() && event.feature.getProperties()['layer'] === 'primary';
         // If the feature is new
-        if (typeSelect.value && (!addedFeature || addedFeature.getGeometry().getExtent().toString() !== extent.toString())) {
+        if (!isGeoFacet && (!addedFeature || addedFeature.getGeometry().getExtent().toString() !== extent.toString())) {
           addedFeature = event.feature;
-          that.updateDrawnBounds(typeSelect.value.toLowerCase(), addedFeature.getGeometry());
+          that.updateDrawnBounds(addedFeature.getGeometry());
         }
         addFeatureLocked = false;
       }
@@ -215,7 +216,12 @@ var OpenLayersSearchMap = function (_OpenLayersMap) {
 
     // Bind handler for right clicks.
     map.getViewport().addEventListener('contextmenu', function () {
+      that.resetDrawnBounds();
       that.processData();
+      if (interaction) {
+        map.removeInteraction(interaction);
+      }
+      addInteractions();
     });
   };
 
@@ -248,22 +254,33 @@ var OpenLayersSearchMap = function (_OpenLayersMap) {
     };
   };
 
-  OpenLayersSearchMap.prototype.updateDrawnBounds = function updateDrawnBounds(shape, geometry) {
+  OpenLayersSearchMap.prototype.updateDrawnBounds = function updateDrawnBounds(geometry) {
     var bounds = {};
-    if (shape === 'point') {
+    var shape = geometry.getType();
+    if (shape === 'Point') {
       bounds = this.getPointBounds(geometry);
-    } else if (shape === 'circle') {
+    } else if (shape === 'Circle') {
       bounds = this.getCircleBounds(geometry);
-    } else {
-      shape = 'box';
+    } else if (shape === 'Polygon') {
+      shape = 'Box';
       bounds = this.getBoxBounds(geometry.getExtent());
     }
 
-    if (!this.state.drawnBounds[shape]) {
-      this.state.drawnBounds[shape] = [];
+    if (shape) {
+      shape = shape.toLowerCase();
+      if (!this.state.drawnBounds[shape]) {
+        this.state.drawnBounds[shape] = [];
+      }
+      this.state.drawnBounds[shape].push(bounds);
     }
-    this.state.drawnBounds[shape].push(bounds);
 
+    if (this.props.boundsChanged) {
+      this.props.boundsChanged(this.state.drawnBounds);
+    }
+  };
+
+  OpenLayersSearchMap.prototype.resetDrawnBounds = function resetDrawnBounds() {
+    this.setState({ drawnBounds: {} });
     if (this.props.boundsChanged) {
       this.props.boundsChanged(this.state.drawnBounds);
     }
@@ -353,6 +370,11 @@ var OpenLayersSearchMap = function (_OpenLayersMap) {
           { id: 'map-selection-type' },
           React.createElement(
             'option',
+            { value: 'Free Hand' },
+            'Free Hand'
+          ),
+          React.createElement(
+            'option',
             { value: 'Point' },
             'Draw Point'
           ),
@@ -365,11 +387,6 @@ var OpenLayersSearchMap = function (_OpenLayersMap) {
             'option',
             { value: 'Circle' },
             'Draw Circle'
-          ),
-          React.createElement(
-            'option',
-            { value: 'Free Hand' },
-            'Free Hand'
           )
         ),
         '\xA0\xA0',
