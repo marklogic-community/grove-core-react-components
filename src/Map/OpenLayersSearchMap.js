@@ -268,7 +268,7 @@ class OpenLayersSearchMap extends OpenLayersMap {
   handleMapClick(event) {
     // Close the old popup first.
     this.closePopup();
-
+    let that = this;
     // Find the feature near the clicked location.
     let features = this.state.map.getFeaturesAtPixel(event.pixel);
     if (features && features.length > 0) {
@@ -293,12 +293,13 @@ class OpenLayersSearchMap extends OpenLayersMap {
           let uri = primFeat.get('uri');
           let label =
             primFeat.get('label') || primFeat.get('name') || uri || 'unknown';
-          display +=
-            '<li><a href="/detail/' +
-            encodeURIComponent(uri) +
-            '">' +
-            label +
-            '</a></li>';
+          display += '<li>';
+          if (that.props.markerClick) {
+            display += '<a onclick="' + that.props.markerClick + '">';
+          } else {
+            display += '<a href="/detail/' + encodeURIComponent(uri) + '">';
+          }
+          display += label + '</a></li>';
         });
         display += '</ul></div>';
       }

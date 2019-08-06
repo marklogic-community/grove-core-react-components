@@ -62,7 +62,7 @@ var mapUtils = {
               coordinates: ptConverted
             },
             properties: {
-              label: facet.name,
+              label: value.label,
               id: value.id || 'feature' + index,
               layer: 'primary',
               count: value.count,
