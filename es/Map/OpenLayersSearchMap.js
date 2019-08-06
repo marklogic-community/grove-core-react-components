@@ -7,7 +7,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 import React from 'react';
 import { Circle as CircleStyle, Fill, Stroke, Style, Text } from 'ol/style.js';
 import { transformExtent } from 'ol/proj';
-import { Draw } from 'ol/interaction.js';
+import { Draw, DragZoom } from 'ol/interaction.js';
 import mapUtils from './mapUtils.js';
 import OpenLayersMap from './OpenLayersMap.js';
 
@@ -168,25 +168,27 @@ var OpenLayersSearchMap = function (_OpenLayersMap) {
   OpenLayersSearchMap.prototype.afterProcessData = function afterProcessData(map, primaryLayer) {
     var that = this;
     var typeSelect = document.getElementById('map-selection-type');
-    var draw = void 0; // global so we can remove them later
+    var interaction = void 0; // global so we can remove them later
 
     function addInteractions() {
       var value = typeSelect.value;
-      if (value !== 'None') {
-        draw = new Draw({
+      if (value === 'Free Hand') {
+        interaction = new DragZoom();
+      } else {
+        interaction = new Draw({
           source: primaryLayer.getSource(),
           type: value
         });
-        map.addInteraction(draw);
       }
+      map.addInteraction(interaction);
     }
 
     /**
      * Handle change event.
      */
     typeSelect.onchange = function () {
-      if (draw) {
-        map.removeInteraction(draw);
+      if (interaction) {
+        map.removeInteraction(interaction);
       }
       addInteractions();
     };
@@ -339,7 +341,7 @@ var OpenLayersSearchMap = function (_OpenLayersMap) {
         React.createElement(
           'label',
           null,
-          'Geometry type \xA0'
+          'Interaction \xA0'
         ),
         React.createElement(
           'select',
@@ -347,22 +349,22 @@ var OpenLayersSearchMap = function (_OpenLayersMap) {
           React.createElement(
             'option',
             { value: 'Point' },
-            'Point'
+            'Draw Point'
           ),
           React.createElement(
             'option',
             { value: 'Polygon' },
-            'Polygon'
+            'Draw Polygon'
           ),
           React.createElement(
             'option',
             { value: 'Circle' },
-            'Circle'
+            'Draw Circle'
           ),
           React.createElement(
             'option',
-            { value: 'None' },
-            'None'
+            { value: 'Free Hand' },
+            'Free Hand'
           )
         ),
         '\xA0\xA0',

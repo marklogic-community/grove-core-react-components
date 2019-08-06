@@ -1,7 +1,7 @@
 import React from 'react';
 import { Circle as CircleStyle, Fill, Stroke, Style, Text } from 'ol/style.js';
 import { transformExtent } from 'ol/proj';
-import { Draw } from 'ol/interaction.js';
+import { Draw, DragZoom } from 'ol/interaction.js';
 import mapUtils from './mapUtils.js';
 import OpenLayersMap from './OpenLayersMap.js';
 
@@ -161,25 +161,27 @@ class OpenLayersSearchMap extends OpenLayersMap {
   afterProcessData(map, primaryLayer) {
     let that = this;
     let typeSelect = document.getElementById('map-selection-type');
-    let draw; // global so we can remove them later
+    let interaction; // global so we can remove them later
 
     function addInteractions() {
-      var value = typeSelect.value;
-      if (value !== 'None') {
-        draw = new Draw({
+      let value = typeSelect.value;
+      if (value === 'Free Hand') {
+        interaction = new DragZoom();
+      } else {
+        interaction = new Draw({
           source: primaryLayer.getSource(),
           type: value
         });
-        map.addInteraction(draw);
       }
+      map.addInteraction(interaction);
     }
 
     /**
      * Handle change event.
      */
     typeSelect.onchange = function() {
-      if (draw) {
-        map.removeInteraction(draw);
+      if (interaction) {
+        map.removeInteraction(interaction);
       }
       addInteractions();
     };
@@ -335,12 +337,12 @@ class OpenLayersSearchMap extends OpenLayersMap {
             <span> Show Map</span>
           </span>
           &nbsp;&nbsp;
-          <label>Geometry type &nbsp;</label>
+          <label>Interaction &nbsp;</label>
           <select id="map-selection-type">
-            <option value="Point">Point</option>
-            <option value="Polygon">Polygon</option>
-            <option value="Circle">Circle</option>
-            <option value="None">None</option>
+            <option value="Point">Draw Point</option>
+            <option value="Polygon">Draw Polygon</option>
+            <option value="Circle">Draw Circle</option>
+            <option value="Free Hand">Free Hand</option>
           </select>
           &nbsp;&nbsp;
           <label>Legend &nbsp;</label>
