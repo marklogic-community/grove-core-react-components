@@ -1,6 +1,6 @@
 # Thanks for Contributing!
 
-This repository is for reusable Grove React components. Specifically, it is for core components. If you are adding a component, it is possible that we will recommend publishing those in a separate package, but [open an issue](https://project.marklogic.com/jira/projects/GROVE/summary) so we can discuss.
+This repository is for reusable Grove React components. Specifically, it is for core components. If you are adding a component, it is possible that we will recommend publishing those in a separate package, but [open an issue](https://github.com/marklogic-community/grove-core-react-components/issues) so we can discuss.
 
 Please be sure you have reviewed the Grove [Contributors Guide](https://wiki.marklogic.com/display/SAL/Grove+Contributor+Starters+Guide) and Grove [React Contributors Guide](https://wiki.marklogic.com/display/SAL/React+Contributors+Guide).
 
