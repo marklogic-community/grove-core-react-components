@@ -4,3 +4,6 @@
 npm-debug.log*
 .DS_Store
 .storybook/dist
+es
+umd
+lib
