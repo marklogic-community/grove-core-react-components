@@ -6,7 +6,6 @@ import SearchBar from './SearchBar';
 import Facets from './Facets/Facets';
 import SearchResponseView from './SearchResponseView';
 import Fade from '../animations/Fade';
-import OpenLayersSearchMap from '../Map/OpenLayersSearchMap';
 
 class SearchView extends Component {
   constructor(props) {
@@ -68,17 +67,6 @@ class SearchView extends Component {
               queryText={this.props.queryText}
               onQueryTextChange={this.handleQueryTextChange}
               onSearchExecute={this.search}
-            />
-          </Row>
-          <Row>
-            <OpenLayersSearchMap
-              facets={this.props.facets}
-              onSearch={this.search}
-              geoFacetName={'GeoPoint'}
-              activeFilters={this.props.activeFilters}
-              replaceFilter={this.props.replaceFilter}
-              addFilter={this.props.addFilter}
-              removeFilter={this.props.removeFilter}
             />
           </Row>
           {this.props.isSearchComplete || this.props.isSearchPending ? (
