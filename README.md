@@ -35,8 +35,8 @@ This component shows a geospatial map that displays the geospatial facets set as
 Listed below are the props available:
 * **facets** - geospatial facets
 * **geoFacetNames** - only displays the geospatial facets from the specified names
-* **boundsChanged** - function called when the user draws points, polygons, and/or circles in the map
-* **markerClick** - function called when the user selects a marker in the map
+* **boundsChanged**(_drawnBounds_) - function called when the user draws points, polygons, and/or circles in the map
+* **markerClick**(_uri_) - function called when the user selects a marker in the map
 * **class** (default: `olmap`) - the css class of the map
 * **lonLat** (default: `[-95.79, 34.48]`) - center of the map
 * **zoom** (default: `4`) - zoom of the map

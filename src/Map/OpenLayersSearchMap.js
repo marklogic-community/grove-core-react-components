@@ -318,7 +318,7 @@ class OpenLayersSearchMap extends OpenLayersMap {
             primFeat.get('label') || primFeat.get('name') || uri || 'unknown';
           display += '<li>';
           if (that.props.markerClick) {
-            display += '<a onclick="' + that.props.markerClick + '">';
+            display += '<a onclick="' + that.props.markerClick(uri) + '">';
           } else {
             display += '<a href="/detail/' + encodeURIComponent(uri) + '">';
           }
