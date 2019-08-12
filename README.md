@@ -28,6 +28,19 @@ This component provides a default view of a single document, together with some 
 
 The default behavior of the SearchResults component is to offer a choice between a CardResult and a ListResult. It can be customized. See: https://wiki.marklogic.com/display/SAL/Grove+React+Developer+Starter+Guide
 
+### <OpenLayersSearchMap />
+
+This component shows a geospatial map that displays the geospatial facets set as a property of this component. It also allows user to select areas of the map and emit a boundsChanged event if set.
+
+Listed below are the props available:
+* **facets** - geospatial facets
+* **geoFacetNames** - only displays the geospatial facets from the specified names
+* **boundsChanged**(_drawnBounds_) - function called when the user draws points, polygons, and/or circles in the map
+* **markerClick**(_uri_) - function called when the user selects a marker in the map
+* **class** (default: `olmap`) - the css class of the map
+* **lonLat** (default: `[-95.79, 34.48]`) - center of the map
+* **zoom** (default: `4`) - zoom of the map
+
 ### Storybook
 
 A storybook for all the components present in this library is provided as part of this project. There is a public copy available at:
