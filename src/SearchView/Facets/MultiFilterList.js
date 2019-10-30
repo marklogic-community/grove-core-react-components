@@ -107,12 +107,6 @@ class MultiFilterList extends React.Component {
                   }
                   {
                     // TODO: show more
-                    // <div ng-if="shouldShowMore &amp;&amp; !facet.displayingAll">
-                    //   <a href
-                    //   ng-click="showMore({facet: facet, facetName: facet.__key})">
-                    //   see more ...
-                    //   </a>
-                    // </div>
                   }
                 </div>
               )

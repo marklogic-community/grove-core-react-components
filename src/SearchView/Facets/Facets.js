@@ -10,7 +10,10 @@ const Facets = ({
   activeFilters,
   availableFilters,
   addFilter,
-  removeFilter
+  removeFilter,
+  showMore,
+  stagedSearch,
+  queryText
 }) => (
   <div className="ml-facet-list list-group">
     {
@@ -54,6 +57,19 @@ const Facets = ({
                   )}
                   removeFilter={removeFilter.bind(null, facetName)}
                 />
+                <span
+                  onClick={showMore.bind(
+                    null,
+                    facetName,
+                    availableFilters[facetName].facetValues,
+                    availableFilters[facetName].type || null,
+                    stagedSearch,
+                    queryText
+                  )}
+                  style={{ cursor: 'pointer' }}
+                >
+                  Show more
+                </span>
               </div>
             </div>
           );
@@ -65,7 +81,10 @@ Facets.propTypes = {
   activeFilters: PropTypes.array.isRequired,
   addFilter: PropTypes.func.isRequired,
   availableFilters: PropTypes.object,
-  removeFilter: PropTypes.func.isRequired
+  removeFilter: PropTypes.func.isRequired,
+  showMore: PropTypes.func.isRequired,
+  stagedSearch: PropTypes.object.isRequired,
+  queryText: PropTypes.string.isRequired
 };
 
 export default Facets;

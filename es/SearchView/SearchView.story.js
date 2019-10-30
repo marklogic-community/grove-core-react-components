@@ -29,7 +29,8 @@ storiesOf('SearchView', module).add('displaying results', function () {
       totalPages: 21,
       page: 1,
       changePage: action('changePage'),
-      handlePageSelection: action('handlePageSelection')
+      handlePageSelection: action('handlePageSelection'),
+      showMore: action('showMore')
     })
   );
 });
