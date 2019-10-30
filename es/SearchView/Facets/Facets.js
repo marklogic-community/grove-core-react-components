@@ -10,7 +10,10 @@ var Facets = function Facets(_ref) {
   var activeFilters = _ref.activeFilters,
       availableFilters = _ref.availableFilters,
       addFilter = _ref.addFilter,
-      removeFilter = _ref.removeFilter;
+      removeFilter = _ref.removeFilter,
+      showMore = _ref.showMore,
+      stagedSearch = _ref.stagedSearch,
+      queryText = _ref.queryText;
   return React.createElement(
     'div',
     { className: 'ml-facet-list list-group' },
@@ -45,7 +48,15 @@ var Facets = function Facets(_ref) {
             selectedValues: selectedValues,
             addFilter: addFilter.bind(null, facetName, availableFilters[facetName].type || null),
             removeFilter: removeFilter.bind(null, facetName)
-          })
+          }),
+          React.createElement(
+            'span',
+            {
+              onClick: showMore.bind(null, facetName, availableFilters[facetName].facetValues, availableFilters[facetName].type || null, stagedSearch, queryText),
+              style: { cursor: 'pointer' }
+            },
+            'Show more'
+          )
         )
       );
     })
@@ -56,7 +67,10 @@ Facets.propTypes = process.env.NODE_ENV !== "production" ? {
   activeFilters: PropTypes.array.isRequired,
   addFilter: PropTypes.func.isRequired,
   availableFilters: PropTypes.object,
-  removeFilter: PropTypes.func.isRequired
+  removeFilter: PropTypes.func.isRequired,
+  showMore: PropTypes.func.isRequired,
+  stagedSearch: PropTypes.object.isRequired,
+  queryText: PropTypes.string.isRequired
 } : {};
 
 export default Facets;

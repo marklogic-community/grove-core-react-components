@@ -9099,7 +9099,10 @@ var Facets = function Facets(_ref) {
   var activeFilters = _ref.activeFilters,
       availableFilters = _ref.availableFilters,
       addFilter = _ref.addFilter,
-      removeFilter = _ref.removeFilter;
+      removeFilter = _ref.removeFilter,
+      showMore = _ref.showMore,
+      stagedSearch = _ref.stagedSearch,
+      queryText = _ref.queryText;
   return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
     'div',
     { className: 'ml-facet-list list-group' },
@@ -9134,7 +9137,15 @@ var Facets = function Facets(_ref) {
             selectedValues: selectedValues,
             addFilter: addFilter.bind(null, facetName, availableFilters[facetName].type || null),
             removeFilter: removeFilter.bind(null, facetName)
-          })
+          }),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'span',
+            {
+              onClick: showMore.bind(null, facetName, availableFilters[facetName].facetValues, availableFilters[facetName].type || null, stagedSearch, queryText),
+              style: { cursor: 'pointer' }
+            },
+            'Show more'
+          )
         )
       );
     })
@@ -9145,7 +9156,10 @@ Facets.propTypes = {
   activeFilters: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.array.isRequired,
   addFilter: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.func.isRequired,
   availableFilters: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.object,
-  removeFilter: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.func.isRequired
+  removeFilter: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.func.isRequired,
+  showMore: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.func.isRequired,
+  stagedSearch: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.object.isRequired,
+  queryText: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string.isRequired
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (Facets);
@@ -21797,7 +21811,10 @@ var SearchView = function (_Component) {
           availableFilters: this.props.facets,
           activeFilters: this.props.activeFilters,
           addFilter: this.props.addFilter,
-          removeFilter: this.props.removeFilter
+          removeFilter: this.props.removeFilter,
+          showMore: this.props.showMore,
+          stagedSearch: this.props.stagedSearch,
+          queryText: this.props.queryText
         })
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -21862,7 +21879,8 @@ SearchView.propTypes = {
   facets: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.object,
   activeFilters: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.array.isRequired,
   addFilter: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.func.isRequired,
-  removeFilter: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.func.isRequired
+  removeFilter: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.func.isRequired,
+  showMore: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.func.isRequired
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (SearchView);

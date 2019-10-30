@@ -59,6 +59,9 @@ class SearchView extends Component {
             activeFilters={this.props.activeFilters}
             addFilter={this.props.addFilter}
             removeFilter={this.props.removeFilter}
+            showMore={this.props.showMore}
+            stagedSearch={this.props.stagedSearch}
+            queryText={this.props.queryText}
           />
         </Col>
         <Col md={9}>
@@ -116,7 +119,8 @@ SearchView.propTypes = {
   facets: PropTypes.object,
   activeFilters: PropTypes.array.isRequired,
   addFilter: PropTypes.func.isRequired,
-  removeFilter: PropTypes.func.isRequired
+  removeFilter: PropTypes.func.isRequired,
+  showMore: PropTypes.func.isRequired
 };
 
 export default SearchView;

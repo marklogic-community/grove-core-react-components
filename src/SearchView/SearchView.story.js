@@ -28,6 +28,7 @@ storiesOf('SearchView', module).add('displaying results', () => (
       page={1}
       changePage={action('changePage')}
       handlePageSelection={action('handlePageSelection')}
+      showMore={action('showMore')}
     />
   </BrowserRouter>
 ));
