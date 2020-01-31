@@ -4,6 +4,7 @@ import { Row, Col, Pagination } from 'react-bootstrap';
 
 import SearchResults from './SearchResults/SearchResults';
 import SearchMetrics from './SearchMetrics';
+import SortToggle from './SortToggle';
 
 const SearchResponseView = props => {
   return (
@@ -27,6 +28,13 @@ const SearchResponseView = props => {
                   <SearchMetrics
                     time={props.executionTime}
                     total={props.total}
+                  />
+                </Col>
+                <Col md={3}>
+                  <SortToggle
+                    searchSorts={props.searchSorts}
+                    changeSort={props.changeSort}
+                    selectedSort={props.sort}
                   />
                 </Col>
                 <SearchResults
