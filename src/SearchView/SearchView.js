@@ -13,6 +13,7 @@ class SearchView extends Component {
 
     this.handleQueryTextChange = this.handleQueryTextChange.bind(this);
     this.handlePageSelection = this.handlePageSelection.bind(this);
+    this.handleSortChange = this.handleSortChange.bind(this);
     this.search = this.search.bind(this);
   }
 
@@ -27,6 +28,16 @@ class SearchView extends Component {
     }
   }
 
+  handleSortChange(sort) {
+    if (sort.value !== this.props.sort) {
+      this.props.changeSort(sort.value);
+    }
+  }
+
+  componentDidMount() {
+    this.props.loadOptions();
+  }
+
   componentDidUpdate(prevProps) {
     if (
       // Intentionally using != to test object reference (ie, is it the
@@ -36,7 +47,10 @@ class SearchView extends Component {
     ) {
       this.search();
     }
-    if (prevProps.stagedSearch.page !== this.props.stagedSearch.page) {
+    if (
+      prevProps.stagedSearch.page !== this.props.stagedSearch.page ||
+      prevProps.stagedSearch.sort !== this.props.stagedSearch.sort
+    ) {
       // TODO: DRY up with this.search()?
       this.props.runSearch(this.props.stagedSearch);
     }
@@ -82,6 +96,10 @@ class SearchView extends Component {
                 detailPath={this.props.detailPath}
                 resultComponent={this.props.resultComponent}
                 isSearchPending={this.props.isSearchPending}
+                searchSorts={this.props.searchOptions.operator.filter(
+                  state => state.name === 'sort'
+                )}
+                changeSort={this.handleSortChange}
               />
             </Fade>
           ) : (

@@ -28,6 +28,7 @@
     "prop-types": "^15.6.1",
     "react-bootstrap": "^0.31.2",
     "react-codemirror2": "^5.1.0",
+    "react-dropdown": "^1.6.4",
     "react-json-tree": "^0.11.0",
     "react-router-bootstrap": "^0.24.4",
     "react-router-dom": "^4.2.2",
