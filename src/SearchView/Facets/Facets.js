@@ -47,12 +47,10 @@ const Facets = ({
                 <SingleFilterList
                   values={availableFilters[facetName].facetValues}
                   selectedValues={selectedValues}
-                  addFilter={addFilter.bind(
-                    null,
-                    facetName,
-                    availableFilters[facetName].type || null
-                  )}
-                  removeFilter={removeFilter.bind(null, facetName)}
+                  addFilter={addFilter}
+                  removeFilter={removeFilter}
+                  facetName={facetName}
+                  facetType={availableFilters[facetName].type || null}
                 />
               </div>
             </div>

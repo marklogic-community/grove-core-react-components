@@ -5,7 +5,9 @@ const SingleFilterList = ({
   values,
   selectedValues,
   addFilter,
-  removeFilter
+  removeFilter,
+  facetName,
+  facetType
 }) => (
   <div>
     {selectedValues && (
@@ -19,7 +21,10 @@ const SingleFilterList = ({
                     className={
                       'glyphicon glyphicon-remove-circle icon-white ml-facet-remove-filter'
                     }
-                    onClick={removeFilter.bind(null, value.name)}
+                    onClick={removeFilter.bind(null, {
+                      constraint: facetName,
+                      values: value.name
+                    })}
                     style={{ cursor: 'pointer' }}
                   />
                 )}
@@ -37,7 +42,11 @@ const SingleFilterList = ({
             <div key={value.name}>
               <i
                 className="glyphicon glyphicon-plus-sign ml-facet-add-pos"
-                onClick={addFilter.bind(null, value.name)}
+                onClick={addFilter.bind(null, {
+                  constraint: facetName,
+                  values: value.name,
+                  constraintType: facetType
+                })}
                 style={{ cursor: 'pointer' }}
               />
               <span title={value.name}> {value.value}</span>
@@ -74,7 +83,9 @@ SingleFilterList.propTypes = {
   ).isRequired,
   selectedValues: PropTypes.array,
   addFilter: PropTypes.func.isRequired,
-  removeFilter: PropTypes.func
+  removeFilter: PropTypes.func,
+  facetName: PropTypes.string,
+  facetType: PropTypes.string
 };
 
 export default SingleFilterList;

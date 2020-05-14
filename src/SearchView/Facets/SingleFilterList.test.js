@@ -99,6 +99,10 @@ describe('<SingleFilterList/>', () => {
 
   it('allows a value to be selected', () => {
     const addFilterSpy = expect.createSpy();
+
+    const facetName = 'FacetName';
+    const facetType = 'constract';
+
     const wrapper = shallow(
       <SingleFilterList
         values={[
@@ -106,16 +110,25 @@ describe('<SingleFilterList/>', () => {
           { name: 'value2', value: 'value2', count: 2 }
         ]}
         addFilter={addFilterSpy}
+        facetName={facetName}
+        facetType={facetType}
       />
     );
     wrapper
       .find('.nonSelectedFilterValues .ml-facet-add-pos')
       .first()
       .simulate('click');
-    expect(addFilterSpy).toHaveBeenCalledWith('value1');
+
+    expect(addFilterSpy).toHaveBeenCalledWith({
+      constraint: facetName,
+      values: 'value1',
+      constraintType: facetType
+    });
   });
 
   it('allows a value to be de-selected', () => {
+    const facetName = 'facetName';
+
     const removeFilterSpy = expect.createSpy();
     const wrapper = shallow(
       <SingleFilterList
@@ -126,11 +139,16 @@ describe('<SingleFilterList/>', () => {
         addFilter={() => {}}
         removeFilter={removeFilterSpy}
         selectedValues={['value1']}
+        facetName={facetName}
       />
     );
     wrapper
       .find('.selectedFilterValues .ml-facet-remove-filter')
       .simulate('click');
-    expect(removeFilterSpy).toHaveBeenCalledWith('value1');
+
+    expect(removeFilterSpy).toHaveBeenCalledWith({
+      constraint: facetName,
+      values: 'value1'
+    });
   });
 });
